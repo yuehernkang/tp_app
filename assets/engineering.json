@@ -1,0 +1,31 @@
+    [
+        {
+            "courseName": "Aerospace Electronics",
+            "courseCode": "T50",
+            "courseDetails": "This course prepares you for a rewarding career in Singapore’s burgeoning aerospace industry. A holistic training programme coupled with practical modules offered by the world-renowned Lufthansa Technical Training will see you pick up key skills in aircraft electrical, communication, navigation and flight control systems.",
+            "image": "https://www.tp.edu.sg/staticfiles/TP/images/Schools/eng/dip-aerospace-electronics/WCM%20Enhancement/eng_t50.jpg",
+            "year1": "You will receive a firm foundation in fundamental engineering concepts, through lab work, study trips to companies, and hands-on learning opportunities, preparing you for specialisation in the medical and life sciences fields.",
+            "year2": "Here, you will deepen your engineering skills, pick up fundamental knowledge of the life sciences, and learn how engineering is used to further the development of technology in the medical and life sciences fields.",
+            "year3": "You can specialise by choosing an elective in Audiometry & Hearing Devices, Clinical Laboratory Equipment, or Medical Biochemistry. Together with the Major Project and internship, you will be ready for an exciting and lucrative career upon graduation."
+
+        },
+        {
+            "courseName": "Computer Engineering",
+            "courseCode": "C01",
+            "courseDetails": "Aeroplanes",
+            "image": "https://www.tp.edu.sg/staticfiles/TP/images/Schools/eng/dip-computer-engineering/WCM%20Enhancement/eng_t13.jpg",
+            "year1": "You will receive a firm foundation in fundamental engineering concepts, through lab work, study trips to companies, and hands-on learning opportunities, preparing you for specialisation in the medical and life sciences fields.",
+            "year2": "Here, you will deepen your engineering skills, pick up fundamental knowledge of the life sciences, and learn how engineering is used to further the development of technology in the medical and life sciences fields.",
+            "year3": "You can specialise by choosing an elective in Audiometry & Hearing Devices, Clinical Laboratory Equipment, or Medical Biochemistry. Together with the Major Project and internship, you will be ready for an exciting and lucrative career upon graduation."
+
+        },
+        {
+            "courseName": "Biomedical Engineering",
+            "courseCode": "B01",
+            "courseDetails": "The healthcare industry needs Biomedical Engineers as much as doctors and nurses. You can make your mark in this growing sector by working with your peers to develop the next generation of medical devices and medicinal drugs. With Singapore on its way to becoming a global centre for medical research and advanced patient care, numerous international biomedical companies have already set up base here. So, if you have a passion to help improve the quality of lives for patients worldwide, then not only is this course perfect for you but it is also your stepping stone to excellent job opportunities and advancement prospects.",
+            "image": "https://www.tp.edu.sg/staticfiles/TP/images/Schools/eng/dip-biomedical-engineering/WCM%20Enhancement/eng_t38.jpg",
+            "year1": "You will receive a firm foundation in fundamental engineering concepts, through lab work, study trips to companies, and hands-on learning opportunities, preparing you for specialisation in the medical and life sciences fields.",
+            "year2": "Here, you will deepen your engineering skills, pick up fundamental knowledge of the life sciences, and learn how engineering is used to further the development of technology in the medical and life sciences fields.",
+            "year3": "You can specialise by choosing an elective in Audiometry & Hearing Devices, Clinical Laboratory Equipment, or Medical Biochemistry. Together with the Major Project and internship, you will be ready for an exciting and lucrative career upon graduation."
+        }
+    ]
