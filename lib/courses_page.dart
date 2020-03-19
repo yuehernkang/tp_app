@@ -131,7 +131,15 @@ class CourseList extends StatelessWidget {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: Column(
                   children: <Widget>[
-                    Image.network(courses[index]['image']),
+                    Hero(
+                      tag: courses[index]['courseCode'],
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          child: Image.network(courses[index]['image']),
+                        ),
+                      ),
+                    ),
                     Text(
                       courses[index]['courseName'],
                       style: TextStyle(fontSize: 16.0),

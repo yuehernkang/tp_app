@@ -32,9 +32,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final imageHeight = 48.0;
     return Scaffold(
         appBar: AppBar(
-          title: Image.asset('assets/tplogo.png'),
+          centerTitle: true,
+          title: Image.asset(
+            'assets/TP_Main.jpg', height: imageHeight
+          ),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 0,
         ),
         body: BodyContainer());
   }

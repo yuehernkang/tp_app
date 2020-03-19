@@ -24,6 +24,7 @@ class _CoursesDetailState extends State<CoursesDetail> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
+              contentPadding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
               title: Text(title),
               subtitle: Text(details),
             )
@@ -45,7 +46,16 @@ class _CoursesDetailState extends State<CoursesDetail> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Image.network(widget.course.image),
+            Hero(
+              tag: widget.course.courseCode,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {},
+                  child: Image.network(widget.course.image),
+                ),
+              ),
+            ),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -75,6 +85,8 @@ class _CoursesDetailState extends State<CoursesDetail> {
                         height: 200.0,
                         width: MediaQuery.of(context).size.width * 0.90,
                         child: Swiper(
+                          loop: false,
+                          index: 0,
                           itemBuilder: (BuildContext context, int index) {
                             return yearList[index];
                           },

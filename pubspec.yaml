@@ -47,7 +47,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/tplogo.png
+    - assets/TP_Main.jpg
     - assets/engineering.json
     - assets/business.json
     - assets/asc.json
