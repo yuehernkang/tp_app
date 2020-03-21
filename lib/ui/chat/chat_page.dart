@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 Future<String> createAlbum(String message) async {
   final uri =
@@ -68,17 +69,30 @@ class ChatMessage extends StatelessWidget {
 }
 
 class ChatPageHtml extends StatelessWidget {
+  
   const ChatPageHtml({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WebviewScaffold(
-        url: 'https://temasekpoly-prd.mybluemix.net/bot.html',
-        appBar: AppBar(
-          title: Text("Hello"),
-        ),
-      ));
+      appBar: AppBar(
+        title: Text("Chatting"),
+      ),
+      body: Webview());
+  }
+}
+
+class Webview extends StatelessWidget {
+  const Webview({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return WebView(
+      initialUrl: 'https://temasekpoly-prd.mybluemix.net/bot.html',
+      javascriptMode: JavascriptMode.unrestricted,
+    );
   }
 }
 
