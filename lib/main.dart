@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/fa_icon.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'courses_page.dart';
+import 'package:tp_app/ui/chat/chat_page.dart';
+import 'package:tp_app/ui/part_time_courses/pt_courses_page.dart';
+import 'package:tp_app/ui/scholarships/scholarship_page.dart';
 import 'route_generator.dart';
+import 'ui/app_bar/custom_app_bar.dart';
+import 'ui/full_time_courses/ft_courses_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,21 +33,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   @override
   Widget build(BuildContext context) {
-    final imageHeight = 48.0;
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Image.asset(
-            'assets/TP_Main.jpg', height: imageHeight
-          ),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 0,
-        ),
-        body: BodyContainer());
+      appBar: CustomAppBar(),
+      body: BodyContainer(),
+    );
   }
 }
 
@@ -54,7 +50,8 @@ class BodyContainer extends StatelessWidget {
     return Column(
       children: <Widget>[
         TitleContainer(title: "Prospective Students"),
-        IconContainer()
+        RowOneIconContainer(),
+        RowTwoIconContainer()
       ],
     );
   }
@@ -75,19 +72,55 @@ class TitleContainer extends StatelessWidget {
   }
 }
 
-class IconContainer extends StatelessWidget {
-  const IconContainer({Key key}) : super(key: key);
+class RowOneIconContainer extends StatelessWidget {
+  const RowOneIconContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        IconWithSubtitle(
-            icon: FaIcon(FontAwesomeIcons.school), 
-            subtitle: "Courses"),
-        IconWithSubtitle(
-            icon: FaIcon(FontAwesomeIcons.graduationCap),
-            subtitle: "Scholarships")
+        Expanded(
+          child: IconWithSubtitle(
+              icon: FaIcon(FontAwesomeIcons.school),
+              subtitle: "Full-Time Courses"),
+        ),
+        Expanded(
+          child: IconWithSubtitle(
+              icon: FaIcon(FontAwesomeIcons.graduationCap),
+              subtitle: "Scholarships"),
+        ),
+        // Container(
+        //   height: 40.0,
+        //   width: 40.0,
+        //   child: SvgPicture.asset('assets/scholarship.svg'),
+        // )
+      ],
+    );
+  }
+}
+
+class RowTwoIconContainer extends StatelessWidget {
+  const RowTwoIconContainer({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: IconWithSubtitle(
+              icon: FaIcon(FontAwesomeIcons.briefcase),
+              subtitle: "Part-Time Courses"),
+        ),
+        Expanded(
+          child: IconWithSubtitle(
+              icon: FaIcon(FontAwesomeIcons.comments),
+              subtitle: "Chat"),
+        ),
+        // Container(
+        //   height: 40.0,
+        //   width: 40.0,
+        //   child: SvgPicture.asset('assets/scholarship.svg'),
+        // )
       ],
     );
   }
@@ -105,12 +138,16 @@ class IconWithSubtitle extends StatelessWidget {
       child: OutlineButton(
         borderSide: BorderSide.none,
         onPressed: () {
-          if (subtitle == "Courses") {
-            Navigator.pushNamed(
-              context, 
-              CoursesPage.routeName
-            );             
+          if (subtitle == "Full-Time Courses") {
+            Navigator.pushNamed(context, FtCoursesPage.routeName);
+          } else if (subtitle == "Scholarships") {
+            Navigator.pushNamed(context, ScholarshipPage.routeName);
+          } else if (subtitle == "Part-Time Courses") {
+            Navigator.pushNamed(context, PtCoursesPage.routeName);
+          }else if (subtitle == "Chat") {
+            Navigator.pushNamed(context, ChatPage.routeName);
           }
+          
         },
         child: Column(
           children: <Widget>[

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:tp_app/courses_detail.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'dart:convert';
 import 'package:tp_app/models/course.dart';
+import 'package:tp_app/ui/app_bar/custom_app_bar.dart';
 
-import 'helper/quad_clipper.dart';
-import 'theme/color/light_color.dart';
+import 'ft_courses_detail.dart';
 
-class CoursesPage extends StatefulWidget {
-  static const String routeName = "/coursesPage";
-  const CoursesPage({Key key}) : super(key: key);
+class FtCoursesPage extends StatefulWidget {
+  const FtCoursesPage({Key key}) : super(key: key);
+  static const String routeName = "/ftCoursesPage";
 
   @override
   _CoursesPageState createState() => _CoursesPageState();
@@ -22,7 +22,7 @@ enum Schools {
   Engineering,
 }
 
-class _CoursesPageState extends State<CoursesPage>
+class _CoursesPageState extends State<FtCoursesPage>
     with SingleTickerProviderStateMixin {
   String dropdownValue = 'Business';
 
@@ -52,7 +52,7 @@ class _CoursesPageState extends State<CoursesPage>
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Text(value, style: Theme.of(context).textTheme.subtitle1),
         );
       }).toList(),
     );
@@ -86,9 +86,7 @@ class _CoursesPageState extends State<CoursesPage>
         });
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Courses"),
-      ),
+      appBar: CustomAppBar(),
       body: Container(
         padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
         width: MediaQuery.of(context).size.width,
@@ -115,41 +113,49 @@ class CourseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: courses.length,
-        itemBuilder: (context, index) {
-          return Material(
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CoursesDetail(
-                            course: Course.fromJson(courses[index]))));
-              },
-              child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Column(
-                  children: <Widget>[
-                    Hero(
-                      tag: courses[index]['courseCode'],
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          child: Image.network(courses[index]['image']),
+    return AnimationLimiter(
+        child: ListView.builder(
+            itemCount: courses.length,
+            itemBuilder: (context, index) {
+              return AnimationConfiguration.staggeredList(
+                  duration: const Duration(milliseconds: 375),
+                  position: index,
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: Material(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CoursesDetail(
+                                      course:
+                                          Course.fromJson(courses[index]))));
+                        },
+                        child: Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Column(
+                            children: <Widget>[
+                              Hero(
+                                tag: courses[index]['courseCode'],
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    child:
+                                        Image.network(courses[index]['image']),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                courses[index]['courseName'],
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    Text(
-                      courses[index]['courseName'],
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
+                  ));
+            }));
   }
-
 }

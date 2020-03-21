@@ -26,10 +26,13 @@ dependencies:
   expansion_card: ^0.1.0
   expandable: ^4.1.2
   flutter_swiper: ^1.1.6
-
+  flutter_svg: ^0.17.3+1
+  flutter_staggered_animations: ^0.1.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  http: ^0.12.0+4
+  flutter_webview_plugin: ^0.3.10+1
 
 dev_dependencies:
   flutter_test:
@@ -47,10 +50,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/TP_Main.jpg
-    - assets/engineering.json
-    - assets/business.json
-    - assets/asc.json
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
