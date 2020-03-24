@@ -142,7 +142,7 @@ class CourseList extends StatelessWidget {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     child:
-                                        Image.network(courses[index]['image']),
+                                        Image.asset(courses[index]['image']),
                                   ),
                                 ),
                               ),

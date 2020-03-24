@@ -1,0 +1,142 @@
+[
+    {
+        "courseName": "Cybersecurity",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Cybersecurity2.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    },
+    {
+        "courseName": "Data Analytics",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Data_Analytics.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/data_analytics.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    },
+    {
+        "courseName": "Digital Media",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Digital_Media.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/digital_media.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    },
+    {
+        "courseName": "Entrepreneurship",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Entrepreneurship.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    },
+    {
+        "courseName": "Financial Services & Governance",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Finance.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    },
+    {
+        "courseName": "Tech-Enabled Services",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Tech-Enabled_Services.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    },
+    {
+        "courseName": "Urban Solutions",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Urban_Solutions.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    },
+    {
+        "courseName": "Advanced Manufacturing",
+        "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Advanced_Manufacturing.jpg",
+        "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
+        "basic": [
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            },
+            {
+                "moduleName": "CAD and Additive Manufacturing",
+                "moduleInfo": "Additive Manufacturing, also commonly known as 3D Printing is the formal term defined under ASTM F2792 – 12a. Today 3D printing is becoming an important manufacturing technique that complements existing manufacturing processes. This emerging technology is said to create a paradigm shift in methods and pace of production. In this course, the main topics covered include principles and development of Metal Additive Manufacturing, design guideline for Additive Manufacturing (ISO/ASTM 52911-2), design of support structure, generalized process chain, process selection guidelines, pre-processing software, post processing methods and Laser based Powder Bed. As a bonus, future directions of Additive Manufacturing will be discussed in detail.",
+                "who": "Manufacturing /Production Technician & Engineers.",
+                "entryRequirement": "Basic engineering domain knowledge."
+            },
+            {
+                "moduleName": "Introduction to Data Science",
+                "moduleInfo": "This course introduces the fundamental knowledge and techniques in the emerging field of data science. It will cover the data science lifecycle, history and context, as well as the business value of analytics and big data. ",
+                "who": "Individuals who are new to the subject of data science and possess basic IT knowledge. This course is for those who are currently employed and keen to learn more about a data-driven approach to improve decision-making and operations, as well as to understand what is involved in a typical Data Science project. ",
+                "entryRequirement": "Some IT knowledge or work in a technology related area."
+            },
+            {
+                "moduleName": "Introduction to Industry 4.0 and its Core Element",
+                "moduleInfo": "Industry 4.0 describes a fundamental change in the world of production. Modern information and communication technologies are merging with classic industrial processes to form the so-called cyber-physical systems. Driven by the Internet, the real and virtual world are increasingly growing closer together. \nThis course will introduce the key concepts of Industry 4.0 and the driving technologies for the convergence of digital and physical worlds.",
+                "who": "Managerial and/or technical specialist position",
+                "entryRequirement": "Basic industrial automation knowledge"
+            },
+            {
+                "moduleName": "Robotics & Automation 101",
+                "moduleInfo": "This course is to prepare participants for digital workplace transformation towards Industry 4.0 by providing the insights to the integration of Robotics & Automation in manufacturing. The course will include introduction to Industry 4.0 and technology enablers increasing roles of Robotics & Automation in manufacturing. Commonly used systems and components will be introduced together with applications and case studies",
+                "who": "Individuals who are interested in new technological solutions and processes in robotics and automation and how they can transform the manufacturing landscape",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            },
+            {
+                "moduleName": "Smart Manufacturing with Product Identification System",
+                "moduleInfo": "With the advancements of digital technologies driving towards Advanced Manufacturing System, the need for batch size one or mass customization production at the cost of mass production is increasing. As a result, a high degree of production ﬂexibility and adaptability is required. \nThis is achievable with the use of object identiﬁcation system particularly the Radio Frequency Identiﬁcation (RFID), an integral part of a smart factory that enables decentralized control of the production processes.\nThis course will introduce the use of object identification systems, particularly the Radio Frequency Identification (RFID). This technology is an integral part of a smart factory the enables decentralized control of the production processes Objective To learn the fundamentals of RFID technology & its benefits and applying it in manufacturing to enhance the flexibility in production configuration",
+                "who": "Technicians and engineers",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            },
+            {
+                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
+                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
+                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
+                "entryRequirement": "Able to use software at a comfortable pace."
+            }
+        ]
+    }
+]

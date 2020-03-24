@@ -52,7 +52,7 @@ class _CoursesDetailState extends State<CoursesDetail> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {},
-                  child: Image.network(widget.course.image),
+                  child: Image.asset(widget.course.image),
                 ),
               ),
             ),
@@ -63,6 +63,7 @@ class _CoursesDetailState extends State<CoursesDetail> {
                   header: Text(
                     "Course Details",
                     textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   collapsed: Text(
                     "",
