@@ -2,6 +2,7 @@
     {
         "courseName": "Cybersecurity",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Cybersecurity2.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Cybersecurity2.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
         "basic": [
             {
@@ -15,6 +16,7 @@
     {
         "courseName": "Data Analytics",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Data_Analytics.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Data_Analytics.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/data_analytics.jpg",
         "basic": [
             {
@@ -28,6 +30,7 @@
     {
         "courseName": "Digital Media",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Digital_Media.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Digital_Media.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/digital_media.jpg",
         "basic": [
             {
@@ -41,6 +44,7 @@
     {
         "courseName": "Entrepreneurship",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Entrepreneurship.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Entrepreneurship.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
         "basic": [
             {
@@ -54,6 +58,7 @@
     {
         "courseName": "Financial Services & Governance",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Finance.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Finance.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
         "basic": [
             {
@@ -67,6 +72,7 @@
     {
         "courseName": "Tech-Enabled Services",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Tech-Enabled_Services.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Tech-Enabled_Services.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
         "basic": [
             {
@@ -80,6 +86,7 @@
     {
         "courseName": "Urban Solutions",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Urban_Solutions.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Urban_Solutions.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
         "basic": [
             {
@@ -93,6 +100,7 @@
     {
         "courseName": "Advanced Manufacturing",
         "imageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/Advanced_Manufacturing.jpg",
+        "localImage": "assets/images/part_time/skillsfuture/Advanced_Manufacturing.jpg",
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
         "basic": [
             {

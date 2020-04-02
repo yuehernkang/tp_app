@@ -42,7 +42,7 @@ class _CoursesDetailState extends State<CoursesDetail> {
     yearList[2] = yearCard("Year 3", widget.course.year3);
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.course.courseName)),
+      appBar: AppBar(title: Text(widget.course.courseName, style: Theme.of(context).primaryTextTheme.headline6,)),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

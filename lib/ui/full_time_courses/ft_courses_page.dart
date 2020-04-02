@@ -41,7 +41,7 @@ class _CoursesPageState extends State<FtCoursesPage>
       style: TextStyle(color: Colors.black),
       underline: Container(
         height: 2,
-        color: Colors.redAccent,
+        color: Theme.of(context).accentColor,
       ),
       onChanged: (String newValue) {
         setState(() {
@@ -148,7 +148,9 @@ class CourseList extends StatelessWidget {
                               ),
                               Text(
                                 courses[index]['courseName'],
-                                style: TextStyle(fontSize: 16.0),
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline6,
                               ),
                             ],
                           ),

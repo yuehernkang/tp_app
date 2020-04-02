@@ -48,15 +48,20 @@ class PtSkillsFutureModuleList {
 }
 
 class PtSkillsFutureCourse {
-  String imageUrl, courseName, coverImageUrl;
+  String imageUrl, courseName, coverImageUrl, localImage;
   PtSkillsFutureModuleList basic = new PtSkillsFutureModuleList();
   PtSkillsFutureCourse(
-      {this.courseName, this.imageUrl, this.coverImageUrl, this.basic});
+      {this.courseName,
+      this.imageUrl,
+      this.coverImageUrl,
+      this.localImage,
+      this.basic});
 
   factory PtSkillsFutureCourse.fromJson(Map<String, dynamic> json) {
     return PtSkillsFutureCourse(
         courseName: json['courseName'] as String,
         imageUrl: json['imageUrl'] as String,
+        localImage: json['localImage'] as String,
         coverImageUrl: json['coverImageUrl'] as String,
         basic: json['basic'] as PtSkillsFutureModuleList);
   }
@@ -88,20 +93,22 @@ class _PtSkillsFutureState extends State<PtSkillsFuture> {
       appBar: CustomAppBar(),
       body: Column(
         children: <Widget>[
-          Image.network(
-              'https://www.tp.edu.sg/staticfiles/TP/images/Banners/SC-Banner---MLC-Giveaway.jpg'),
+          Image.asset(
+              'assets/images/part_time/skillsfuture/SC-Banner---MLC-Giveaway.jpg'),
           Card(
+            color: Theme.of(context).cardColor,
             elevation: 8.0,
             child: ListTile(
               title: Center(
-                child: Text("SkillsFuture Series"),
+                child: Text("SkillsFuture Series", style: Theme.of(context).primaryTextTheme.subtitle1),
               ),
               subtitle: Column(
                 children: <Widget>[
                   Text(
-                      "The SkillsFuture Series is a curated list of short, industry-relevant training programmes that focus on emerging skills. Complete a SkillsFuture Series course today and you will get a FREE online Micro-Learning Course that you can learn using your mobile devices."),
+                      "The SkillsFuture Series is a curated list of short, industry-relevant training programmes that focus on emerging skills. Complete a SkillsFuture Series course today and you will get a FREE online Micro-Learning Course that you can learn using your mobile devices.",
+                      style: Theme.of(context).primaryTextTheme.subtitle1),
                   MaterialButton(
-                    child: Text("More Info"),
+                    child: Text("More Info", style: Theme.of(context).primaryTextTheme.subtitle1),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -154,7 +161,7 @@ class PtSkillsFutureCourseList extends StatelessWidget {
                       child: ListTile(
                         leading: Container(
                           height: 40.0,
-                          child: Image.network(this.courses[index]['imageUrl']),
+                          child: Image.asset(this.courses[index]['localImage']),
                         ),
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -162,7 +169,9 @@ class PtSkillsFutureCourseList extends StatelessWidget {
                             Center(
                               child: Text(
                                 this.courses[index]['courseName'],
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .subtitle1,
                               ),
                             )
                           ],

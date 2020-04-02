@@ -1,3 +1,5 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:dynamic_theme/theme_switcher_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/fa_icon.dart';
@@ -14,14 +16,50 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: MyHomePage(),
-      onGenerateRoute: RouteGenerator.generateRoute,
+    return DynamicTheme(
+      defaultBrightness: Brightness.light,
+      data: (brightness) => _buildTheme(brightness),
+      themedWidgetBuilder: (context, theme) {
+        return new MaterialApp(
+          title: 'Flutter Demo',
+          theme: theme,
+          home: MyHomePage(),
+          onGenerateRoute: RouteGenerator.generateRoute,
+        );
+      },
     );
+  }
+
+  ThemeData _buildTheme(Brightness brightness) {
+    return brightness == Brightness.dark
+        ? ThemeData.dark().copyWith(
+            cardColor: Colors.grey,
+            accentColor: Colors.grey,
+            primaryColor: Colors.grey,
+            primaryTextTheme: TextTheme(
+                headline6: TextStyle(fontSize: 24, color: Colors.white),
+                subtitle1: TextStyle(fontSize: 16, color: Colors.white)),
+            iconTheme: IconThemeData(color: Colors.red),
+            textTheme: ThemeData.dark().textTheme.apply(
+                  bodyColor: Colors.white,
+                  displayColor: Colors.white,
+                  fontFamily: 'Roboto',
+                ),
+            backgroundColor: Colors.black)
+        : ThemeData.light().copyWith(
+            cardColor: Colors.red,
+            accentColor: Colors.red,
+            primaryColor: Colors.red,
+            primaryTextTheme: TextTheme(
+                headline6: TextStyle(fontSize: 24, color: Colors.white),
+                subtitle1: TextStyle(fontSize: 16, color: Colors.white)),
+            iconTheme: IconThemeData(color: Colors.red),
+            textTheme: ThemeData.light().textTheme.apply(
+                  bodyColor: Colors.black,
+                  displayColor: Colors.black,
+                  fontFamily: 'Roboto',
+                ),
+            backgroundColor: Colors.white);
   }
 }
 
@@ -36,9 +74,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            ListTile(
+              title: Text("Dark Theme"),
+              trailing: Switch(
+                value: Theme.of(context).brightness == Brightness.dark,
+                onChanged: (_) => changeBrightness(),
+              ),
+            )
+          ],
+        ),
+      ),
       appBar: CustomAppBar(),
-      body: BodyContainer(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[BodyContainer()],
+      ),
     );
+  }
+
+  void changeBrightness() {
+    DynamicTheme.of(context).setBrightness(
+        Theme.of(context).brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark);
   }
 }
 
@@ -51,7 +114,8 @@ class BodyContainer extends StatelessWidget {
       children: <Widget>[
         TitleContainer(title: "Prospective Students"),
         RowOneIconContainer(),
-        RowTwoIconContainer()
+        RowTwoIconContainer(),
+        RowThreeIconContainer()
       ],
     );
   }
@@ -81,12 +145,12 @@ class RowOneIconContainer extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.school),
+              icon: FaIcon(FontAwesomeIcons.school, size: 50.0),
               subtitle: "Full-Time Courses"),
         ),
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.graduationCap),
+              icon: FaIcon(FontAwesomeIcons.graduationCap, size: 50.0),
               subtitle: "Scholarships"),
         ),
         // Container(
@@ -108,13 +172,35 @@ class RowTwoIconContainer extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.briefcase),
+              icon: FaIcon(FontAwesomeIcons.briefcase, size: 50.0),
               subtitle: "Part-Time Courses"),
         ),
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.comments),
+              icon: FaIcon(FontAwesomeIcons.comments, size: 50.0),
               subtitle: "Chat"),
+        ),
+        // Container(
+        //   height: 40.0,
+        //   width: 40.0,
+        //   child: SvgPicture.asset('assets/scholarship.svg'),
+        // )
+      ],
+    );
+  }
+}
+
+class RowThreeIconContainer extends StatelessWidget {
+  const RowThreeIconContainer({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: IconWithSubtitle(
+              icon: FaIcon(FontAwesomeIcons.toolbox, size: 50.0),
+              subtitle: "Change Theme"),
         ),
         // Container(
         //   height: 40.0,
@@ -144,17 +230,29 @@ class IconWithSubtitle extends StatelessWidget {
             Navigator.pushNamed(context, ScholarshipPage.routeName);
           } else if (subtitle == "Part-Time Courses") {
             Navigator.pushNamed(context, PtCoursesPage.routeName);
-          }else if (subtitle == "Chat") {
+          } else if (subtitle == "Chat") {
             Navigator.pushNamed(context, ChatPage.routeName);
+          } else if (subtitle == "Change Theme") {
+            showDialog<void>(
+                context: context,
+                builder: (context) {
+                  return BrightnessSwitcherDialog(
+                    onSelectedTheme: (brightness) {
+                      DynamicTheme.of(context).setBrightness(brightness);
+                      Navigator.pop(context);
+                    },
+                  );
+                });
           }
-          
         },
         child: Column(
           children: <Widget>[
             this.icon,
-            Text(
-              this.subtitle,
-              style: TextStyle(fontSize: 15.0),
+            Center(
+              child: Text(
+                this.subtitle,
+                style: TextStyle(fontSize: 20.0),
+              ),
             )
           ],
         ),

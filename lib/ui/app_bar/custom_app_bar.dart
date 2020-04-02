@@ -10,12 +10,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(
-        color: Colors.redAccent, //change your color here
-      ),
-      backgroundColor: Colors.white,
+      iconTheme: Theme.of(context).iconTheme,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
-      title: Image.asset('assets/TP_Main.jpg', height: kToolbarHeight),
+      title: Image.asset('assets/tplogo.png', height: kToolbarHeight),
       elevation: 0,
     );
   }

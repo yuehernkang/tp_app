@@ -17,17 +17,17 @@ class _PartTimeCourseState extends State<PtCoursesPage> {
   Widget build(BuildContext context) {
     List<String> imageUrlList = List<String>();
     imageUrlList.add(
-        "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/banner-1.jpg");
+        "assets/images/part_time/banner-1.jpg");
     imageUrlList.add(
-        "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/banner-2.jpg");
+        "assets/images/part_time/banner-2.jpg");
     imageUrlList.add(
-        "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/banner-3.jpg");
+        "assets/images/part_time/banner-3.jpg");
     imageUrlList.add(
-        "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/banner-4.jpg");
+        "assets/images/part_time/banner-4.jpg");
     imageUrlList.add(
-        "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/banner-5.jpg");
+        "assets/images/part_time/banner-5.jpg");
     imageUrlList.add(
-        "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/banner-6.jpg");
+        "assets/images/part_time/banner-6.jpg");
     return Scaffold(
       appBar: CustomAppBar(),
       body: Column(
@@ -173,7 +173,7 @@ class PtCardItem extends StatelessWidget {
         }
       },
       child: Card(
-        color: Colors.red,
+        color: Theme.of(context).cardColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -221,7 +221,7 @@ class PtCourseSlideshow extends StatelessWidget {
         duration: 1500,
         pagination: new SwiperPagination(),
         itemBuilder: (BuildContext context, int index) {
-          return new Image.network(
+          return new Image.asset(
             imageUrlList[index],
             fit: BoxFit.fill,
           );
