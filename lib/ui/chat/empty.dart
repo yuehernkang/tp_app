@@ -14,4 +14,8 @@ class EmptyElement extends Element {
 
   @override
   void performRebuild() {}
+
+  @override
+  // TODO: implement debugDoingBuild
+  bool get debugDoingBuild => throw UnimplementedError();
 }
