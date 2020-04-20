@@ -1,98 +1,18 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:tp_app/ui/chat/chat_message.dart';
 
-Future<String> createAlbum(String message) async {
-  final uri =
-      'https://jointpoly-prd.mybluemix.net/api/message?{"input":{"text":"$message"},"context":{"conversation_id":"91a7167b-7fa7-46be-8c8d-61d8e03c22f2","system":{"initialized":true,"dialog_stack":[{"dialog_node":"root"}],"dialog_turn_counter":2,"dialog_request_counter":2,"branch_exited":true,"branch_exited_reason":"completed"},"iter":0,"course":"","school":"","counter":0,"netscore":"","crosspoly":false,"poly_array":[],"netscorenum":0,"polycontext":"Temasek Polytechnic","polytechnic":"Temasek Polytechnic","course_array":[],"school_array":[],"shortcourses":false,"npcoursefound":false,"rpcoursefound":false,"spcoursefound":false,"tpcoursefound":false,"disambiguation":false,"nypcoursefound":false,"iter_poly_array":0,"poly_comparison":false,"aboutcoursecheck":false,"artsstream_array":[],"iter_school_array":0,"admission_exercise":"","sciencestream_array":[],"courseinterest_array":[],"courserecommendation":false,"iter_artsstream_array":0,"moecourseinterest_array":[],"iter_sciencestream_array":0,"iter_courseinterest_array":0,"iter_moecourseinterest_array":0,"_id":"51c62f34-6613-4d6e-8f12-f81351a29028","prev_intent":"hi","nocourseinterest":true}}';
-  final headers = {'Content-Type': 'application/json'};
-  Map<String, dynamic> body = {
-    'input': {'text': 'asd'}
-  };
-  String jsonBody = json.encode(body);
-  final encoding = Encoding.getByName('utf-8');
 
-  Response response = await http.post(
-    uri,
-    headers: headers,
-    // body: jsonBody,
-    encoding: encoding,
-  );
-  print(response.body);
-  print(response.request);
-  return response.body;
-}
-
-const String _name = "You";
-
-class ChatMessage extends StatelessWidget {
-  final String text;
-  //for opotional params we use curly braces
-  ChatMessage({this.text});
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: new Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Container(
-            margin: const EdgeInsets.only(right: 16.0),
-            child: new CircleAvatar(
-              child: new Text(_name[0]),
-            ),
-          ),
-          new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new Text(_name, style: Theme.of(context).textTheme.subhead),
-              new Container(
-                margin: const EdgeInsets.only(top: 5.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Text(
-                    text,
-                  ),
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class ChatPageHtml extends StatelessWidget {
-  
-  const ChatPageHtml({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Chatting"),
-      ),
-      body: Webview());
-  }
-}
-
-class Webview extends StatelessWidget {
-  const Webview({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return WebView(
-      initialUrl: 'https://temasekpoly-prd.mybluemix.net/bot.html',
-      javascriptMode: JavascriptMode.unrestricted,
-    );
-  }
+Future<List> dialogFlowChat(String message) async {
+  AuthGoogle authGoogle =
+      await AuthGoogle(fileJson: "assets/tp-app-aff2e-155c26bd1dad.json")
+          .build();
+  Dialogflow dialogflow =
+      Dialogflow(authGoogle: authGoogle, language: Language.english);
+  AIResponse response = await dialogflow.detectIntent(message);
+  return response.getListMessage();
 }
 
 class ChatPage extends StatefulWidget {
@@ -109,17 +29,51 @@ class ChatPageState extends State<ChatPage> {
 
   void _handleSubmit(String text) {
     textEditingController.clear();
-    ChatMessage chatMessage = new ChatMessage(text: text);
+    ChatMessage chatMessage = new ChatMessage(text: text, user: false);
     setState(() {
       _messages.insert(0, chatMessage);
-      createAlbum(text).then((value) => receivedMessage(value));
+      // createAlbum(text).then((value) => receivedMessage(value));
+      // createAlbum(text).then((value) => print(value));
+      dialogFlowChat(text).then((value) => receivedMessage(value));
     });
   }
 
-  void receivedMessage(String text) {
+  void receivedMessage(List text) {
+    print(text);
+    String message = text[0]['text']['text'][0];
+    var arr = List();
+    List<Widget> buttons = List();
+
+    try {
+      arr = text[1]['payload']['buttons'];
+    } catch (e) {
+      //RangeError (index): Invalid value: Only valid value is 0: 1
+      print("bad payload");
+      arr = null;
+      print(e);
+    }
+    if (arr != null) {
+      print("array not null");
+      arr.forEach((f) {
+        buttons.add(RaisedButton(
+          child: Text(f),
+          onPressed: () {
+            _handleSubmit(f);
+          },
+        ));
+      });
+    }
+
+    if (text == null) {
+      message = "error";
+      print("message is null");
+    }
+    //return array from payload
+    // print(text[1]['payload']['buttons']);
     setState(() {
-      _messages.insert(0,
-          ChatMessage(text: json.decode(text)['output']['text'][0].toString()));
+      _messages.insert(0, ChatMessage(text: message, buttons: buttons, user: true)
+          // ChatMessage(text: json.decode(text)[0]['text']['text'][0])
+          );
     });
   }
 

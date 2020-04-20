@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Course{
   String courseName, courseCode, courseDetails, image, year1, year2, year3;
 
@@ -14,6 +16,18 @@ class Course{
       year1: json['year1'] as String,
       year2: json['year2'] as String,
       year3: json['year3'] as String
+    );
+  }
+
+  factory Course.fromSnapshot(DocumentSnapshot snapshot){
+    return Course(
+      courseCode: snapshot.data['courseCode'],
+      courseName: snapshot.data['courseName'],
+      courseDetails: snapshot.data['courseDetails'],
+      image: snapshot.data['imageUrl'],
+      year1: snapshot.data['year1'],
+      year2: snapshot.data['year2'],
+      year3: snapshot.data['year3']
     );
   }
 

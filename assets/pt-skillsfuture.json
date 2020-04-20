@@ -6,10 +6,18 @@
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/advanced_manufacturing.jpg",
         "basic": [
             {
-                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
-                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
-                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
-                "entryRequirement": "Able to use software at a comfortable pace."
+                "moduleName": "Fundamentals of Cybersecurity",
+                "moduleInfo": "The course focuses on the fundamental principles of cybersecurity and lays the foundation for intermediate and advanced topics.",
+                "who": "Individuals who are new to the subject of cybersecurity and possess minimal relevant IT knowledge. This course is for you if you are keen to learn more about cybersecurity as a complementary skill area to your current job role.",
+                "entryRequirement": "No requirement"
+            }
+        ],
+        "intermediate": [
+            {
+                "moduleName": "Understanding Cyber Risk Assessment and Management",
+                "moduleInfo": "This is an introduction to the basic concepts of risk assessment, management and treatment. Individuals are introduced to the mainstream risk assessment methodologies such as quantitative and qualitative risk assessments. There are also hands-on exercise on performing basic risk assessments and management.",
+                "who": "Individuals who wants to introduce risk awareness into the corporate culture, implement risk assessment initiatives and incorporate risk management in the use of information technology within the organisation. Pre-requisite knowledge about risks or cybersecurity is not required.",
+                "entryRequirement": "No requirement"
             }
         ]
     },
@@ -20,10 +28,28 @@
         "coverImageUrl": "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/sf_series/data_analytics.jpg",
         "basic": [
             {
-                "moduleName": "Basic Computer Aided Design (CAD) 3D Modelling and 3D Printing",
-                "moduleInfo": "Heard about 3D printing but have yet to see one in action? How about trying to make a replica of something which you are left with only one piece? \n\nThis workshop focuses on basic 3D modelling of physical objects using CAD software and printing it using a 3D printer. Participants will reverse engineer or model actual parts and print a replica of the part using a 3D printer. Creative individuals who are keen in creating their own physical parts for the workplace or personal use will benefit from the course.",
-                "who": "Hobbyist, Prototyping Enthusiasts, Engineering Technicians, Operations Staff, Students",
-                "entryRequirement": "Able to use software at a comfortable pace."
+                "moduleName": "Analysing Data on Human Behaviour",
+                "moduleInfo": "This course equips participants with a comprehensive set of statistical techniques for analysing quantitative research data using Jamovi, a free statistical platform. Participants will learn to become informed consumers of statistical information, and utilize Jamovi to conduct data analysis for a range of personal and work purposes.\nJamovi is a free statistical platform that is able to perform basic analyses (e.g. t-tests, ANOVA, correlation etc.), with real-time computation. Jamovi presents results of analysis in APA-formatted tables that are easily transferred to word processing softwares.",
+                "who": "This course is designed for participants who already have at least a basic understanding of how to design and carry out simple descriptive research studies. Participants will find this course useful for learning various techniques to analyse and make sense of quantitative data in their line of work.",
+                "entryRequirement": "No requirement"
+            },
+            {
+                "moduleName": "Basic Business Analytics @ Work",
+                "moduleInfo": "With the tsunami of information faced by many in this internet era, the challenge is for us to pick out pieces of information which are vital to our work. How can we work smarter and be more productive? The answer to that is - Analytics. However, the challenge is also in knowing how to introduce it, and to eventually adopt it in our functional areas.\n\nThis workshop is a quick jumpstart to do basic business analytics. Participants will get to understand of the importance of Analytics, to get hands-on experience to handle data, as well as to create interactive dashboards. This workshop will also show case the potential and possibilities of doing more with advance business analytics.",
+                "who": "This workshop is targeted at executives, managers and decision makers who would like to have a hands-on introduction to business analytics.",
+                "entryRequirement": "No requirement"
+            },
+            {
+                "moduleName": "Digital Proficiency in Business Data & Insights (Level 2) – Basic Analytics at Work and Data Visualisation",
+                "moduleInfo": "“Tsunami of Information”, “Data Deluge”, “BIG data” – these terms aptly describe the situation that modern enterprises faces while operating in the internet era. The challenge is real. Companies struggle to keep on top of things that are happening in real time, and to pick out pieces of information which are vital to the business. In order to survive and compete effectively, companies need to be smarter and be more productive. And the answer to that is - Analytics.\n\nHowever, the challenge is in knowing how to introduce it to our organizations, and to eventually adopt it in our business processes so that analytics become a part of the work culture. This workshop provides a quick jumpstart on using basic analytics at work, and show case the potential and possibilities of doing more.",
+                "who": "This workshop is targeted at executives, managers and decision makers who would like to have a hands-on introduction to business analytics.",
+                "entryRequirement": "No requirement"
+            },
+            {
+                "moduleName": "Introduction to Data Science",
+                "moduleInfo": "This course introduces the fundamental knowledge and techniques in the emerging field of data science. It will cover the data science lifecycle, history and context, as well as the business value of analytics and big data. ",
+                "who": "Individuals who are new to the subject of data science and possess basic IT knowledge. This course is for those who are currently employed and keen to learn more about a data-driven approach to improve decision-making and operations, as well as to understand what is involved in a typical Data Science project. ",
+                "entryRequirement": "Some IT knowledge or work in a technology related area."
             }
         ]
     },
