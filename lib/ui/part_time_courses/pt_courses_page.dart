@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:tp_app/ui/app_bar/custom_app_bar.dart';
-import 'package:tp_app/ui/part_time_courses/pt_skillsfuture/pt_skillsfuture_page.dart';
+
+import '../app_bar/custom_app_bar.dart';
+import 'pt_skillsfuture/pt_skillsfuture_page.dart';
 
 class PtCoursesPage extends StatefulWidget {
   PtCoursesPage({Key key}) : super(key: key);
@@ -173,7 +174,7 @@ class PtCardItem extends StatelessWidget {
         }
       },
       child: Card(
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).accentColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

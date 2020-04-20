@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:tp_app/models/course.dart';
+import 'package:tp_app/utils/read_more_text.dart';
 
 class CoursesDetail extends StatefulWidget {
   final Course course;
@@ -42,7 +44,11 @@ class _CoursesDetailState extends State<CoursesDetail> {
     yearList[2] = yearCard("Year 3", widget.course.year3);
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.course.courseName, style: Theme.of(context).primaryTextTheme.headline6,)),
+      appBar: AppBar(
+          title: Text(
+        widget.course.courseName,
+        style: Theme.of(context).primaryTextTheme.headline,
+      )),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -52,25 +58,25 @@ class _CoursesDetailState extends State<CoursesDetail> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {},
-                  child: Image.asset(widget.course.image),
+                  child: CachedNetworkImage(imageUrl: widget.course.image),
                 ),
               ),
             ),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ExpandablePanel(
-                  header: Text(
-                    "Course Details",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  collapsed: Text(
-                    "",
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  expanded: Text(widget.course.courseDetails),
+                child: Column(
+                  children: <Widget>[
+                    Text("Course Details"),
+                    ReadMoreText(
+                      widget.course.courseDetails,
+                      trimLines: 3,
+                      colorClickableText: Colors.pink,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: '...Expand',
+                      trimExpandedText: ' Collapse ',
+                    )
+                  ],
                 ),
               ),
             ),
