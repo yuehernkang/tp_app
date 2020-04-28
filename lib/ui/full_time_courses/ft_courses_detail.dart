@@ -1,13 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expand_widget/expand_widget.dart';
 import 'package:expandable/expandable.dart';
 import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:tp_app/models/course.dart';
 import 'package:tp_app/utils/read_more_text.dart';
 
+import 'ft_courses_modules_page.dart';
+
 class CoursesDetail extends StatefulWidget {
   final Course course;
+
   CoursesDetail({Key key, this.course}) : super(key: key);
 
   @override
@@ -27,7 +32,10 @@ class _CoursesDetailState extends State<CoursesDetail> {
           children: <Widget>[
             ListTile(
               contentPadding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
-              title: Text(title),
+              title: Text(
+                title,
+                style: TextStyle(fontSize: 24),
+              ),
               subtitle: Text(details),
             )
           ],
@@ -52,61 +60,26 @@ class _CoursesDetailState extends State<CoursesDetail> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Hero(
-              tag: widget.course.courseCode,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {},
-                  child: CachedNetworkImage(imageUrl: widget.course.image),
+            CourseHeroImageWidget(
+              course: widget.course,
+            ),
+            CourseDetailWidget(courseDetailText: widget.course.courseDetails),
+            PlatformButton(
+              child: ButtonTheme(
+                minWidth: double.infinity,
+                child: MaterialButton(
+                  child: Text("View Course Modules"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FtCoursesModulePage())
+                    );
+                  },
+                  color: Theme.of(context).cardColor,
                 ),
               ),
             ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text("Course Details"),
-                    ReadMoreText(
-                      widget.course.courseDetails,
-                      trimLines: 3,
-                      colorClickableText: Colors.pink,
-                      trimMode: TrimMode.Line,
-                      trimCollapsedText: '...Expand',
-                      trimExpandedText: ' Collapse ',
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: 200.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      new Container(
-                        height: 200.0,
-                        width: MediaQuery.of(context).size.width * 0.90,
-                        child: Swiper(
-                          loop: false,
-                          index: 0,
-                          itemBuilder: (BuildContext context, int index) {
-                            return yearList[index];
-                          },
-                          itemCount: 3,
-                          viewportFraction: 0.8,
-                          scale: 1,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
+            ThreeYearWidget(widgetList: yearList)
           ],
         ),
       ),
@@ -114,8 +87,100 @@ class _CoursesDetailState extends State<CoursesDetail> {
   }
 }
 
+class CourseHeroImageWidget extends StatelessWidget {
+  final Course course;
+  const CourseHeroImageWidget({Key key, this.course});
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: course.courseCode,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
+          child: CachedNetworkImage(imageUrl: course.image),
+        ),
+      ),
+    );
+  }
+}
+
+class CourseDetailWidget extends StatelessWidget {
+  final courseDetailText;
+  const CourseDetailWidget({Key key, this.courseDetailText}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "Course Details",
+              style: TextStyle(fontSize: 24),
+            ),
+            ExpandText(
+              this.courseDetailText,
+              textAlign: TextAlign.justify,
+              maxLength: 5,
+            ),
+
+            // ReadMoreText(
+            //   widget.course.courseDetails,
+            //   trimLines: 3,
+            //   colorClickableText: Colors.pink,
+            //   trimMode: TrimMode.Line,
+            //   trimCollapsedText: '...Expand',
+            //   trimExpandedText: ' Collapse ',
+            //   style: TextStyle(fontSize: 16),
+            // )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ThreeYearWidget extends StatelessWidget {
+  final widgetList;
+  const ThreeYearWidget({Key key, this.widgetList}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200.0,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                height: 200.0,
+                width: MediaQuery.of(context).size.width * 0.90,
+                child: Swiper(
+                  loop: false,
+                  index: 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    return this.widgetList[index];
+                  },
+                  itemCount: 3,
+                  viewportFraction: 0.8,
+                  scale: 1,
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class ThreeYearsCard extends StatelessWidget {
   final String year1, year2, year3;
+
   const ThreeYearsCard({Key key, this.year1, this.year2, this.year3})
       : super(key: key);
 
@@ -133,6 +198,7 @@ class ThreeYearsCard extends StatelessWidget {
 
 class CourseDetailExpandCard extends StatelessWidget {
   final String title, details;
+
   const CourseDetailExpandCard({Key key, this.title, this.details})
       : super(key: key);
 
