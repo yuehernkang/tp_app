@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:algolia/algolia.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:tp_app/ui/app_bar/custom_app_bar.dart';
 import 'package:tp_app/ui/chat/chat_message.dart';
-
 
 Future<List> dialogFlowChat(String message) async {
   AuthGoogle authGoogle =
@@ -27,6 +28,11 @@ class ChatPageState extends State<ChatPage> {
       new TextEditingController();
   final List<ChatMessage> _messages = <ChatMessage>[];
 
+  static Algolia algolia = Algolia.init(
+    applicationId: 'XVRTA8E4T1',
+    apiKey: '0fdf05b6dc737d0f893b0136174644ae',
+  );
+
   void _handleSubmit(String text) {
     textEditingController.clear();
     ChatMessage chatMessage = new ChatMessage(text: text, user: false);
@@ -36,6 +42,19 @@ class ChatPageState extends State<ChatPage> {
       // createAlbum(text).then((value) => print(value));
       dialogFlowChat(text).then((value) => receivedMessage(value));
     });
+  }
+
+  void queryAgolia(String querydata) async{
+    AlgoliaQuery query =
+        algolia.instance.index('prod_courses').search(querydata);
+
+    // Get Result/Objects
+    AlgoliaQuerySnapshot snap = await query.getObjects();
+
+    // Checking if has [AlgoliaQuerySnapshot]
+    print('\n\n');
+    print('Hits count: ${snap.nbHits}');
+    print('${snap.hits.map((e) => print(e.data))}');
   }
 
   void receivedMessage(List text) {
@@ -56,6 +75,7 @@ class ChatPageState extends State<ChatPage> {
       print("array not null");
       arr.forEach((f) {
         buttons.add(RaisedButton(
+          color: Theme.of(context).cardColor,
           child: Text(f),
           onPressed: () {
             _handleSubmit(f);
@@ -71,7 +91,8 @@ class ChatPageState extends State<ChatPage> {
     //return array from payload
     // print(text[1]['payload']['buttons']);
     setState(() {
-      _messages.insert(0, ChatMessage(text: message, buttons: buttons, user: true)
+      _messages.insert(
+          0, ChatMessage(text: message, buttons: buttons, user: true)
           // ChatMessage(text: json.decode(text)[0]['text']['text'][0])
           );
     });
@@ -90,6 +111,9 @@ class ChatPageState extends State<ChatPage> {
                     hintText: "Enter your message"),
                 controller: textEditingController,
                 onSubmitted: _handleSubmit,
+                onChanged: (text){
+                  queryAgolia(text);
+                },
               ),
             ),
             new Container(
@@ -108,6 +132,7 @@ class ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: CustomAppBar(),
       body: Column(
         children: <Widget>[
           new Flexible(
