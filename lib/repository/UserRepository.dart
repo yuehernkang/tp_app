@@ -21,21 +21,13 @@ class UserRepository {
     return _firebaseAuth.currentUser();
   }
 
-  Future<FirebaseUser> signInWithCredentials(
-      String email, String password) async {
-    FirebaseUser user;
-    try {
-      user = (await _firebaseAuth.signInWithEmailAndPassword(
-              email: email, password: password))
-          .user;
-    } catch (error) {
-      switch (error.code) {
-        case "ERROR_WRONG_PASSWORD":
-          print("wrong password");
-      }
-    }
-    return user;
+  Future<void> signInWithCredentials(String email, String password) {
+    return _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
+
 
   Future<void> signUp({String email, String password}) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(

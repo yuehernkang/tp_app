@@ -1,13 +1,18 @@
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 
 import 'empty.dart';
 
 class ChatMessage extends StatelessWidget {
+  final bool card;
   final String text;
   final List buttons;
   final bool user;
   //for opotional params we use curly braces
-  ChatMessage({this.text, this.buttons, this.user});
+  ChatMessage({this.text, this.buttons, this.user, this.card});
   String _name = "You";
 
   Widget _buildButtons(List buttons) {
@@ -15,6 +20,64 @@ class ChatMessage extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: buttons,
+      );
+    } else
+      return Empty();
+  }
+
+  Widget _buildCard() {
+    if (card) {
+      return Container(
+        height:150.0,
+        width: 200.0,
+        child: Card(
+          child: Column(
+            children: <Widget>[
+              Hero(
+                tag: jsonDecode(text)['courseCode'],
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: CachedNetworkImage(
+                          imageUrl: jsonDecode(text)['image_url'],
+                          placeholder: (image, ctx) => Container(
+                              width: 800,
+                              child: AspectRatio(
+                                aspectRatio: 1900 / 783,
+                                child: BlurHash(
+                                    hash: "L5H2EC=PM+yV0g-mq.wG9c010J}I"),
+                              )),
+                        ),
+                        // child: Image.asset(
+                        //     this.localImagePath),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 2.0),
+                      child: Text(
+                        jsonDecode(text)['courseName'],
+                        // style: Theme.of(context).primaryTextTheme.headline,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       );
     } else
       return Empty();
@@ -38,7 +101,8 @@ class ChatMessage extends StatelessWidget {
           crossAxisAlignment:
               this.user ? CrossAxisAlignment.start : CrossAxisAlignment.end,
           children: <Widget>[
-            new Text("Temasek Polytechnic", style: Theme.of(context).textTheme.subhead),
+            new Text("Temasek Polytechnic",
+                style: Theme.of(context).textTheme.subhead),
             new Container(
               alignment:
                   this.user ? Alignment.centerLeft : Alignment.centerRight,
@@ -48,11 +112,12 @@ class ChatMessage extends StatelessWidget {
                     this.user ? Alignment.centerLeft : Alignment.centerRight,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Text(
-                  text,
+                  this.card ? " " : text,
                 ),
               ),
             ),
-            _buildButtons(this.buttons)
+            _buildButtons(this.buttons),
+            _buildCard()
           ],
         ),
       ],
@@ -100,7 +165,6 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return new Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         child: this.user ? _buildBot(context) : _buildUser(context));

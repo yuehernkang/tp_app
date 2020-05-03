@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:expandable/expandable.dart';
 import 'package:expansion_card/expansion_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -11,9 +13,10 @@ import 'package:tp_app/utils/read_more_text.dart';
 import 'ft_courses_modules_page.dart';
 
 class CoursesDetail extends StatefulWidget {
-  final Course course;
+  // final Course course;
+  final DocumentSnapshot snapshot;
 
-  CoursesDetail({Key key, this.course}) : super(key: key);
+  CoursesDetail({Key key, this.snapshot}) : super(key: key);
 
   @override
   _CoursesDetailState createState() => _CoursesDetailState();
@@ -47,38 +50,44 @@ class _CoursesDetailState extends State<CoursesDetail> {
   @override
   Widget build(BuildContext context) {
     List<Widget> yearList = List<Widget>(3);
-    yearList[0] = yearCard("Year 1", widget.course.year1);
-    yearList[1] = yearCard("Year 2", widget.course.year2);
-    yearList[2] = yearCard("Year 3", widget.course.year3);
+    yearList[0] = yearCard("Year 1", widget.snapshot.data['year1']);
+    yearList[1] = yearCard("Year 2", widget.snapshot.data['year2']);
+    yearList[2] = yearCard("Year 3", widget.snapshot.data['year3']);
 
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        widget.course.courseName,
+        widget.snapshot.data['courseName'],
         style: Theme.of(context).primaryTextTheme.headline,
       )),
-      body: SingleChildScrollView(
+      body: Expanded(
         child: Column(
           children: <Widget>[
             CourseHeroImageWidget(
-              course: widget.course,
+              course: Course.fromSnapshot(widget.snapshot),
             ),
-            CourseDetailWidget(courseDetailText: widget.course.courseDetails),
+            CourseDetailWidget(
+                courseDetailText: widget.snapshot.data['courseDetails']),
             PlatformButton(
-              child: ButtonTheme(
-                minWidth: double.infinity,
-                child: MaterialButton(
-                  child: Text("View Course Modules"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FtCoursesModulePage())
-                    );
-                  },
-                  color: Theme.of(context).cardColor,
+                child: PlatformText("View Course Modules"),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FtCoursesModulePage(
+                                snapshot: widget.snapshot,
+                              )));
+                },
+
+                // child: ButtonTheme(
+                //   minWidth: double.infinity,
+                //   child: MaterialButton(
+                //     child: Text("View Course Modules"),
+
+                //     color: Theme.of(context).cardColor,
+                //   ),
+                // ),
                 ),
-              ),
-            ),
             ThreeYearWidget(widgetList: yearList)
           ],
         ),

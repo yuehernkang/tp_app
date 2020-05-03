@@ -30,6 +30,13 @@
             {
               "client_id": "928965541572-jb46bv7p96ca7ue4if581po9cmhf48h1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "928965541572-7li14mf8u97oa7886jrs1r5u045j8ven.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tpApp"
+              }
             }
           ]
         }

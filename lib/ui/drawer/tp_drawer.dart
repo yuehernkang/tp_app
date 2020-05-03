@@ -8,12 +8,17 @@ import '../../repository/UserRepository.dart';
 import '../../repository/bloc/authentication_bloc.dart';
 import '../login_page/login_with_password.dart';
 
-class TpDrawer extends StatelessWidget {
+class TpDrawer extends StatefulWidget {
   final BuildContext context;
   final AuthenticationBloc authenticationBloc;
   const TpDrawer({Key key, this.context, this.authenticationBloc})
       : super(key: key);
 
+  @override
+  _TpDrawerState createState() => _TpDrawerState();
+}
+
+class _TpDrawerState extends State<TpDrawer> {
   @override
   Widget build(BuildContext context) {
 
@@ -23,7 +28,7 @@ class TpDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            bloc: this.authenticationBloc,
+            bloc: this.widget.authenticationBloc,
             builder: (context, state) {
               if (state is Authenticated) {
                 return DrawerHeader(
@@ -60,7 +65,7 @@ class TpDrawer extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 //TODO: use route generator instead
-                                builder: (context) => LoginWithPassword(authenticationBloc: this.authenticationBloc)));
+                                builder: (context) => LoginWithPassword(authenticationBloc: this.widget.authenticationBloc)));
                       },
                     )
                   ],
@@ -78,7 +83,7 @@ class TpDrawer extends StatelessWidget {
           ListTile(
             title: Text("Sign Out"),
             onTap: (){
-              this.authenticationBloc.add(LoggedOut());
+              this.widget.authenticationBloc.add(LoggedOut());
             },
           ),
         ],
@@ -87,8 +92,8 @@ class TpDrawer extends StatelessWidget {
   }
 
   void changeBrightness() {
-    DynamicTheme.of(this.context).setBrightness(
-        Theme.of(this.context).brightness == Brightness.dark
+    DynamicTheme.of(this.widget.context).setBrightness(
+        Theme.of(this.widget.context).brightness == Brightness.dark
             ? Brightness.light
             : Brightness.dark);
   }
