@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:algolia/algolia.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:tp_app/models/course.dart';
 import 'package:tp_app/ui/app_bar/custom_app_bar.dart';
 import 'package:tp_app/ui/chat/chat_message.dart';
 
@@ -15,6 +18,19 @@ Future<List> dialogFlowChat(String message) async {
   AIResponse response = await dialogflow.detectIntent(message);
   return response.getListMessage();
 }
+
+Future<http.Response> warmUp(String title) {
+  return http.post(
+    'https://jsonplaceholder.typicode.com/albums',
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'title': title,
+    }),
+  );
+}
+
 
 class ChatPage extends StatefulWidget {
   static const String routeName = "/chatPage";
@@ -33,6 +49,12 @@ class ChatPageState extends State<ChatPage> {
     apiKey: '0fdf05b6dc737d0f893b0136174644ae',
   );
 
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _handleSubmit(String text) {
     textEditingController.clear();
     ChatMessage chatMessage = new ChatMessage(text: text, user: false);
@@ -44,7 +66,7 @@ class ChatPageState extends State<ChatPage> {
     });
   }
 
-  void queryAgolia(String querydata) async{
+  void queryAgolia(String querydata) async {
     AlgoliaQuery query =
         algolia.instance.index('prod_courses').search(querydata);
 
@@ -58,16 +80,34 @@ class ChatPageState extends State<ChatPage> {
   }
 
   void receivedMessage(List text) {
-    print(text);
+    // print(text[0]['text']['text'][0]['courseName']);
+    // print(text[0]['text']['text'][0]);
+    // print(text[0]['text']['text'][0]['courseCode']);
     String message = text[0]['text']['text'][0];
+    print(message);
+    bool card = false;
     var arr = List();
     List<Widget> buttons = List();
+    // String algoliaArr;
+    try {
+      String messageFromAlgolia =
+          jsonDecode(text[0]['text']['text'][0])['objectID'];
+      if (messageFromAlgolia != null) {
+        print("card detected");
+
+        card = true;
+      }
+    } catch (e) {
+      print("No card detected");
+      arr = null;
+      print(e);
+    }
 
     try {
       arr = text[1]['payload']['buttons'];
     } catch (e) {
-      //RangeError (index): Invalid value: Only valid value is 0: 1
-      print("bad payload");
+      // RangeError (index): Invalid value: Only valid value is 0: 1
+      print("No buttons detected");
       arr = null;
       print(e);
     }
@@ -91,9 +131,15 @@ class ChatPageState extends State<ChatPage> {
     //return array from payload
     // print(text[1]['payload']['buttons']);
     setState(() {
+      print(card);
       _messages.insert(
-          0, ChatMessage(text: message, buttons: buttons, user: true)
-          // ChatMessage(text: json.decode(text)[0]['text']['text'][0])
+          0,
+          ChatMessage(
+            text: message,
+            buttons: buttons,
+            user: true,
+            card: card,
+          ) // ChatMessage(text: json.decode(text)[0]['text']['text'][0])
           );
     });
   }
@@ -111,9 +157,9 @@ class ChatPageState extends State<ChatPage> {
                     hintText: "Enter your message"),
                 controller: textEditingController,
                 onSubmitted: _handleSubmit,
-                onChanged: (text){
-                  queryAgolia(text);
-                },
+                // onChanged: (text){
+                //   queryAgolia(text);
+                // },
               ),
             ),
             new Container(
@@ -133,26 +179,29 @@ class ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: CustomAppBar(),
-      body: Column(
-        children: <Widget>[
-          new Flexible(
-            child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
-              itemCount: _messages.length,
+      body: SafeArea(
+        bottom: true,
+        child: Column(
+          children: <Widget>[
+            new Flexible(
+              child: new ListView.builder(
+                padding: new EdgeInsets.all(8.0),
+                reverse: true,
+                itemBuilder: (_, int index) => _messages[index],
+                itemCount: _messages.length,
+              ),
             ),
-          ),
-          new Divider(
-            height: 1.0,
-          ),
-          new Container(
-            decoration: new BoxDecoration(
-              color: Theme.of(context).cardColor,
+            new Divider(
+              height: 1.0,
             ),
-            child: _textComposerWidget(),
-          )
-        ],
+            new Container(
+              decoration: new BoxDecoration(
+                color: Theme.of(context).cardColor,
+              ),
+              child: _textComposerWidget(),
+            )
+          ],
+        ),
       ),
     );
   }

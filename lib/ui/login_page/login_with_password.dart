@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/src/button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,11 +43,14 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
           bloc: _loginBloc,
           listener: (BuildContext context, LoginState state) {
             if (state.isFailure) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text("Hello"),
-              ));
+              print("fail");
+              // Scaffold.of(context).showSnackBar(SnackBar(
+              //   content: Text("Hello"),
+              // ));
             }
             if (state.isSubmitting) {
+              print("submitting");
+
               // Flushbar(
               //   message: "Submitting",
               //   duration: Duration(seconds: 2),
