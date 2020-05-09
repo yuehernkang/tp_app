@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -13,8 +9,6 @@ import 'package:like_button/like_button.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 
 import '../../models/course.dart';
-import '../app_bar/custom_app_bar.dart';
-import 'bottomNav.dart';
 import 'ft_courses_detail.dart';
 
 class FtCoursesPage extends StatefulWidget {
@@ -44,9 +38,10 @@ class _CoursesPageState extends State<FtCoursesPage>
   PlatformTabController tabController;
   void initState() {
     super.initState();
+
     if (tabController == null) {
       tabController = PlatformTabController(
-        initialIndex: 1,
+        initialIndex: 0,
       );
     }
   }
@@ -64,6 +59,23 @@ class _CoursesPageState extends State<FtCoursesPage>
           ),
         ];
 
+    return PlatformTabScaffold(
+      tabController: tabController,
+      items: items(context),
+      bodyBuilder: (context, index) => ContentView(
+        index: index,
+      ),
+    );
+  }
+}
+
+class ContentView extends StatelessWidget {
+  final index;
+
+  const ContentView({Key key, this.index}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final tabItems = [
       Tab(
         text: "Business",
@@ -149,35 +161,40 @@ class _CoursesPageState extends State<FtCoursesPage>
         ),
       ),
     ];
-
-    return PlatformScaffold(
-      body: DefaultTabController(
-        length: 5,
-        child: Scaffold(
-          appBar: AppBar(
-            iconTheme: Theme.of(context).iconTheme,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            centerTitle: true,
-            title: Image.asset('assets/tplogo.png', height: kToolbarHeight),
-            bottom: TabBar(
-              isScrollable: true,
-              indicatorSize: TabBarIndicatorSize.label,
-              labelColor: Theme.of(context).accentColor,
-              unselectedLabelColor: Color(0xff5f6368),
-              indicator: MD2Indicator(
-                  indicatorHeight: 3,
-                  indicatorColor: Theme.of(context).accentColor,
-                  indicatorSize: MD2IndicatorSize.full),
-              tabs: tabItems,
+    final coursesList = [
+      PlatformScaffold(
+        body: DefaultTabController(
+          length: 5,
+          child: Scaffold(
+            appBar: AppBar(
+              iconTheme: Theme.of(context).iconTheme,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              centerTitle: true,
+              title: Image.asset('assets/tplogo.png', height: kToolbarHeight),
+              bottom: TabBar(
+                isScrollable: true,
+                indicatorSize: TabBarIndicatorSize.label,
+                labelColor: Theme.of(context).accentColor,
+                unselectedLabelColor: Color(0xff5f6368),
+                indicator: MD2Indicator(
+                    indicatorHeight: 3,
+                    indicatorColor: Theme.of(context).accentColor,
+                    indicatorSize: MD2IndicatorSize.full),
+                tabs: tabItems,
+              ),
             ),
+            body: TabBarView(
+              children: tabContent,
+            ),
+            // bottomNavigationBar: TPFullTimeBottomNav(),
           ),
-          body: TabBarView(
-            children: tabContent,
-          ),
-          bottomNavigationBar: TPFullTimeBottomNav(),
         ),
       ),
-    );
+      Container(
+        child: Text("Hello"),
+      )
+    ];
+    return coursesList[this.index];
   }
 }
 
@@ -277,8 +294,6 @@ class FTCourseCard extends StatelessWidget {
                                 BlurHash(hash: "L5H2EC=PM+yV0g-mq.wG9c010J}I"),
                           )),
                     ),
-                    // child: Image.asset(
-                    //     this.localImagePath),
                   ),
                 ),
               ),
@@ -308,6 +323,55 @@ class FTCourseCard extends StatelessWidget {
               )
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class FTCourseCard2 extends StatelessWidget {
+  final Course course;
+  const FTCourseCard2({Key key, this.course}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Stack(
+        children: <Widget>[
+          Hero(
+            tag: this.course.courseCode,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                child: Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: CachedNetworkImage(
+                      imageUrl: this.course.image,
+                      placeholder: (image, ctx) => Container(
+                          width: 800,
+                          child: AspectRatio(
+                            aspectRatio: 1900 / 783,
+                            child:
+                                BlurHash(hash: "L5H2EC=PM+yV0g-mq.wG9c010J}I"),
+                          )),
+                    ),
+                    // child: Image.asset(
+                    //     this.localImagePath),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Text(
+            this.course.courseName,
+            style: TextStyle(fontSize: 28),
+          )
         ],
       ),
     );

@@ -20,7 +20,11 @@ class FtCoursesModulePage extends StatelessWidget {
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              final List<DocumentSnapshot> ftFundamentalModules = snapshot
+                  if(snapshot.data == null) return Center(
+                    child: CircularProgressIndicator(),
+                  );
+
+                  final List<DocumentSnapshot> ftFundamentalModules = snapshot
                   .data.documents
                   .where((DocumentSnapshot documentSnapshot) =>
                       documentSnapshot['moduleGroup'] == 'fundamental_modules')
@@ -32,16 +36,19 @@ class FtCoursesModulePage extends StatelessWidget {
                   .toList();
               if (snapshot.hasError)
                 return new Text('Error: ${snapshot.error}');
-              return new CustomScrollView(
-                slivers: [
-                  _StickyHeaderList(
-                      title: "Fundamental Modules",
-                      ptSkillsFutureModuleList: ftFundamentalModules),
-                  _StickyHeaderList(
-                      title: "Core Modules",
-                      ptSkillsFutureModuleList: ftCoreModules),
-                ],
-              );
+              if (snapshot.hasData) {
+                return new CustomScrollView(
+                  slivers: [
+                    _StickyHeaderList(
+                        title: "Fundamental Modules",
+                        ptSkillsFutureModuleList: ftFundamentalModules),
+                    _StickyHeaderList(
+                        title: "Core Modules",
+                        ptSkillsFutureModuleList: ftCoreModules),
+                  ],
+                );
+              }
+              return CircularProgressIndicator();
             }));
   }
 }

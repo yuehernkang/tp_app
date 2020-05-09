@@ -12,18 +12,25 @@ import 'ui/full_time_courses/ft_courses_page.dart';
 import 'ui/part_time_courses/pt_courses_page.dart';
 
 class AppRouter {
-  final _authenticationBloc = AuthenticationBloc(userRepository: UserRepository());
+  final BuildContext context;
+  final AuthenticationBloc authenticationBloc;
+
+  AppRouter(this.context, this.authenticationBloc);
   Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
       case MyHomePage.routeName:
         return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
-                  value: _authenticationBloc,
+                  value: this.authenticationBloc,
                   child: MyHomePage(),
                 ));
       case FtCoursesPage.routeName:
-        return MaterialPageRoute(builder: (_) => FtCoursesPage());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+                  value: this.authenticationBloc,
+                  child: FtCoursesPage(),
+                ));
       case ScholarshipPage.routeName:
         return MaterialPageRoute(builder: (_) => ScholarshipPage());
       case PtCoursesPage.routeName:
@@ -35,5 +42,9 @@ class AppRouter {
       case LoginWithPassword.routeName:
         return MaterialPageRoute(builder: (_) => LoginWithPassword());
     }
+  }
+
+  void dispose() {
+    this.authenticationBloc.close();
   }
 }

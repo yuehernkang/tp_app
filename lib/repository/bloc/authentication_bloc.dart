@@ -33,9 +33,12 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
+    print("Checking logged in state");
+    // await _userRepository.checkUserDarkMode().then((bool value) => print(value));
     final isSignedIn = await _userRepository.isSignedIn();
     if (isSignedIn) {
-      final name = await _userRepository.getUser();
+      print("signed in");
+      final name = await _userRepository.getUserEmail();
       yield Authenticated(name);
     } else {
       yield Unauthenticated();
@@ -43,7 +46,7 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield Authenticated(await _userRepository.getUser());
+    yield Authenticated(await _userRepository.getUserEmail());
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {

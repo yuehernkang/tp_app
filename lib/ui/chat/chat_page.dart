@@ -83,7 +83,7 @@ class ChatPageState extends State<ChatPage> {
     // print(text[0]['text']['text'][0]['courseName']);
     // print(text[0]['text']['text'][0]);
     // print(text[0]['text']['text'][0]['courseCode']);
-    String message = text[0]['text']['text'][0];
+    String message = text[0]['text']['text'];
     print(message);
     bool card = false;
     var arr = List();
