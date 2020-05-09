@@ -4,31 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tp_app/repository/bloc/authentication_bloc.dart';
-import 'package:tp_app/ui/app_bar/custom_app_bar.dart';
-import 'package:tp_app/ui/chat/chat_page.dart';
-import 'package:tp_app/ui/drawer/tp_drawer.dart';
-import 'package:tp_app/ui/full_time_courses/ft_courses_page.dart';
-import 'package:tp_app/ui/part_time_courses/pt_courses_page.dart';
-import 'package:tp_app/ui/scholarships/scholarship_page.dart';
 
-class MyHomePage extends StatefulWidget {
-  static const String routeName = "/";
+import '../repository/bloc/authentication_bloc.dart';
+import '../ui/app_bar/custom_app_bar.dart';
+import '../ui/chat/chat_page.dart';
+import '../ui/drawer/tp_drawer.dart';
+import '../ui/full_time_courses/ft_courses_page.dart';
+import '../ui/part_time_courses/pt_courses_page.dart';
+import '../ui/scholarships/scholarship_page.dart';
 
-  MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
+    static const String routeName = "/";
 
   @override
   Widget build(BuildContext context) {
     final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+
     return Scaffold(
-      drawer: TpDrawer(
-          context: context, authenticationBloc: authenticationBloc),
+      drawer:
+          BlocProvider.value(
+            value: authenticationBloc,
+            child: TpDrawer(context: context),
+          ),
       appBar: CustomAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

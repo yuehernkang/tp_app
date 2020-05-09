@@ -1,13 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final Firestore _firestore;
 
-  UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
+  UserRepository(
+      {FirebaseAuth firebaseAuth,
+      GoogleSignIn googleSignin,
+      Firestore firestore})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignin ?? GoogleSignIn();
+        _googleSignIn = googleSignin ?? GoogleSignIn(),
+        _firestore = firestore ?? Firestore.instance;
 
   Future<FirebaseUser> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -28,6 +35,18 @@ class UserRepository {
     );
   }
 
+  Future<bool> checkUserDarkMode(){
+    bool darkTheme;
+    getUserUid().then((String value) async{
+      await _firestore
+          .document('users/$value')
+          .get()
+          .then((DocumentSnapshot snapshot) {
+            darkTheme = snapshot.data['darkTheme'];
+      });
+    });
+    // return darkTheme;
+  }
 
   Future<void> signUp({String email, String password}) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(
@@ -48,7 +67,11 @@ class UserRepository {
     return currentUser != null;
   }
 
-  Future<String> getUser() async {
+  Future<String> getUserEmail() async {
     return (await _firebaseAuth.currentUser()).email;
+  }
+
+  Future<String> getUserUid() async {
+    return (await _firebaseAuth.currentUser()).uid;
   }
 }

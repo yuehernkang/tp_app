@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter_auth_buttons/src/button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tp_app/ui/login_page/login_with_password.dart';
 
 import '../../repository/UserRepository.dart';
 import '../../repository/bloc/authentication_bloc.dart';
@@ -38,7 +40,7 @@ class LoginOptionsPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    'Sign in to Cat App',
+                    'Sign in to TTTTTTTT',
                     style: Theme.of(context)
                         .textTheme
                         .headline
@@ -69,10 +71,13 @@ class LoginOptionsPage extends StatelessWidget {
                 buttonColor: Color(0xFFFFFFFF),
                 borderRadius: 0,
                 onPressed: () {
-                  // Navigator.of(context).pushNamed(
-                  //   // LoginWithPassword.routeName,
-                  //   arguments: this.userRepository
-                  // );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BlocProvider.value(
+                                      value: BlocProvider.of<AuthenticationBloc>(context),
+                                      child: LoginWithPassword(),
+                                    )));
                 },
                 buttonPadding: 8.0,
                 children: <Widget>[

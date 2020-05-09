@@ -60,37 +60,35 @@ class _CoursesDetailState extends State<CoursesDetail> {
         widget.snapshot.data['courseName'],
         style: Theme.of(context).primaryTextTheme.headline,
       )),
-      body: Expanded(
-        child: Column(
-          children: <Widget>[
-            CourseHeroImageWidget(
-              course: Course.fromSnapshot(widget.snapshot),
-            ),
-            CourseDetailWidget(
-                courseDetailText: widget.snapshot.data['courseDetails']),
-            PlatformButton(
-                child: PlatformText("View Course Modules"),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FtCoursesModulePage(
-                                snapshot: widget.snapshot,
-                              )));
-                },
+      body: Column(
+        children: <Widget>[
+          CourseHeroImageWidget(
+            course: Course.fromSnapshot(widget.snapshot),
+          ),
+          CourseDetailWidget(
+              courseDetailText: widget.snapshot.data['courseDetails']),
+          PlatformButton(
+            child: PlatformText("View Course Modules"),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FtCoursesModulePage(
+                        snapshot: widget.snapshot,
+                      )));
+            },
 
-                // child: ButtonTheme(
-                //   minWidth: double.infinity,
-                //   child: MaterialButton(
-                //     child: Text("View Course Modules"),
+            // child: ButtonTheme(
+            //   minWidth: double.infinity,
+            //   child: MaterialButton(
+            //     child: Text("View Course Modules"),
 
-                //     color: Theme.of(context).cardColor,
-                //   ),
-                // ),
-                ),
-            ThreeYearWidget(widgetList: yearList)
-          ],
-        ),
+            //     color: Theme.of(context).cardColor,
+            //   ),
+            // ),
+          ),
+          ThreeYearWidget(widgetList: yearList)
+        ],
       ),
     );
   }

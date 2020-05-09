@@ -12,4 +12,10 @@ class SimpleBlocDelegate extends BlocDelegate {
     super.onTransition(bloc, transition);
     print(transition);
   }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stackTrace) {
+    print(error);
+    super.onError(bloc, error, stackTrace);
+  }
 }

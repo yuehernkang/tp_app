@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/src/button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tp_app/home_page/home_page.dart';
+import 'package:tp_app/utils/stateful_wrapper.dart';
 
 import '../../repository/UserRepository.dart';
 import '../../repository/bloc/authentication_bloc.dart';
@@ -11,79 +12,71 @@ import 'bloc/login_event.dart';
 import 'bloc/login_state.dart';
 import 'password_field.dart';
 
-class LoginWithPassword extends StatefulWidget {
+class LoginWithPassword extends StatelessWidget {
   static const String routeName = "/loginWithPassword";
-  final AuthenticationBloc authenticationBloc;
-  final UserRepository repository;
 
-  LoginWithPassword({Key key, this.authenticationBloc, this.repository});
-
-  @override
-  _LoginWithPasswordState createState() => _LoginWithPasswordState();
-}
-
-class _LoginWithPasswordState extends State<LoginWithPassword> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _passwordFieldKey = GlobalKey<FormFieldState<String>>();
   final LoginBloc _loginBloc = LoginBloc(userRepository: UserRepository());
 
   @override
-  void initState() {
-    _emailController.addListener(_onEmailChanged);
-    _passwordController.addListener(_onPasswordChanged);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => _loginBloc,
-        child: BlocListener(
-          bloc: _loginBloc,
-          listener: (BuildContext context, LoginState state) {
-            if (state.isFailure) {
-              print("fail");
-              // Scaffold.of(context).showSnackBar(SnackBar(
-              //   content: Text("Hello"),
-              // ));
-            }
-            if (state.isSubmitting) {
-              print("submitting");
+    final _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
 
-              // Flushbar(
-              //   message: "Submitting",
-              //   duration: Duration(seconds: 2),
-              // )..show(context);
-              // Scaffold.of(context).showSnackBar(SnackBar(
-              //   content: Text("Logging in"),
-              // ));
-            }
-            if (state.isSuccess) {
-              widget.authenticationBloc.add(LoggedIn());
-              Navigator.of(context).pop();
-            }
-          },
-          child: BlocBuilder(
+    return StatefulWrapper(
+      onInit: () {
+        _emailController.addListener(_onEmailChanged);
+        _passwordController.addListener(_onPasswordChanged);
+      },
+      child: BlocProvider(
+          create: (context) => _loginBloc,
+          child: BlocListener(
             bloc: _loginBloc,
-            builder: (BuildContext context, LoginState state) {
-              return LoginPasswordScreen(
-                emailController: _emailController,
-                passwordController: _passwordController,
-                passwordFieldKey: _passwordFieldKey,
-                loginBloc: _loginBloc,
-                authenticationBloc: widget.authenticationBloc,
-              );
-            },
-          ),
-        ));
-  }
+            listener: (BuildContext context, LoginState state) {
+              if (state.isFailure) {
+                print("fail");
+                // Scaffold.of(context).showSnackBar(SnackBar(
+                //   content: Text("Hello"),
+                // ));
+              }
+              if (state.isSubmitting) {
+                print("submitting");
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+                // Flushbar(
+                //   message: "Submitting",
+                //   duration: Duration(seconds: 2),
+                // )..show(context);
+                // Scaffold.of(context).showSnackBar(SnackBar(
+                //   content: Text("Logging in"),
+                // ));
+              }
+              if (state.isSuccess) {
+                _authenticationBloc.add(LoggedIn());
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                              value:
+                                  BlocProvider.of<AuthenticationBloc>(context),
+                              child: MyHomePage(),
+                            )));
+              }
+            },
+            child: BlocBuilder(
+              bloc: _loginBloc,
+              builder: (BuildContext context, LoginState state) {
+                return LoginPasswordScreen(
+                  emailController: _emailController,
+                  passwordController: _passwordController,
+                  passwordFieldKey: _passwordFieldKey,
+                  loginBloc: _loginBloc,
+                  authenticationBloc: _authenticationBloc,
+                );
+              },
+            ),
+          )),
+    );
   }
 
   void _onEmailChanged() {
