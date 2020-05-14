@@ -35,17 +35,18 @@ class UserRepository {
     );
   }
 
-  Future<bool> checkUserDarkMode(){
+  Future<bool> checkUserDarkMode() async{
     bool darkTheme;
     getUserUid().then((String value) async{
       await _firestore
           .document('users/$value')
           .get()
           .then((DocumentSnapshot snapshot) {
+            print(snapshot.data);
             darkTheme = snapshot.data['darkTheme'];
       });
     });
-    // return darkTheme;
+    return Future.value(darkTheme);
   }
 
   Future<void> signUp({String email, String password}) async {

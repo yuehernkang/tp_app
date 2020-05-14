@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -33,10 +34,11 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
-    print("Checking logged in state");
-    // await _userRepository.checkUserDarkMode().then((bool value) => print(value));
+    developer.log('checking log in state', name: 'authenticationBloc');
     final isSignedIn = await _userRepository.isSignedIn();
     if (isSignedIn) {
+      print(await _userRepository.checkUserDarkMode());
+
       print("signed in");
       final name = await _userRepository.getUserEmail();
       yield Authenticated(name);

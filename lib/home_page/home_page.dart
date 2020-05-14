@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../repository/bloc/authentication_bloc.dart';
+import '../repository/authentication_bloc/authentication_bloc.dart';
 import '../ui/app_bar/custom_app_bar.dart';
 import '../ui/chat/chat_page.dart';
 import '../ui/drawer/tp_drawer.dart';
@@ -21,6 +21,7 @@ class MyHomePage extends StatelessWidget {
     final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       drawer:
           BlocProvider.value(
             value: authenticationBloc,

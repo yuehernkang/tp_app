@@ -3,21 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:tp_app/ui/login_page/login_page.dart';
+import 'package:tp_app/ui/settings/settings.dart';
 
-import '../../repository/UserRepository.dart';
-import '../../repository/bloc/authentication_bloc.dart';
-import '../login_page/login_with_password.dart';
-
-// class TpDrawer extends StatefulWidget {
-//   final BuildContext context;
-//   final AuthenticationBloc authenticationBloc;
-//   const TpDrawer({Key key, this.context, this.authenticationBloc})
-//       : super(key: key);
-
-//   @override
-//   _TpDrawerState createState() => _TpDrawerState();
-// }
+import '../../repository/authentication_bloc/authentication_bloc.dart';
+import '../login_page/login_page.dart';
 
 class TpDrawer extends StatelessWidget {
   final BuildContext context;
@@ -88,6 +77,12 @@ class TpDrawer extends StatelessWidget {
               value: Theme.of(context).brightness == Brightness.dark,
               onChanged: (_) => changeBrightness(),
             ),
+          ),
+          ListTile(
+            title: Text("Settings"),
+            onTap: () {
+              Navigator.pushNamed(context, SettingsPage.routeName);
+            },
           ),
           ListTile(
             title: Text("Sign Out"),

@@ -1,29 +1,34 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/src/button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tp_app/home_page/home_page.dart';
-import 'package:tp_app/utils/stateful_wrapper.dart';
 
+import '../../home_page/home_page.dart';
 import '../../repository/UserRepository.dart';
-import '../../repository/bloc/authentication_bloc.dart';
+import '../../repository/authentication_bloc/authentication_bloc.dart';
+import '../../utils/stateful_wrapper.dart';
 import 'bloc/login_bloc.dart';
 import 'bloc/login_event.dart';
 import 'bloc/login_state.dart';
 import 'password_field.dart';
 
-class LoginWithPassword extends StatelessWidget {
-  static const String routeName = "/loginWithPassword";
+class LoginWithPassword extends StatefulWidget {
+  static const String routeName = "/loginWithPasswordPage";
 
+  @override
+  _LoginWithPasswordState createState() => _LoginWithPasswordState();
+}
+
+class _LoginWithPasswordState extends State<LoginWithPassword> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final _passwordFieldKey = GlobalKey<FormFieldState<String>>();
-  final LoginBloc _loginBloc = LoginBloc(userRepository: UserRepository());
+    final LoginBloc _loginBloc = LoginBloc(userRepository: UserRepository());
 
   @override
   Widget build(BuildContext context) {
     final _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-
     return StatefulWrapper(
       onInit: () {
         _emailController.addListener(_onEmailChanged);
@@ -70,7 +75,7 @@ class LoginWithPassword extends StatelessWidget {
                   emailController: _emailController,
                   passwordController: _passwordController,
                   passwordFieldKey: _passwordFieldKey,
-                  loginBloc: _loginBloc,
+                  loginBloc: BlocProvider.of<LoginBloc>(context),
                   authenticationBloc: _authenticationBloc,
                 );
               },
@@ -180,17 +185,6 @@ class LoginPasswordScreen extends StatelessWidget {
                       _loginBloc.add(LoginWithCredentialsPressed(
                           email: _emailController.value.text,
                           password: _passwordController.value.text));
-                      // _loginBloc.userRepository
-                      //     .signInWithCredentials(_emailController.value.text,
-                      //         _passwordController.value.text)
-                      //     .then((FirebaseUser user) {
-                      //   if (user == null) {
-                      //     print("null user");
-                      //   } else {
-                      //     _authenticationBloc.add(LoggedIn());
-                      //     Navigator.of(context).pop();
-                      //   }
-                      // });
                     },
                     buttonPadding: 8.0,
                     children: <Widget>[
@@ -199,7 +193,6 @@ class LoginPasswordScreen extends StatelessWidget {
                         child: Text(
                           "Login with Password",
                           style: TextStyle(
-                            // default to the application font-style
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.blue,
@@ -214,13 +207,4 @@ class LoginPasswordScreen extends StatelessWidget {
           ),
         ));
   }
-
-  // void _onFormSubmitted() {
-  //   _loginBloc.add(
-  //     LoginWithCredentialsPressed(
-  //       email: _emailController.text,
-  //       password: _passwordController.text,
-  //     ),
-  //   );
-  // }
 }

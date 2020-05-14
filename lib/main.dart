@@ -1,14 +1,15 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tp_app/ui/login_page/login_page.dart';
+import 'package:tp_app/repository/firebase_messaging_bloc/bloc/firebase_messaging_bloc.dart';
 
 import 'bloc/bloc_delegate.dart';
 import 'repository/UserRepository.dart';
-import 'repository/bloc/authentication_bloc.dart';
+import 'repository/authentication_bloc/authentication_bloc.dart';
 import 'route_generator.dart';
 import 'ui/theme/theme.dart';
 
@@ -16,17 +17,28 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   final UserRepository userRepository = UserRepository();
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
   runApp(
-    BlocProvider(
-      create: (context) =>
-          AuthenticationBloc(userRepository: userRepository)..add(AppStarted()),
-      child: MyApp(),
-    ),
+        MultiBlocProvider(
+        providers: [
+          BlocProvider<FirebaseMessagingBloc>(create: (BuildContext context) {
+            return FirebaseMessagingBloc(firebaseMessaging: firebaseMessaging)
+              ..add(InitFirebaseNotifications());
+          }),
+          BlocProvider<AuthenticationBloc>(
+            create: (BuildContext context) {
+              return AuthenticationBloc(userRepository: userRepository)
+                ..add(AppStarted());
+            },
+          ),
+        ],
+        child: MyApp(),
+      )
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
@@ -34,8 +46,15 @@ class MyApp extends StatelessWidget {
   MyApp({Key key}) : super(key: key);
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
+  @override
   Widget build(BuildContext context) {
-    final _router = AppRouter(context, BlocProvider.of<AuthenticationBloc>(context));
+    final _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    final _router = AppRouter(context, _authenticationBloc);
     return DynamicTheme(
       defaultBrightness: Brightness.light,
       data: (brightness) => buildTheme(brightness),
@@ -43,7 +62,7 @@ class MyApp extends StatelessWidget {
         return new MaterialApp(
           title: 'Temasek Polytechnic',
           theme: theme,
-          navigatorObservers: <NavigatorObserver>[observer],
+          navigatorObservers: <NavigatorObserver>[MyApp.observer],
           onGenerateRoute: _router.generateRoute,
         );
       },

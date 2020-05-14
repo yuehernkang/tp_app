@@ -15,7 +15,6 @@ import 'ft_courses_modules_page.dart';
 class CoursesDetail extends StatefulWidget {
   // final Course course;
   final DocumentSnapshot snapshot;
-
   CoursesDetail({Key key, this.snapshot}) : super(key: key);
 
   @override
@@ -48,6 +47,14 @@ class _CoursesDetailState extends State<CoursesDetail> {
   }
 
   @override
+  void initState() {
+    if(widget.snapshot == null){
+      
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<Widget> yearList = List<Widget>(3);
     yearList[0] = yearCard("Year 1", widget.snapshot.data['year1']);
@@ -60,35 +67,28 @@ class _CoursesDetailState extends State<CoursesDetail> {
         widget.snapshot.data['courseName'],
         style: Theme.of(context).primaryTextTheme.headline,
       )),
-      body: Column(
-        children: <Widget>[
-          CourseHeroImageWidget(
-            course: Course.fromSnapshot(widget.snapshot),
-          ),
-          CourseDetailWidget(
-              courseDetailText: widget.snapshot.data['courseDetails']),
-          PlatformButton(
-            child: PlatformText("View Course Modules"),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FtCoursesModulePage(
-                        snapshot: widget.snapshot,
-                      )));
-            },
-
-            // child: ButtonTheme(
-            //   minWidth: double.infinity,
-            //   child: MaterialButton(
-            //     child: Text("View Course Modules"),
-
-            //     color: Theme.of(context).cardColor,
-            //   ),
-            // ),
-          ),
-          ThreeYearWidget(widgetList: yearList)
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            CourseHeroImageWidget(
+              course: Course.fromSnapshot(widget.snapshot),
+            ),
+            CourseDetailWidget(
+                courseDetailText: widget.snapshot.data['courseDetails']),
+            PlatformButton(
+              child: PlatformText("View Course Modules"),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FtCoursesModulePage(
+                              snapshot: widget.snapshot,
+                            )));
+              },
+            ),
+            ThreeYearWidget(widgetList: yearList)
+          ],
+        ),
       ),
     );
   }
