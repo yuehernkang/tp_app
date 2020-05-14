@@ -61,6 +61,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }).catchError((e) {
         print(e);
       });
+      yield LoginState.success();
     } on PlatformException catch (e) {
       yield LoginState.failure();
       print(e.message);

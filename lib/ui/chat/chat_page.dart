@@ -1,36 +1,12 @@
-import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-import 'package:algolia/algolia.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dialogflow/dialogflow_v2.dart';
-import 'package:tp_app/models/course.dart';
-import 'package:tp_app/ui/app_bar/custom_app_bar.dart';
-import 'package:tp_app/ui/chat/chat_message.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tp_app/ui/chat/bloc/chatbot_bloc.dart';
+import 'package:tp_app/ui/chat/repository/DialogFlowRepository.dart';
 
-Future<List> dialogFlowChat(String message) async {
-  AuthGoogle authGoogle =
-      await AuthGoogle(fileJson: "assets/tp-app-aff2e-155c26bd1dad.json")
-          .build();
-  Dialogflow dialogflow =
-      Dialogflow(authGoogle: authGoogle, language: Language.english);
-  AIResponse response = await dialogflow.detectIntent(message);
-  return response.getListMessage();
-}
-
-Future<http.Response> warmUp(String title) {
-  return http.post(
-    'https://jsonplaceholder.typicode.com/albums',
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'title': title,
-    }),
-  );
-}
-
+import '../app_bar/custom_app_bar.dart';
+import 'chat_message.dart';
 
 class ChatPage extends StatefulWidget {
   static const String routeName = "/chatPage";
@@ -43,12 +19,8 @@ class ChatPageState extends State<ChatPage> {
   final TextEditingController textEditingController =
       new TextEditingController();
   final List<ChatMessage> _messages = <ChatMessage>[];
-
-  static Algolia algolia = Algolia.init(
-    applicationId: 'XVRTA8E4T1',
-    apiKey: '0fdf05b6dc737d0f893b0136174644ae',
-  );
-
+  static DialogFlowRepository _dialogFlowRepository = DialogFlowRepository();
+  ChatbotBloc _chatbotBloc = ChatbotBloc(_dialogFlowRepository);
 
   @override
   void initState() {
@@ -60,35 +32,19 @@ class ChatPageState extends State<ChatPage> {
     ChatMessage chatMessage = new ChatMessage(text: text, user: false);
     setState(() {
       _messages.insert(0, chatMessage);
-      // createAlbum(text).then((value) => receivedMessage(value));
-      // createAlbum(text).then((value) => print(value));
-      dialogFlowChat(text).then((value) => receivedMessage(value));
+      // _dialogFlowRepository
+      //     .dialogFlowChat(text)
+      //     .then((value) => receivedMessage(value));
     });
   }
 
-  void queryAgolia(String querydata) async {
-    AlgoliaQuery query =
-        algolia.instance.index('prod_courses').search(querydata);
-
-    // Get Result/Objects
-    AlgoliaQuerySnapshot snap = await query.getObjects();
-
-    // Checking if has [AlgoliaQuerySnapshot]
-    print('\n\n');
-    print('Hits count: ${snap.nbHits}');
-    print('${snap.hits.map((e) => print(e.data))}');
-  }
-
   void receivedMessage(List text) {
-    // print(text[0]['text']['text'][0]['courseName']);
-    // print(text[0]['text']['text'][0]);
-    // print(text[0]['text']['text'][0]['courseCode']);
-    String message = text[0]['text']['text'];
+    print(text[0]['text']['text'][0]);
+    String message = text[0]['text']['text'][0];
     print(message);
     bool card = false;
     var arr = List();
     List<Widget> buttons = List();
-    // String algoliaArr;
     try {
       String messageFromAlgolia =
           jsonDecode(text[0]['text']['text'][0])['objectID'];
@@ -118,6 +74,8 @@ class ChatPageState extends State<ChatPage> {
           color: Theme.of(context).cardColor,
           child: Text(f),
           onPressed: () {
+            _chatbotBloc.add(SendMessage(f));
+
             _handleSubmit(f);
           },
         ));
@@ -139,8 +97,7 @@ class ChatPageState extends State<ChatPage> {
             buttons: buttons,
             user: true,
             card: card,
-          ) // ChatMessage(text: json.decode(text)[0]['text']['text'][0])
-          );
+          ));
     });
   }
 
@@ -156,18 +113,24 @@ class ChatPageState extends State<ChatPage> {
                 decoration: new InputDecoration.collapsed(
                     hintText: "Enter your message"),
                 controller: textEditingController,
-                onSubmitted: _handleSubmit,
-                // onChanged: (text){
-                //   queryAgolia(text);
-                // },
+                // onSubmitted: _handleSubmit,
               ),
             ),
             new Container(
               margin: const EdgeInsets.symmetric(horizontal: 8.0),
               child: new IconButton(
-                icon: new Icon(Icons.send),
-                onPressed: () => _handleSubmit(textEditingController.text),
-              ),
+                  icon: new Icon(Icons.send),
+                  // onPressed: () => _handleSubmit(textEditingController.text),
+                  onPressed: () {
+                    ChatMessage chatMessage = new ChatMessage(
+                        text: textEditingController.text, user: false);
+
+                    setState(() {
+                      _messages.insert(0, chatMessage);
+                    });
+                    _chatbotBloc.add(SendMessage(textEditingController.text));
+                    textEditingController.clear();
+                  }),
             )
           ],
         ),
@@ -175,32 +138,51 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
+
+  @override
+  void dispose() {
+    _chatbotBloc.close;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: CustomAppBar(),
-      body: SafeArea(
-        bottom: true,
-        child: Column(
-          children: <Widget>[
-            new Flexible(
-              child: new ListView.builder(
-                padding: new EdgeInsets.all(8.0),
-                reverse: true,
-                itemBuilder: (_, int index) => _messages[index],
-                itemCount: _messages.length,
-              ),
+    return BlocProvider(
+      create: (context) => _chatbotBloc,
+      child: BlocListener(
+        bloc: _chatbotBloc,
+        listener: (BuildContext context, ChatbotState state) {
+          if (state is ChatbotSendMessage) {}
+          if (state is ChatbotMessageReceived) {
+            receivedMessage(state.message);
+          }
+        },
+        child: Scaffold(
+          appBar: CustomAppBar(),
+          body: SafeArea(
+            bottom: true,
+            child: Column(
+              children: <Widget>[
+                new Flexible(
+                  child: new ListView.builder(
+                    padding: new EdgeInsets.all(8.0),
+                    reverse: true,
+                    itemBuilder: (_, int index) => _messages[index],
+                    itemCount: _messages.length,
+                  ),
+                ),
+                new Divider(
+                  height: 1.0,
+                ),
+                new Container(
+                  decoration: new BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                  ),
+                  child: _textComposerWidget(),
+                )
+              ],
             ),
-            new Divider(
-              height: 1.0,
-            ),
-            new Container(
-              decoration: new BoxDecoration(
-                color: Theme.of(context).cardColor,
-              ),
-              child: _textComposerWidget(),
-            )
-          ],
+          ),
         ),
       ),
     );

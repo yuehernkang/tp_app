@@ -15,6 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Image.asset('assets/tplogo.png', height: kToolbarHeight),
       elevation: 0,
+
     );
   }
 
