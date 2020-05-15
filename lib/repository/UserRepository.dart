@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:developer' as developer;
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
@@ -35,17 +36,17 @@ class UserRepository {
     );
   }
 
-  Future<bool> checkUserDarkMode() async{
+  Future<bool> checkUserDarkMode() async {
     bool darkTheme;
-    getUserUid().then((String value) async{
-      await _firestore
-          .document('users/$value')
-          .get()
-          .then((DocumentSnapshot snapshot) {
-            print(snapshot.data);
-            darkTheme = snapshot.data['darkTheme'];
-      });
-    });
+    // getUserUid().then((String value) async{
+    //   await _firestore
+    //       .document('users/$value')
+    //       .get()
+    //       .then((DocumentSnapshot snapshot) {
+    //         print(snapshot.data);
+    //         darkTheme = snapshot.data['darkTheme'];
+    //   });
+    // });
     return Future.value(darkTheme);
   }
 
