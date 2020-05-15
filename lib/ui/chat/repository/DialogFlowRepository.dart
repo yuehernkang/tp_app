@@ -1,4 +1,5 @@
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'dart:developer' as developer;
 
 class DialogFlowRepository {
   Future<List> dialogFlowChat(String message) async {
@@ -8,6 +9,7 @@ class DialogFlowRepository {
     Dialogflow dialogflow =
         Dialogflow(authGoogle: authGoogle, language: Language.english);
     AIResponse response = await dialogflow.detectIntent(message);
+    developer.log(response.getMessage(), name: "DialogFlowRepsitory");
     return response.getListMessage();
   }
 }

@@ -34,14 +34,13 @@ class LoginOptionsPage extends StatelessWidget {
             }
             if (state.isSubmitting) {
               print("submitting");
-
               // Flushbar(
               //   message: "Submitting",
               //   duration: Duration(seconds: 2),
               // )..show(context);
-              // Scaffold.of(context).showSnackBar(SnackBar(
-              //   content: Text("Logging in"),
-              // ));
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text("Logging in"),
+              ));
             }
             if (state.isSuccess) {
               _authenticationBloc.add(LoggedIn());
@@ -67,27 +66,13 @@ class LoginOptionsPage extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 30),
                         child: Image.asset(
                           'assets/tplogo.png',
-                          width: 60,
-                          height: 60,
+                          // width: 60,
+                          height: 80,
                         ),
                       )
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          'Sign in to TTTTTTTT',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline
-                              .copyWith(color: Colors.blue),
-                        ),
-                      ),
-                    ],
-                  ),
+ 
                   Padding(
                     padding: const EdgeInsets.only(top: 160.0),
                     child: GoogleSignInButton(

@@ -16,11 +16,7 @@ class SearchRepository {
     AlgoliaQuerySnapshot snap = await query.getObjects();
 
     snap.hits.forEach((element)=> courseData.add(Course.fromJson(element.data)));
-    // Checking if has [AlgoliaQuerySnapshot]
     print('Hits count: ${snap.nbHits}');
-    // print('${snap.hits.map((e) => print(e.data))}');
-    // print('${snap.hits.for}');
-    // return Course.fromJson(snap.hits.asMap());
     return courseData;
   }
 }

@@ -24,6 +24,7 @@ class ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
+    _chatbotBloc.add(SendMessage("hello"));
     super.initState();
   }
 

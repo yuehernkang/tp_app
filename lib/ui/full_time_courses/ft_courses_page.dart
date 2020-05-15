@@ -22,14 +22,6 @@ class School {
 
 class FtCoursesPage extends StatelessWidget {
   static const String routeName = "/ftCoursesPage";
-
-  List<School> schools = [
-    School('Business', 'business'),
-    School('Design', 'design'),
-    School('Engineering', 'engineering'),
-    School('Applied Science', 'applied_science'),
-    School('Information Technology', 'it')
-  ];
   double width;
   PlatformTabController tabController;
   @override
@@ -67,6 +59,22 @@ class ContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget tabWidget(String school) {
+      return Container(
+        padding: EdgeInsets.only(left: 20.0, right: 20.0),
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: FTCourseList(
+                school: school,
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
     final tabItems = [
       Tab(
         text: "Business",
@@ -86,71 +94,11 @@ class ContentView extends StatelessWidget {
     ];
 
     final tabContent = [
-      Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: FTCourseList(
-                school: 'bus',
-              ),
-            )
-          ],
-        ),
-      ),
-      Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: FTCourseList(
-                school: 'eng',
-              ),
-            )
-          ],
-        ),
-      ),
-      Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: FTCourseList(
-                school: 'des',
-              ),
-            )
-          ],
-        ),
-      ),
-      Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: FTCourseList(
-                school: 'asc',
-              ),
-            )
-          ],
-        ),
-      ),
-      Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: FTCourseList(
-                school: 'iit',
-              ),
-            )
-          ],
-        ),
-      ),
+      tabWidget('bus'),
+      tabWidget('eng'),
+      tabWidget('des'),
+      tabWidget('asc'),
+      tabWidget('iit'),
     ];
     final SearchRepository searchRepository = SearchRepository();
     final FtCourseSearchBloc _ftCourseSearchBloc =
