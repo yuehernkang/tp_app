@@ -4,7 +4,7 @@ import 'dart:developer' as developer;
 class DialogFlowRepository {
   Future<List> dialogFlowChat(String message) async {
     AuthGoogle authGoogle =
-        await AuthGoogle(fileJson: "assets/tp-app-aff2e-155c26bd1dad.json")
+        await AuthGoogle(fileJson: "assets/tp-app-aff2e-firebase-adminsdk-v0eyn-a5f556b175.json")
             .build();
     Dialogflow dialogflow =
         Dialogflow(authGoogle: authGoogle, language: Language.english);

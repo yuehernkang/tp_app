@@ -144,7 +144,7 @@ class LoginPasswordScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        'TTTTTTTTTTTTTTT',
+                        'Temasek Polytechnic',
                         style: Theme.of(context)
                             .textTheme
                             .headline
