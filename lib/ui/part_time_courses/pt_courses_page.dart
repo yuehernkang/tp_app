@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:tp_app/ui/part_time_courses/pt_short_course/short_course_categories.dart';
 
 import '../app_bar/custom_app_bar.dart';
 import 'pt_skillsfuture/pt_skillsfuture_page.dart';
@@ -17,18 +18,12 @@ class _PartTimeCourseState extends State<PtCoursesPage> {
   @override
   Widget build(BuildContext context) {
     List<String> imageUrlList = List<String>();
-    imageUrlList.add(
-        "assets/images/part_time/banner-1.jpg");
-    imageUrlList.add(
-        "assets/images/part_time/banner-2.jpg");
-    imageUrlList.add(
-        "assets/images/part_time/banner-3.jpg");
-    imageUrlList.add(
-        "assets/images/part_time/banner-4.jpg");
-    imageUrlList.add(
-        "assets/images/part_time/banner-5.jpg");
-    imageUrlList.add(
-        "assets/images/part_time/banner-6.jpg");
+    imageUrlList.add("assets/images/part_time/banner-1.jpg");
+    imageUrlList.add("assets/images/part_time/banner-2.jpg");
+    imageUrlList.add("assets/images/part_time/banner-3.jpg");
+    imageUrlList.add("assets/images/part_time/banner-4.jpg");
+    imageUrlList.add("assets/images/part_time/banner-5.jpg");
+    imageUrlList.add("assets/images/part_time/banner-6.jpg");
     return Scaffold(
       appBar: CustomAppBar(),
       body: Column(
@@ -61,7 +56,12 @@ class PtCourseCardList extends StatelessWidget {
             "Our short industry relevant training programmes will prepare you for the Future Economy.",
         imageUrl:
             "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/courses-sfs.png"));
-
+    buttonList.add(PtCard(
+        title: "Short Courses",
+        buttonText: "Short Courses",
+        subtitle: "Short Courses",
+        imageUrl:
+            "https://www.tp.edu.sg/staticfiles/TP/microsites/cet/2020/images/courses-sfs.png"));
     buttonList.add(PtCard(
         title: "Work-Study Programmes",
         buttonText: "Work-Study Programmes",
@@ -171,6 +171,9 @@ class PtCardItem extends StatelessWidget {
       onTap: () {
         if (this.title == "SkillsFuture Series") {
           Navigator.pushNamed(context, PtSkillsFuture.routeName);
+        }
+        if (this.title == "Short Courses") {
+          Navigator.pushNamed(context, ShortCourseCategory.routeName);
         }
       },
       child: Card(

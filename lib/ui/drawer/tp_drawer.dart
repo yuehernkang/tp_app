@@ -29,7 +29,7 @@ class TpDrawer extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      Text('TTTTTTTTTTTTTTTTT'),
+                      Text('Temasek Polytechnic'),
                       Container(
                         child: Align(
                           alignment: Alignment.bottomLeft,

@@ -24,6 +24,7 @@ class ChatCourseCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: CachedNetworkImage(
+                        colorBlendMode: BlendMode.hardLight,
                         imageUrl: imageUrl,
                         placeholder: (image, ctx) => Container(
                             width: 800,

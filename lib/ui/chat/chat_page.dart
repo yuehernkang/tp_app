@@ -32,10 +32,14 @@ class ChatPageState extends State<ChatPage> {
     textEditingController.clear();
     ChatMessage chatMessage = new ChatMessage(text: text, user: false);
     setState(() {
+<<<<<<< Updated upstream
       _messages.insert(0, chatMessage);
       // _dialogFlowRepository
       //     .dialogFlowChat(text)
       //     .then((value) => receivedMessage(value));
+=======
+      _list.insert(0, chatMessage);
+>>>>>>> Stashed changes
     });
   }
 
