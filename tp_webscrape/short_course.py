@@ -33,7 +33,8 @@ class ShortCourse:
         self.course_url = course_url
 
     def __str__(self):
-        return '{course_name:' + self.course_name + ', course_overview: ' + self.course_overview + '}'
+        return '{course_name: %s\ncourse_overview: %s\ncourse_overview_html:%s}' % (
+            self.course_name, self.course_overview, self.course_outline)
 
 
 class AddShortCourseToFirebase:
@@ -56,6 +57,7 @@ class AddShortCourseToFirebase:
             else:
                 course_outline_html += unicode(tag)
         short_course = ShortCourse("Hello", course_overview, course_outline_html, self.short_course_url)
+        print(short_course)
         return short_course
 
 

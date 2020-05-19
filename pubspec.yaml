@@ -49,9 +49,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-dependency_overrides:
-  crypto: 2.1.4
-
 flutter:
   uses-material-design: true
   assets:
@@ -60,4 +57,4 @@ flutter:
     - assets/images/engineering/
     - assets/images/part_time/
     - assets/images/part_time/skillsfuture/
-    - assets/tp-app-aff2e-155c26bd1dad.json
+    - assets/tp-app-aff2e-ab98fc09bd7d.json

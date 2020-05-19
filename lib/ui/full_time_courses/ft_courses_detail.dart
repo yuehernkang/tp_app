@@ -1,27 +1,29 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expand_widget/expand_widget.dart';
-import 'package:expandable/expandable.dart';
 import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:tp_app/models/course.dart';
-import 'package:tp_app/utils/read_more_text.dart';
 
 import 'ft_courses_modules_page.dart';
 
 class CoursesDetail extends StatefulWidget {
   // final Course course;
   final DocumentSnapshot snapshot;
-  CoursesDetail({Key key, this.snapshot}) : super(key: key);
+  final String documentID;
+  CoursesDetail({Key key, this.snapshot, this.documentID}) : super(key: key);
 
   @override
   _CoursesDetailState createState() => _CoursesDetailState();
 }
 
 class _CoursesDetailState extends State<CoursesDetail> {
+  DocumentSnapshot snapshot;
+
+  final Firestore _firestore = Firestore();
   Widget yearCard(String title, String details) {
     return Container(
       margin: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -48,33 +50,83 @@ class _CoursesDetailState extends State<CoursesDetail> {
 
   @override
   void initState() {
-    if(widget.snapshot == null){
-      
-    }
     super.initState();
+  }
+
+  _getFirestore() async {
+    await _firestore
+        .collection('courses')
+        .document(widget.documentID)
+        .get()
+        .then(
+            (DocumentSnapshot documentSnapshot) => snapshot = documentSnapshot);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> yearList = List<Widget>(3);
-    yearList[0] = yearCard("Year 1", widget.snapshot.data['year1']);
-    yearList[1] = yearCard("Year 2", widget.snapshot.data['year2']);
-    yearList[2] = yearCard("Year 3", widget.snapshot.data['year3']);
+    if (widget.snapshot == null) {
+      print("snapshot is null");
+      FutureBuilder(
+        future: Firestore.instance
+            .collection("courses")
+            .document(widget.documentID)
+            .get(),
+        initialData: null,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          print(snapshot.data);
+          // List<Widget> yearList = List<Widget>(3);
+          // yearList[0] = yearCard("Year 1", snapshot.data['year1']);
+          // yearList[1] = yearCard("Year 2", snapshot.data['year2']);
+          // yearList[2] = yearCard("Year 3", snapshot.data['year3']);
+          return CourseDetailBody(
+            snapshot: snapshot.data,
+            // yearList: yearList,
+          );
+        },
+      );
+    } else {
+      print("snapshot is not null");
+      snapshot = widget.snapshot;
+    }
+    // List<Widget> yearList = List<Widget>(3);
+    // yearList[0] = yearCard("Year 1", snapshot.data['year1']);
+    // yearList[1] = yearCard("Year 2", snapshot.data['year2']);
+    // yearList[2] = yearCard("Year 3", snapshot.data['year3']);
 
+    return CourseDetailBody(
+      snapshot: snapshot,
+      // yearList: yearList
+    );
+  }
+}
+
+class CourseDetailBody extends StatelessWidget {
+  const CourseDetailBody({
+    Key key,
+    @required this.snapshot,
+    @required this.yearList,
+  }) : super(key: key);
+
+  final DocumentSnapshot snapshot;
+  final List<Widget> yearList;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        widget.snapshot.data['courseName'],
+        // snapshot.data['courseName'],
+        "helo",
         style: Theme.of(context).primaryTextTheme.headline,
       )),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             CourseHeroImageWidget(
-              course: Course.fromSnapshot(widget.snapshot),
+              course: Course.fromSnapshot(snapshot),
             ),
             CourseDetailWidget(
-                courseDetailText: widget.snapshot.data['courseDetails']),
+                courseDetailText: snapshot.data['courseDetails']),
             PlatformButton(
               child: PlatformText("View Course Modules"),
               onPressed: () {
@@ -82,11 +134,11 @@ class _CoursesDetailState extends State<CoursesDetail> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => FtCoursesModulePage(
-                              snapshot: widget.snapshot,
+                              snapshot: snapshot,
                             )));
               },
             ),
-            ThreeYearWidget(widgetList: yearList)
+            // ThreeYearWidget(widgetList: yearList)
           ],
         ),
       ),

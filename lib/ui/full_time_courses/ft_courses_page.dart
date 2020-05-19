@@ -52,11 +52,16 @@ class FtCoursesPage extends StatelessWidget {
   }
 }
 
-class ContentView extends StatelessWidget {
+class ContentView extends StatefulWidget {
   final index;
 
   const ContentView({Key key, this.index}) : super(key: key);
 
+  @override
+  _ContentViewState createState() => _ContentViewState();
+}
+
+class _ContentViewState extends State<ContentView> {
   @override
   Widget build(BuildContext context) {
     Widget tabWidget(String school) {
@@ -147,7 +152,13 @@ class ContentView extends StatelessWidget {
         child: Text("Hello"),
       )
     ];
-    return coursesList[this.index];
+    return coursesList[this.widget.index];
+  }
+
+  @override
+  void dispose() { 
+    
+    super.dispose();
   }
 }
 
@@ -160,8 +171,7 @@ class FTCourseList extends StatelessWidget {
       child: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
             .collection('courses')
-            .document(this.school)
-            .collection('courseList')
+            .where("school", isEqualTo: this.school)
             .orderBy('courseName')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -173,7 +183,9 @@ class FTCourseList extends StatelessWidget {
           }
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return new Text('Loading...');
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             default:
               print(snapshot.data.metadata.isFromCache
                   ? "NOT FROM NETWORK"
