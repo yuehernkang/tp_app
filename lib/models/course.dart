@@ -10,7 +10,7 @@ class Course{
       courseCode: json['courseCode'] as String,
       courseName: json['courseName'] as String,
       courseDetails: json['courseDetails'] as String,
-      image: json['image'] as String,
+      image: json['imageUrl'] as String,
       year1: json['year1'] as String,
       year2: json['year2'] as String,
       year3: json['year3'] as String

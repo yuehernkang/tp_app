@@ -6,7 +6,9 @@ import 'package:tp_app/ui/chat/bloc/chatbot_bloc.dart';
 import 'package:tp_app/ui/chat/repository/DialogFlowRepository.dart';
 
 import '../app_bar/custom_app_bar.dart';
+import 'aminated_listeg.dart';
 import 'chat_message.dart';
+import 'package:http/http.dart' as http;
 
 class ChatPage extends StatefulWidget {
   static const String routeName = "/chatPage";
@@ -16,6 +18,9 @@ class ChatPage extends StatefulWidget {
 }
 
 class ChatPageState extends State<ChatPage> {
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  ListModel<ChatMessage> _list;
+
   final TextEditingController textEditingController =
       new TextEditingController();
   final List<ChatMessage> _messages = <ChatMessage>[];
@@ -24,26 +29,37 @@ class ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    _chatbotBloc.add(SendMessage("hello"));
     super.initState();
+    warmUpFunction();
+    _chatbotBloc.add(SendMessage("hello"));
+
+    _list = ListModel<ChatMessage>(
+      listKey: _listKey,
+      initialItems: <ChatMessage>[
+        ChatMessage(
+          text: "hello",
+        )
+      ],
+    );
+  }
+
+  void warmUpFunction(){
+    http.get('https://us-central1-tp-app-aff2e.cloudfunctions.net/api/test');
   }
 
   void _handleSubmit(String text) {
     textEditingController.clear();
     ChatMessage chatMessage = new ChatMessage(text: text, user: false);
     setState(() {
-<<<<<<< Updated upstream
-      _messages.insert(0, chatMessage);
+      _list.insert(0, chatMessage);
       // _dialogFlowRepository
       //     .dialogFlowChat(text)
       //     .then((value) => receivedMessage(value));
-=======
-      _list.insert(0, chatMessage);
->>>>>>> Stashed changes
     });
   }
 
   void receivedMessage(List text) {
+    print(text);
     print(text[0]['text']['text'][0]);
     String message = text[0]['text']['text'][0];
     print(message);
@@ -55,13 +71,12 @@ class ChatPageState extends State<ChatPage> {
           jsonDecode(text[0]['text']['text'][0])['objectID'];
       if (messageFromAlgolia != null) {
         print("card detected");
-
         card = true;
       }
-    } catch (e) {
-      print("No card detected");
-      arr = null;
+    } on FormatException catch (e) {
       print(e);
+    } catch (error) {
+      print("No card detected");
     }
 
     try {
@@ -95,9 +110,10 @@ class ChatPageState extends State<ChatPage> {
     // print(text[1]['payload']['buttons']);
     setState(() {
       print(card);
-      _messages.insert(
+      _list.insert(
           0,
           ChatMessage(
+            context: context,
             text: message,
             buttons: buttons,
             user: true,
@@ -131,7 +147,7 @@ class ChatPageState extends State<ChatPage> {
                         text: textEditingController.text, user: false);
 
                     setState(() {
-                      _messages.insert(0, chatMessage);
+                      _list.insert(0, chatMessage);
                     });
                     _chatbotBloc.add(SendMessage(textEditingController.text));
                     textEditingController.clear();
@@ -143,10 +159,10 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
-
   @override
   void dispose() {
-    _chatbotBloc.close;
+    textEditingController.dispose();
+    _chatbotBloc.close();
     super.dispose();
   }
 
@@ -169,13 +185,22 @@ class ChatPageState extends State<ChatPage> {
             child: Column(
               children: <Widget>[
                 new Flexible(
-                  child: new ListView.builder(
-                    padding: new EdgeInsets.all(8.0),
-                    reverse: true,
-                    itemBuilder: (_, int index) => _messages[index],
-                    itemCount: _messages.length,
-                  ),
-                ),
+                    child: AnimatedList(
+                  reverse: true,
+                  key: _listKey,
+                  itemBuilder: (context, index, animation) {
+                    return SlideTransition(
+                      position: CurvedAnimation(
+                        curve: Curves.easeOut,
+                        parent: animation,
+                      ).drive((Tween<Offset>(
+                        begin: Offset(1, 0),
+                        end: Offset(0, 0),
+                      ))),
+                      child: _list[index],
+                    );
+                  },
+                )),
                 new Divider(
                   height: 1.0,
                 ),

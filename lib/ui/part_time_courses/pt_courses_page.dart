@@ -173,7 +173,7 @@ class PtCardItem extends StatelessWidget {
           Navigator.pushNamed(context, PtSkillsFuture.routeName);
         }
         if (this.title == "Short Courses") {
-          Navigator.pushNamed(context, ShortCourseCategory.routeName);
+          Navigator.pushNamed(context, ShortCourseCategoryPage.routeName);
         }
       },
       child: Card(

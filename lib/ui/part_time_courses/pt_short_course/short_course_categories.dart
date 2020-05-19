@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class ShortCourseCategory extends StatelessWidget {
+class ShortCourseCategory {
+  
+}
+
+class ShortCourseCategoryPage extends StatelessWidget {
   static const String routeName = "/ptShortCourses";
 
-  const ShortCourseCategory({Key key}) : super(key: key);
+  const ShortCourseCategoryPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

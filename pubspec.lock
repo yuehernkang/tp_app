@@ -121,7 +121,7 @@ packages:
     source: hosted
     version: "2.1.1"
   crypto:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: crypto
       url: "https://pub.dartlang.org"

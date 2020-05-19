@@ -45,8 +45,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginWithPassword());
       case SettingsPage.routeName:
         return MaterialPageRoute(builder: (_) => SettingsPage());
-      case ShortCourseCategory.routeName:
-        return MaterialPageRoute(builder: (_) => ShortCourseCategory());
+      case ShortCourseCategoryPage.routeName:
+        return MaterialPageRoute(builder: (_) => ShortCourseCategoryPage());
     }
   }
 
