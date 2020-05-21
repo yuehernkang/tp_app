@@ -22,8 +22,6 @@ class CoursesDetail extends StatefulWidget {
 
 class _CoursesDetailState extends State<CoursesDetail> {
   DocumentSnapshot snapshot;
-
-  final Firestore _firestore = Firestore();
   Widget yearCard(String title, String details) {
     return Container(
       margin: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -53,49 +51,39 @@ class _CoursesDetailState extends State<CoursesDetail> {
     super.initState();
   }
 
-  _getFirestore() async {
-    await _firestore
-        .collection('courses')
-        .document(widget.documentID)
-        .get()
-        .then(
-            (DocumentSnapshot documentSnapshot) => snapshot = documentSnapshot);
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.snapshot == null) {
       print("snapshot is null");
-      FutureBuilder(
+      return FutureBuilder(
         future: Firestore.instance
             .collection("courses")
             .document(widget.documentID)
             .get(),
         initialData: null,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          print(snapshot.data);
-          // List<Widget> yearList = List<Widget>(3);
-          // yearList[0] = yearCard("Year 1", snapshot.data['year1']);
-          // yearList[1] = yearCard("Year 2", snapshot.data['year2']);
-          // yearList[2] = yearCard("Year 3", snapshot.data['year3']);
+        builder: (BuildContext context, AsyncSnapshot dsnapshot) {
+          if (!dsnapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          List<Widget> yearList = List<Widget>(3);
+          yearList[0] = yearCard("Year 1", dsnapshot.data['year1']);
+          yearList[1] = yearCard("Year 2", dsnapshot.data['year2']);
+          yearList[2] = yearCard("Year 3", dsnapshot.data['year3']);
           return CourseDetailBody(
-            snapshot: snapshot.data,
-            // yearList: yearList,
+            snapshot: dsnapshot.data,
+            yearList: yearList,
           );
         },
       );
-    } else {
-      print("snapshot is not null");
-      snapshot = widget.snapshot;
     }
-    // List<Widget> yearList = List<Widget>(3);
-    // yearList[0] = yearCard("Year 1", snapshot.data['year1']);
-    // yearList[1] = yearCard("Year 2", snapshot.data['year2']);
-    // yearList[2] = yearCard("Year 3", snapshot.data['year3']);
-
+    print("snapshot is not null");
+    List<Widget> yearList = List<Widget>(3);
+    yearList[0] = yearCard("Year 1", widget.snapshot.data['year1']);
+    yearList[1] = yearCard("Year 2", widget.snapshot.data['year2']);
+    yearList[2] = yearCard("Year 3", widget.snapshot.data['year3']);
     return CourseDetailBody(
-      snapshot: snapshot,
-      // yearList: yearList
+      snapshot: widget.snapshot,
+      yearList: yearList
     );
   }
 }
@@ -115,8 +103,7 @@ class CourseDetailBody extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        // snapshot.data['courseName'],
-        "helo",
+        snapshot.data['courseName'],
         style: Theme.of(context).primaryTextTheme.headline,
       )),
       body: SingleChildScrollView(
@@ -138,7 +125,7 @@ class CourseDetailBody extends StatelessWidget {
                             )));
               },
             ),
-            // ThreeYearWidget(widgetList: yearList)
+            ThreeYearWidget(widgetList: yearList)
           ],
         ),
       ),

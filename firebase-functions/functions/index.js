@@ -9,7 +9,7 @@ app.get('/test', (request, response) => {
 
 app.post('/dialogFlowFirebaseFulfillment', (request, response) => {
     const algoliasearch = require('algoliasearch');
-    const client = algoliasearch('XVRTA8E4T1', '0aea7af85bc7d1e6d2b09586ff31333e');
+    const client = algoliasearch('XVRTA8E4T1', '0fdf05b6dc737d0f893b0136174644ae');
     const index = client.initIndex('prod_courses');
     const agent = new WebhookClient({ request, response });
 

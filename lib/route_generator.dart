@@ -10,6 +10,7 @@ import 'ui/full_time_courses/ft_courses_page.dart';
 import 'ui/login_page/login_with_password.dart';
 import 'ui/part_time_courses/pt_courses_page.dart';
 import 'ui/part_time_courses/pt_short_course/short_course_categories.dart';
+import 'ui/part_time_courses/pt_short_course/short_course_detail.dart';
 import 'ui/part_time_courses/pt_skillsfuture/pt_skillsfuture_page.dart';
 import 'ui/scholarships/scholarship_page.dart';
 
@@ -47,6 +48,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => SettingsPage());
       case ShortCourseCategoryPage.routeName:
         return MaterialPageRoute(builder: (_) => ShortCourseCategoryPage());
+      case ShortCourseDetailPage.routeName:
+        return MaterialPageRoute(builder: (_) => ShortCourseDetailPage());
     }
   }
 
