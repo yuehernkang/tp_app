@@ -1,12 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class ShortCourseCategory {
-  
-}
+class ShortCourseCategory {}
 
 class ShortCourseCategoryPage extends StatelessWidget {
-  static const String routeName = "/ptShortCourses";
+  static const String routeName = "/ptShortCourseCategory";
 
   const ShortCourseCategoryPage({Key key}) : super(key: key);
 
@@ -56,24 +55,38 @@ class PtShortCourseItem extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Card(
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         color: Theme.of(context).accentColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: <Widget>[
-            ListTile(
-              title: Text(
-                this.title,
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: CachedNetworkImage(
+                imageUrl:
+                    "https://www.tp.edu.sg/staticfiles/TP/images/Centres/tsa/short_courses/SC-Business-&-Finance.jpg",
+                fit: BoxFit.cover,
               ),
-              subtitle: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    this.title,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
-                ],
-              ),
-            )
+                  subtitle: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

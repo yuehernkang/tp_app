@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tp_app/ui/chat/bloc/chatbot_bloc.dart';
 import 'package:tp_app/ui/chat/repository/DialogFlowRepository.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../app_bar/custom_app_bar.dart';
 import 'aminated_listeg.dart';
 import 'chat_message.dart';
 import 'package:http/http.dart' as http;
+
+import 'models/chat_button.dart';
 
 class ChatPage extends StatefulWidget {
   static const String routeName = "/chatPage";
@@ -43,7 +46,7 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
-  void warmUpFunction(){
+  void warmUpFunction() {
     http.get('https://us-central1-tp-app-aff2e.cloudfunctions.net/api/test');
   }
 
@@ -89,14 +92,21 @@ class ChatPageState extends State<ChatPage> {
     }
     if (arr != null) {
       print("array not null");
+
       arr.forEach((f) {
+        ChatButton _chatButton = ChatButton.fromJson(f);
+        print(f);
         buttons.add(RaisedButton(
           color: Theme.of(context).cardColor,
-          child: Text(f),
+          child: Text(_chatButton.buttonText),
           onPressed: () {
-            _chatbotBloc.add(SendMessage(f));
-
-            _handleSubmit(f);
+            if (_chatButton.buttonType == "LinkMessage") {
+              launch(_chatButton.buttonValue);
+            }
+            if (_chatButton.buttonType == "ChatMessage") {
+              _chatbotBloc.add(SendMessage(_chatButton.buttonText));
+              _handleSubmit(_chatButton.buttonText);
+            }
           },
         ));
       });

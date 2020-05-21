@@ -13,7 +13,6 @@ class ChatMessage extends StatelessWidget {
   final String text;
   final List buttons;
   final bool user;
-  //for opotional params we use curly braces
   ChatMessage({this.text, this.buttons, this.user, this.card, this.context});
   String _name = "You";
 
@@ -103,10 +102,10 @@ class ChatMessage extends StatelessWidget {
           this.user ? CrossAxisAlignment.start : CrossAxisAlignment.end,
       children: <Widget>[
         new Container(
-          margin: EdgeInsets.only(right: 16.0),
+          margin: EdgeInsets.only(left: 8.0, right: 8.0),
           child: new CircleAvatar(
             backgroundColor: Theme.of(context).accentColor,
-            child: new Text("yes"),
+            child: new Text("TP"),
           ),
         ),
         new Column(
@@ -165,10 +164,10 @@ class ChatMessage extends StatelessWidget {
           ],
         ),
         new Container(
-          margin: EdgeInsets.only(left: 16.0),
+          margin: EdgeInsets.only(left: 8.0, right: 8.0),
           child: new CircleAvatar(
             backgroundColor: Theme.of(context).accentColor,
-            child: new Text("yes"),
+            child: new Text("You"),
           ),
         ),
       ],
