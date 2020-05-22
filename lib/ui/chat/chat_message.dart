@@ -14,7 +14,6 @@ class ChatMessage extends StatelessWidget {
   final List buttons;
   final bool user;
   ChatMessage({this.text, this.buttons, this.user, this.card, this.context});
-  String _name = "You";
 
   Widget _buildButtons(List buttons) {
     if (buttons != null) {
@@ -113,7 +112,7 @@ class ChatMessage extends StatelessWidget {
               this.user ? CrossAxisAlignment.start : CrossAxisAlignment.end,
           children: <Widget>[
             new Text("Temasek Polytechnic",
-                style: Theme.of(context).textTheme.subhead),
+                style: TextStyle(fontWeight: FontWeight.bold)),
             new Container(
               alignment:
                   this.user ? Alignment.centerLeft : Alignment.centerRight,
@@ -146,7 +145,7 @@ class ChatMessage extends StatelessWidget {
           crossAxisAlignment:
               this.user ? CrossAxisAlignment.start : CrossAxisAlignment.end,
           children: <Widget>[
-            new Text(_name, style: Theme.of(context).textTheme.subhead),
+            new Text("You", style:TextStyle(fontWeight: FontWeight.bold)),
             new Container(
               alignment:
                   this.user ? Alignment.centerLeft : Alignment.centerRight,

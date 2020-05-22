@@ -13,11 +13,11 @@ class FtCoursesModulePage extends StatelessWidget {
         appBar: AppBar(
           title: Text("Course Modules"),
         ),
-        body: StreamBuilder(
-            stream: snapshot.reference
+        body: FutureBuilder(
+            future: snapshot.reference
                 .collection('modules')
                 .orderBy('modulePosition')
-                .snapshots(),
+                .getDocuments(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if(snapshot.data == null) return Center(

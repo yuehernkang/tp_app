@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:tp_app/ui/part_time_courses/pt_short_course/short_course_detail.dart';
 
-class ShortCourseCategory {}
 
 class ShortCourseCategoryPage extends StatelessWidget {
   static const String routeName = "/ptShortCourseCategory";
@@ -53,7 +53,9 @@ class PtShortCourseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, ShortCourseDetailPage.routeName, arguments: this.title);
+      },
       child: Card(
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -76,13 +78,6 @@ class PtShortCourseItem extends StatelessWidget {
                     this.title,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                    ],
                   ),
                 )
               ],
