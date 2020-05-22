@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:like_button/like_button.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
@@ -156,29 +157,38 @@ class _ContentViewState extends State<ContentView> {
   }
 
   @override
-  void dispose() { 
-    
+  void dispose() {
     super.dispose();
   }
 }
 
-class FTCourseList extends StatelessWidget {
+class FTCourseList extends StatefulWidget{
   final String school;
   FTCourseList({this.school});
+
+  @override
+  _FTCourseListState createState() => _FTCourseListState();
+}
+
+class _FTCourseListState extends State<FTCourseList> with AutomaticKeepAliveClientMixin  {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Material(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance
+      child: FutureBuilder<QuerySnapshot>(
+        future: Firestore.instance
             .collection('courses')
-            .where("school", isEqualTo: this.school)
+            .where("school", isEqualTo: this.widget.school)
             .orderBy('courseName')
-            .snapshots(),
+            .getDocuments(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitFadingFour(
+                color: Colors.white,
+                size: 50.0,
+              ),
             );
           }
           switch (snapshot.connectionState) {
@@ -224,6 +234,9 @@ class FTCourseList extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class FTCourseCard extends StatelessWidget {

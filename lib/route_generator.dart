@@ -49,7 +49,7 @@ class AppRouter {
       case ShortCourseCategoryPage.routeName:
         return MaterialPageRoute(builder: (_) => ShortCourseCategoryPage());
       case ShortCourseDetailPage.routeName:
-        return MaterialPageRoute(builder: (_) => ShortCourseDetailPage());
+        return MaterialPageRoute(builder: (_) => ShortCourseDetailPage(categoryName: args));
     }
   }
 

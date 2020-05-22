@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/fa_icon.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tp_app/ui/chat/bloc/chatbot_bloc.dart';
+import 'package:tp_app/ui/chat/empty.dart';
 import 'package:tp_app/ui/chat/repository/DialogFlowRepository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -98,7 +101,14 @@ class ChatPageState extends State<ChatPage> {
         print(f);
         buttons.add(RaisedButton(
           color: Theme.of(context).cardColor,
-          child: Text(_chatButton.buttonText),
+          child: Row(
+            children: [
+              Text(_chatButton.buttonText),
+              _chatButton.buttonType == "LinkMessage"
+                  ? FaIcon(FontAwesomeIcons.externalLinkAlt)
+                  : Empty()
+            ],
+          ),
           onPressed: () {
             if (_chatButton.buttonType == "LinkMessage") {
               launch(_chatButton.buttonValue);

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../app_bar/custom_app_bar.dart';
@@ -36,7 +37,10 @@ class _PtSkillsFutureState extends State<PtSkillsFuture> {
         future: loadCourse(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return CircularProgressIndicator();
+            return new SpinKitFadingFour(
+              color: Colors.white,
+              size: 50.0,
+            );
           } else {
             return PtSkillsFutureCourseList(courses: snapshot.data);
           }
