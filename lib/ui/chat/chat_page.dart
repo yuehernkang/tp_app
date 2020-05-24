@@ -23,7 +23,7 @@ class ChatPage extends StatefulWidget {
   State createState() => new ChatPageState();
 }
 
-class ChatPageState extends State<ChatPage> {
+class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin{
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   ListModel<ChatMessage> _list;
 
@@ -237,4 +237,8 @@ class ChatPageState extends State<ChatPage> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

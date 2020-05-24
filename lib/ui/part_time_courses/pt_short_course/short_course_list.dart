@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tp_app/ui/widgets/loading_widget.dart';
 
-class ShortCourseDetailPage extends StatelessWidget {
+class ShortCourseListPage extends StatelessWidget {
   static const String routeName = "/ptShortCourseDetail";
   final String categoryName;
 
-  const ShortCourseDetailPage({Key key, this.categoryName}) : super(key: key);
+  const ShortCourseListPage({Key key, this.categoryName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +28,11 @@ class ShortCourseList extends StatelessWidget {
           .collection("pt_short_courses")
           .where("category_name", isEqualTo: this.categoryName)
           .getDocuments(),
-      initialData: null,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return new SpinKitFadingFour(
-              color: Colors.white,
-              size: 50.0,
-            );
+            return new LoadingWidget();
           default:
             return new ListView(
               children:

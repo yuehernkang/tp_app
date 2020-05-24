@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:tp_app/ui/part_time_courses/pt_skillsfuture/models/pt_skillsfuture_module_list.dart';
+
+import '../widgets/loading_widget.dart';
 
 class FtCoursesModulePage extends StatelessWidget {
   final DocumentSnapshot snapshot;
@@ -20,11 +21,10 @@ class FtCoursesModulePage extends StatelessWidget {
                 .getDocuments(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if(snapshot.data == null) return Center(
-                    child: CircularProgressIndicator(),
-                  );
-
-                  final List<DocumentSnapshot> ftFundamentalModules = snapshot
+              if (!snapshot.hasData) {
+                return LoadingWidget();
+              }
+              final List<DocumentSnapshot> ftFundamentalModules = snapshot
                   .data.documents
                   .where((DocumentSnapshot documentSnapshot) =>
                       documentSnapshot['moduleGroup'] == 'fundamental_modules')
