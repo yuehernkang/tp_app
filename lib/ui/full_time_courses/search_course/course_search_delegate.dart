@@ -61,10 +61,10 @@ class CourseSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    print(query);
-    final debouncer = Debouncer<String>(Duration(milliseconds: 1000));
+    final debouncer = Debouncer<String>(Duration(milliseconds: 1500));
     debouncer.value = query;
     debouncer.values.listen((event) {
+      print(event);
       this.ftCourseSearchBloc.add(FtCourseSearchEvent(event));
     });
     return BlocBuilder(

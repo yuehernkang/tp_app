@@ -12,7 +12,6 @@ class SearchRepository {
     AlgoliaQuery query =
         algolia.instance.index('prod_courses').search(querydata);
 
-    // Get Result/Objects
     AlgoliaQuerySnapshot snap = await query.getObjects();
 
     snap.hits.forEach((element)=> courseData.add(Course.fromJson(element.data)));

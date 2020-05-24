@@ -46,8 +46,9 @@ class GetShortCourseData:
         soup = BeautifulSoup(page.content, 'html.parser')
         # who_should_attend = soup.find_all("div", {"id": "tab1"})[0].find(
         #     string="Who Should Attend").parent.next_sibling.next_sibling.get_text()
+
         who_should_attend = soup.find_all("div", {"id": "tab1"})[0]\
-            .find(text=re.compile(r'who should attend', re.IGNORECASE))\
+            .find(text=re.split(r'who should attend', r'targeted audience', flags=re.IGNORECASE))\
             .next_element.next_element
         course_name = soup.find_all("div", {"id": "tab1"})[0].find("h2").getText()
         course_overview = soup.find_all("div", {"id": "tab1"})[0].p.getText()
@@ -103,31 +104,32 @@ biz_and_finance = [
 
 
 # WORKING FOR FIRST ROW
-for sibling in first_row:
-    tp_link = "https://www.tp.edu.sg"
+# for sibling in first_row:
+#     tp_link = "https://www.tp.edu.sg"
+#     list_of_courses = []
+#     category_name = sibling.h2.getText()
+#     for courses in sibling.find_all("li"):
+#         course_name = courses.a.get_text()
+#         short_course_url = tp_link + courses.a['href']
+#         list_of_courses.append(courses.a.get_text())
+#         f = GetShortCourseData(category_name, course_name, short_course_url)
+#         AddShortCourseToFirebase(f.extract_data(), category_name.strip()).add_short_course_to_firebase()
+#         print(f.extract_data())
+#
+#     courseObject = ShortCourseCategory(category_name, list_of_courses)
+
+# WORKING FOR SECOND ROW
+for sibling in second_row:
     list_of_courses = []
+    tp_link = "https://www.tp.edu.sg"
     category_name = sibling.h2.getText()
     for courses in sibling.find_all("li"):
         course_name = courses.a.get_text()
         short_course_url = tp_link + courses.a['href']
         list_of_courses.append(courses.a.get_text())
         f = GetShortCourseData(category_name, course_name, short_course_url)
-        AddShortCourseToFirebase(f.extract_data(), category_name.strip()).add_short_course_to_firebase()
+        # AddShortCourseToFirebase(f.extract_data(), category_name.strip()).add_short_course_to_firebase()
         print(f.extract_data())
-
-    courseObject = ShortCourseCategory(category_name, list_of_courses)
-    # print(courseObject)
-
-# WORKING FOR SECOND ROW
-# for sibling in second_row:
-#     list_of_courses = []
-#     category_title = sibling.h2.getText()
-#     for courses in sibling.find_all("li"):
-#         courses_name = courses.a.get_text()
-#         courses_url = 'http://www.tp.edu.sg' + courses.a['href']
-#         page = requests.get(courses_url)
-#         soup = BeautifulSoup(page.content, 'html.parser')
-#         print(soup.find_all("div", {"class": "tab-content"}))
 
 # #WORKING FOR THIRD ROW
 # for sibling in third_row:

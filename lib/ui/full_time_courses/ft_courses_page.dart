@@ -1,19 +1,20 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:like_button/like_button.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
-import 'package:tp_app/ui/full_time_courses/search_course/bloc/ft_course_search_bloc.dart';
-import 'package:tp_app/ui/full_time_courses/search_course/repository/search_repository.dart';
 
 import '../../models/course.dart';
+import '../widgets/loading_widget.dart';
 import 'ft_courses_detail.dart';
+import 'search_course/bloc/ft_course_search_bloc.dart';
 import 'search_course/course_search_delegate.dart';
+import 'search_course/repository/search_repository.dart';
 
 class School {
   School(this.displayName, this.value);
@@ -162,7 +163,7 @@ class _ContentViewState extends State<ContentView> {
   }
 }
 
-class FTCourseList extends StatefulWidget{
+class FTCourseList extends StatefulWidget {
   final String school;
   FTCourseList({this.school});
 
@@ -170,7 +171,8 @@ class FTCourseList extends StatefulWidget{
   _FTCourseListState createState() => _FTCourseListState();
 }
 
-class _FTCourseListState extends State<FTCourseList> with AutomaticKeepAliveClientMixin  {
+class _FTCourseListState extends State<FTCourseList>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -184,18 +186,11 @@ class _FTCourseListState extends State<FTCourseList> with AutomaticKeepAliveClie
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
-            return Center(
-              child: SpinKitFadingFour(
-                color: Colors.white,
-                size: 50.0,
-              ),
-            );
+            return LoadingWidget();
           }
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return LoadingWidget();
             default:
               print(snapshot.data.metadata.isFromCache
                   ? "NOT FROM NETWORK"
@@ -220,7 +215,7 @@ class _FTCourseListState extends State<FTCourseList> with AutomaticKeepAliveClie
                                                   .data.documents[index],
                                             )));
                               },
-                              child: FTCourseCard(
+                              child: FTCourseCard3(
                                   course: Course.fromSnapshot(
                                       snapshot.data.documents[index])),
                             ),
@@ -283,8 +278,9 @@ class FTCourseCard extends StatelessWidget {
               Flexible(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 2.0),
-                  child: Text(
+                  child: AutoSizeText(
                     this.course.courseName,
+                    maxLines: 1,
                     style: Theme.of(context).primaryTextTheme.headline,
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
@@ -350,6 +346,77 @@ class FTCourseCard2 extends StatelessWidget {
             this.course.courseName,
             style: TextStyle(fontSize: 28),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class FTCourseCard3 extends StatelessWidget {
+  final Course course;
+  const FTCourseCard3({Key key, this.course}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Stack(
+        children: <Widget>[
+          Hero(
+            tag: this.course.courseCode,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                child: Container(
+                  child: ShaderMask(
+                    shaderCallback: (rect) {
+                      return LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.black, Colors.transparent],
+                      ).createShader(
+                          Rect.fromLTRB(0, 0, rect.width, rect.height));
+                    },
+                    blendMode: BlendMode.dstIn,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: CachedNetworkImage(
+                        imageUrl: this.course.image,
+                        placeholder: (image, ctx) => Container(
+                            child: AspectRatio(
+                          aspectRatio: 1900 / 783,
+                          child: BlurHash(hash: "L5H2EC=PM+yV0g-mq.wG9c010J}I"),
+                        )),
+                      ),
+                      // child: Image.asset(
+                      //     this.localImagePath),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              SizedBox(
+                height:128,
+              ),
+              Center(
+                child: AutoSizeText(
+                  this.course.courseName,
+                  stepGranularity: 1,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 27, fontWeight: FontWeight.w600, color:Theme.of(context).accentColor),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
