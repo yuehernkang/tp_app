@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
+import 'package:tp_app/utils/validators.dart';
 
 import '../../../repository/UserRepository.dart';
 import 'login_event.dart';
@@ -41,9 +42,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> _mapEmailChangedToState(String email) async* {
-    // yield currentState.update(
-    //   isEmailValid: Validators.isValidEmail(email),
-    // );
+    yield state.update(
+      isEmailValid: Validators.isValidEmail(email),
+    );
   }
 
   Stream<LoginState> _mapLoginWithFacebookPressedToState() async* {

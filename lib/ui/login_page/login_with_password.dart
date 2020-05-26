@@ -24,7 +24,15 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   final TextEditingController _passwordController = TextEditingController();
 
   final _passwordFieldKey = GlobalKey<FormFieldState<String>>();
-    final LoginBloc _loginBloc = LoginBloc(userRepository: UserRepository());
+  final LoginBloc _loginBloc = LoginBloc(userRepository: UserRepository());
+  
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +85,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                   passwordFieldKey: _passwordFieldKey,
                   loginBloc: BlocProvider.of<LoginBloc>(context),
                   authenticationBloc: _authenticationBloc,
+                  state: state
                 );
               },
             ),
@@ -104,16 +113,19 @@ class LoginPasswordScreen extends StatelessWidget {
       @required TextEditingController passwordController,
       @required GlobalKey<FormFieldState<String>> passwordFieldKey,
       @required LoginBloc loginBloc,
-      @required AuthenticationBloc authenticationBloc})
+      @required AuthenticationBloc authenticationBloc,
+      LoginState state})
       : _emailController = emailController,
         _passwordController = passwordController,
         _passwordFieldKey = passwordFieldKey,
-        _loginBloc = loginBloc;
+        _loginBloc = loginBloc,
+        _state = state;
 
   final TextEditingController _emailController;
   final TextEditingController _passwordController;
   final GlobalKey<FormFieldState<String>> _passwordFieldKey;
   final LoginBloc _loginBloc;
+  final LoginState _state;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,6 +173,9 @@ class LoginPasswordScreen extends StatelessWidget {
                         icon: Icon(Icons.email),
                         hintText: 'Enter your email',
                         labelText: 'Email'),
+                    validator: (_) {
+                      return !_state.isEmailValid ? 'Invalid Email' : null;
+                    },
                   ),
                 ),
                 Padding(
