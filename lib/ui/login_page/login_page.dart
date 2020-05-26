@@ -10,6 +10,7 @@ import '../../repository/authentication_bloc/authentication_bloc.dart';
 import 'bloc/login_event.dart';
 import 'login_with_password.dart';
 import 'bloc/login_state.dart';
+import 'login_with_password_page.dart';
 
 class LoginOptionsPage extends StatelessWidget {
   const LoginOptionsPage({Key key, this.userRepository});
@@ -102,7 +103,7 @@ class LoginOptionsPage extends StatelessWidget {
                                       value:
                                           BlocProvider.of<AuthenticationBloc>(
                                               context),
-                                      child: LoginWithPassword(),
+                                      child: LoginWithPasswordScreen(userRepository: UserRepository(),),
                                     )));
                       },
                       buttonPadding: 8.0,

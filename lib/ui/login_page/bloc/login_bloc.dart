@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:tp_app/utils/validators.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../repository/UserRepository.dart';
 import 'login_event.dart';
@@ -21,12 +22,43 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   LoginState get initialState => LoginState.empty();
 
+  // @override
+  // Stream<Transition<LoginEvent, LoginState>> transformEvents(
+  //     Stream<LoginEvent> events, transitionFn) {
+  //   final nonDebounceStream = events.where((event) {
+  //     return (event is! EmailChanged && event is! PasswordChanged);
+  //   });
+  //   final debounceStream = events.where((event) {
+  //     return (event is EmailChanged || event is PasswordChanged);
+  //   }).debounceTime(Duration(milliseconds: 300));
+  //   return super.transformEvents(
+  //     nonDebounceStream.mergeWith([debounceStream]),
+  //     transitionFn,
+  //   );
+  // }
+  
+   @override
+  Stream<Transition<LoginEvent, LoginState>> transformEvents(
+      Stream<LoginEvent> events, transitionFn) {
+    final defferedEvents = events
+        .where((e) => e is EmailChanged || e is PasswordChanged)
+        .debounceTime(const Duration(milliseconds: 500))
+        .distinct()
+        .switchMap(transitionFn);
+    final forwardedEvents = events
+        .where((e) => e is! EmailChanged && e is! PasswordChanged)
+        .asyncExpand(transitionFn);
+    return forwardedEvents.mergeWith([defferedEvents]);
+  }
+
   @override
   Stream<LoginState> mapEventToState(
-    LoginEvent event,
+    LoginEvent event
   ) async* {
     if (event is EmailChanged) {
-      _mapEmailChangedToState(event.email);
+      yield* _mapEmailChangedToState(event.email);
+    } else if (event is PasswordChanged) {
+      yield* _mapPasswordChangedToState(event.password);
     }
     if (event is LoginWithGooglePressed) {
       yield* _mapLoginWithGooglePressedToState();
@@ -44,6 +76,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> _mapEmailChangedToState(String email) async* {
     yield state.update(
       isEmailValid: Validators.isValidEmail(email),
+    );
+  }
+
+  Stream<LoginState> _mapPasswordChangedToState(String password) async* {
+    yield state.update(
+      isPasswordValid: Validators.isValidPassword(password),
     );
   }
 

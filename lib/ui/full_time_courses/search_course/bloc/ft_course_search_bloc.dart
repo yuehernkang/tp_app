@@ -13,6 +13,8 @@ class FtCourseSearchBloc
   final SearchRepository searchRepository;
 
   FtCourseSearchBloc(this.searchRepository);
+
+  
   @override
   FtCourseSearchState get initialState => FtCourseSearchState.initial();
 
