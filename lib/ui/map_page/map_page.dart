@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:google_map_polyutil/google_map_polyutil.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
@@ -33,6 +34,8 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = {};
+  Set<Polygon> _polygons = {};
+  List<LatLng> polygonLatlngs = List<LatLng>();
   BitmapDescriptor myIcon;
   Location location;
   String googleAPIKey = 'AIzaSyCo35OuMWo6FPVIRVxAaQK0GamMhK7U4Og';
@@ -40,18 +43,56 @@ class _MapPageState extends State<MapPage> {
   LocationData currentLocation;
   LocationData destinationLocation;
 
+  //1.341251, 103.934042
+  //1.349025, 103.927803
+  //1.345485, 103.935755
+  //1.346361, 103.928061
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> checkPermissions(){
+    location.hasPermission().then((value){
+      if(value == PermissionStatus.denied){
+        print("permission denied");
+        location.requestPermission();
+      }
+    });
+  }
+
+
+  Future<bool> checkIfInTP(LatLng currentLocation) async {
+    return await GoogleMapPolyUtil.containsLocation(
+        polygon: polygonLatlngs, point:currentLocation);
+  }
+
   @override
   void initState() {
     super.initState();
     location = new Location();
     polylinePoints = PolylinePoints();
+    checkPermissions();
     location.onLocationChanged.listen((LocationData cLoc) {
-      print(cLoc.latitude);
+      checkIfInTP(LatLng(cLoc.latitude, cLoc.longitude)).then((value) => print(value));
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    polygonLatlngs.add(LatLng(1.341251, 103.934042));
+    polygonLatlngs.add(LatLng(1.345485, 103.935755));
+
+    polygonLatlngs.add(LatLng(1.349025, 103.927803));
+    polygonLatlngs.add(LatLng(1.346361, 103.928061));
+
+    _polygons.add(Polygon(
+        polygonId: PolygonId("TP"),
+        points: polygonLatlngs,
+        strokeWidth: 2,
+        strokeColor: Colors.yellow,
+        fillColor: Colors.yellow.withOpacity(0.01)));
+
     _markers.add(Marker(
       markerId: MarkerId("subway"),
       position: LatLng(1.344928, 103.932481),
@@ -79,11 +120,13 @@ class _MapPageState extends State<MapPage> {
       ),
       icon: myIcon,
     ));
+
     return new Scaffold(
       body: GoogleMap(
         compassEnabled: true,
         buildingsEnabled: true,
         myLocationEnabled: true,
+        indoorViewEnabled: true,
         mapType: MapType.normal,
         initialCameraPosition: MapPage._kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
@@ -91,6 +134,7 @@ class _MapPageState extends State<MapPage> {
         },
         markers: _markers,
         polylines: {},
+        polygons: _polygons,
       ),
     );
   }
