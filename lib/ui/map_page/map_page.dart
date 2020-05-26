@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
 const double CAMERA_BEARING = 30;
@@ -46,7 +47,7 @@ class _MapPageState extends State<MapPage> {
     polylinePoints = PolylinePoints();
     location.onLocationChanged.listen((LocationData cLoc) {
       print(cLoc.latitude);
-     });
+    });
   }
 
   @override
@@ -61,16 +62,26 @@ class _MapPageState extends State<MapPage> {
       icon: BitmapDescriptor.defaultMarker,
     ));
     _markers.add(Marker(
+      markerId: MarkerId("library"),
+      position: LatLng(1.345080, 103.932599),
+      infoWindow: InfoWindow(
+        title: 'library',
+        snippet: 'Great place to study!',
+      ),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
+    _markers.add(Marker(
       markerId: MarkerId("McDonalds"),
       position: LatLng(1.345124, 103.931652),
       infoWindow: InfoWindow(
-        title: 'Subway',
-        snippet: 'Great place for nice sandwiches!',
+        title: 'McDonalds',
+        snippet: 'Great place for nice burgers!',
       ),
       icon: myIcon,
     ));
     return new Scaffold(
       body: GoogleMap(
+        compassEnabled: true,
         buildingsEnabled: true,
         myLocationEnabled: true,
         mapType: MapType.normal,
