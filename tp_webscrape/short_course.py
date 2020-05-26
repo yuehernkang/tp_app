@@ -46,12 +46,14 @@ class GetShortCourseData:
         soup = BeautifulSoup(page.content, 'html.parser')
         # who_should_attend = soup.find_all("div", {"id": "tab1"})[0].find(
         #     string="Who Should Attend").parent.next_sibling.next_sibling.get_text()
-
+        # who_should_attend = soup.find_all("div", {"id": "tab1"})[0]\
+        #     .find(text=re.split(r'who should attend', r'targeted audience', flags=re.IGNORECASE))\
+        #     .next_element.next_element
         who_should_attend = soup.find_all("div", {"id": "tab1"})[0]\
-            .find(text=re.split(r'who should attend', r'targeted audience', flags=re.IGNORECASE))\
-            .next_element.next_element
+            .find_all(text=re.split(r'who should attend', r'targeted audience', flags=re.IGNORECASE))
         course_name = soup.find_all("div", {"id": "tab1"})[0].find("h2").getText()
         course_overview = soup.find_all("div", {"id": "tab1"})[0].p.getText()
+        print(who_should_attend)
         # course_outline = soup.find_all("div", {"id": "tab2"})[0].find(
         #     string="Course Outline").parent.next_sibling.next_sibling
         for tag in soup.find_all("div", {"id": "tab2"})[0].find(
@@ -129,7 +131,7 @@ for sibling in second_row:
         list_of_courses.append(courses.a.get_text())
         f = GetShortCourseData(category_name, course_name, short_course_url)
         # AddShortCourseToFirebase(f.extract_data(), category_name.strip()).add_short_course_to_firebase()
-        print(f.extract_data())
+        f.extract_data()
 
 # #WORKING FOR THIRD ROW
 # for sibling in third_row:

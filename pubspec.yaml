@@ -48,6 +48,12 @@ dependencies:
   url_launcher: ^5.4.7
   flutter_spinkit: ^4.1.2+1
   auto_size_text: ^2.1.0
+  foldable_sidebar: ^1.0.0
+  verify: ^1.1.1
+  google_maps_flutter: ^0.5.28+1
+  location: ^3.0.2
+  flutter_polyline_points: ^0.2.1
+  flutter_google_places: ^0.2.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,3 +67,4 @@ flutter:
     - assets/images/part_time/
     - assets/images/part_time/skillsfuture/
     - assets/tp-app-aff2e-ab98fc09bd7d.json
+    - assets/logo_mcd.png

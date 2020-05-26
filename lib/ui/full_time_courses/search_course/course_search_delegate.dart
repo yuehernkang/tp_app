@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:debounce_throttle/debounce_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,12 +63,13 @@ class CourseSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final debouncer = Debouncer<String>(Duration(milliseconds: 1500));
+    final debouncer = Debouncer<String>(Duration(milliseconds: 1000));
     debouncer.value = query;
     debouncer.values.listen((event) {
       print(event);
       this.ftCourseSearchBloc.add(FtCourseSearchEvent(event));
     });
+
     return BlocBuilder(
       bloc: this.ftCourseSearchBloc,
       builder: (BuildContext context, FtCourseSearchState state) {
