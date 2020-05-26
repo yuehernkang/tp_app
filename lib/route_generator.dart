@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tp_app/ui/map_page/map_page.dart';
 
 import 'home_page/home_page.dart';
 import 'repository/authentication_bloc/authentication_bloc.dart';
@@ -49,7 +50,10 @@ class AppRouter {
       case ShortCourseCategoryPage.routeName:
         return MaterialPageRoute(builder: (_) => ShortCourseCategoryPage());
       case ShortCourseListPage.routeName:
-        return MaterialPageRoute(builder: (_) => ShortCourseListPage(categoryName: args));
+        return MaterialPageRoute(
+            builder: (_) => ShortCourseListPage(categoryName: args));
+      case MapPage.routeName:
+        return MaterialPageRoute(builder: (_) => MapPage());
     }
   }
 

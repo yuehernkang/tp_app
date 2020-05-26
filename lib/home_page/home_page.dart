@@ -3,7 +3,11 @@ import 'package:dynamic_theme/theme_switcher_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tp_app/home_page/custom_drawer.dart';
+import 'package:tp_app/home_page/models/highlight_object.dart';
+import 'package:tp_app/ui/map_page/map_page.dart';
 
 import '../repository/authentication_bloc/authentication_bloc.dart';
 import '../ui/app_bar/custom_app_bar.dart';
@@ -12,21 +16,27 @@ import '../ui/drawer/tp_drawer.dart';
 import '../ui/full_time_courses/ft_courses_page.dart';
 import '../ui/part_time_courses/pt_courses_page.dart';
 import '../ui/scholarships/scholarship_page.dart';
+import 'highlights_slideshow_widget.dart';
 
-class MyHomePage extends StatelessWidget {
-    static const String routeName = "/";
+class MyHomePage extends StatefulWidget {
+  static const String routeName = "/";
 
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    // FSBStatus drawerStatus;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      drawer:
-          BlocProvider.value(
-            value: authenticationBloc,
-            child: TpDrawer(context: context),
-          ),
+      drawer: BlocProvider.value(
+        value: authenticationBloc,
+        child: TpDrawer(context: context),
+      ),
       appBar: CustomAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -34,20 +44,72 @@ class MyHomePage extends StatelessWidget {
         children: <Widget>[BodyContainer()],
       ),
     );
+
+    // return SafeArea(
+    //   child: Scaffold(
+    //     body: (FoldableSidebarBuilder(
+    //       drawerBackgroundColor: Colors.redAccent,
+    //       // drawer: BlocProvider.value(
+    //       //   value: authenticationBloc,
+    //       //   child: TpDrawer(context: context),
+    //       // ),
+    //       status: drawerStatus,
+
+    //       drawer: CustomDrawer(
+    //         closeDrawer: () {
+    //           setState(() {
+    //             drawerStatus = FSBStatus.FSB_CLOSE;
+    //           });
+    //         },
+    //       ),
+    //       screenContents: Column(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         crossAxisAlignment: CrossAxisAlignment.center,
+    //         children: <Widget>[BodyContainer()],
+    //       ),
+    //     )),
+    //     floatingActionButton: FloatingActionButton(
+    //         backgroundColor: Colors.deepOrange,
+    //         child: Icon(
+    //           Icons.menu,
+    //           color: Colors.white,
+    //         ),
+    //         onPressed: () {
+    //           setState(() {
+    //             drawerStatus = drawerStatus == FSBStatus.FSB_OPEN
+    //                 ? FSBStatus.FSB_CLOSE
+    //                 : FSBStatus.FSB_OPEN;
+    //           });
+    //         }),
+    //   ),
+    // );
   }
 }
 
 class BodyContainer extends StatelessWidget {
   const BodyContainer({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    List<HighlightObject> imageUrlList = List();
+    imageUrlList.add(
+        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/images/Carousel/TSA-ETSP.jpg",targetUrl: "https://www.tp.edu.sg/staticfiles/TP/files/centres/tsa/ETSP_for_4_Sectors_Brochure.pdf"));
+    imageUrlList.add(
+        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/Web/Carousel/kickstarter-thumbnail.jpg", targetUrl: "https://www.tp.edu.sg/staticfiles/Review/careerkickstarter/careerkickstarter.pdf"));
+    imageUrlList.add(
+        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/images/Carousel/freshmen-2020.jpg", targetUrl: "https://www.tp.edu.sg/admissions/freshmen"));
+    imageUrlList.add(
+        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/images/Banners/BYOD.jpg", targetUrl: "https://www.tp.edu.sg/byod"));
+    imageUrlList.add(
+        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/Web/Carousel/tp30_carousel_banner.jpg", targetUrl: "https://www.tp.edu.sg/30"));
     return Column(
       children: <Widget>[
         TitleContainer(title: "Prospective Students"),
         RowOneIconContainer(),
         RowTwoIconContainer(),
-        RowThreeIconContainer()
+        RowThreeIconContainer(),
+        RowFourIconContainer(),
+        TitleContainer(title: "Latest Highlights"),
+        HighlightsSlideshow(imageUrlList: imageUrlList),
       ],
     );
   }
@@ -144,6 +206,27 @@ class RowThreeIconContainer extends StatelessWidget {
   }
 }
 
+class RowFourIconContainer extends StatelessWidget {
+  const RowFourIconContainer({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: IconWithSubtitle(
+              icon: FaIcon(FontAwesomeIcons.map, size: 50.0), subtitle: "Map"),
+        ),
+        Expanded(
+          child: IconWithSubtitle(
+              icon: FaIcon(FontAwesomeIcons.toolbox, size: 50.0),
+              subtitle: "NOT"),
+        ),
+      ],
+    );
+  }
+}
+
 class IconWithSubtitle extends StatelessWidget {
   final String subtitle;
   final FaIcon icon;
@@ -196,6 +279,11 @@ class IconWithSubtitle extends StatelessWidget {
             case "Clear Cache":
               {
                 DefaultCacheManager().emptyCache();
+              }
+              break;
+            case "Map":
+              {
+                Navigator.pushNamed(context, MapPage.routeName);
               }
           }
         },
