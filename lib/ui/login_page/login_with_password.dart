@@ -49,9 +49,9 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
             listener: (BuildContext context, LoginState state) {
               if (state.isFailure) {
                 print("fail");
-                // Scaffold.of(context).showSnackBar(SnackBar(
-                //   content: Text("Hello"),
-                // ));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text("Hello"),
+                ));
               }
               if (state.isSubmitting) {
                 print("submitting");
@@ -172,6 +172,7 @@ class LoginPasswordScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                         icon: Icon(Icons.email),
                         hintText: 'Enter your email',
+                        errorText: "Invalid Email",
                         labelText: 'Email'),
                     validator: (_) {
                       return !_state.isEmailValid ? 'Invalid Email' : null;
