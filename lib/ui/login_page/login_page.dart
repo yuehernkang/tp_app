@@ -73,7 +73,6 @@ class LoginOptionsPage extends StatelessWidget {
                       )
                     ],
                   ),
- 
                   Padding(
                     padding: const EdgeInsets.only(top: 160.0),
                     child: GoogleSignInButton(
@@ -99,12 +98,20 @@ class LoginOptionsPage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BlocProvider.value(
-                                      value:
-                                          BlocProvider.of<AuthenticationBloc>(
-                                              context),
-                                      child: LoginWithPasswordScreen(userRepository: UserRepository(),),
-                                    )));
+                                // builder: (context) => BlocProvider.value(
+                                //       value:
+                                //           BlocProvider.of<AuthenticationBloc>(
+                                //               context),
+                                //       child: LoginWithPasswordScreen(userRepository: UserRepository(),),
+                                //     )
+                                builder: (context) =>
+                                    MultiBlocProvider(providers: [
+                                      BlocProvider.value(
+                                          value: BlocProvider.of<
+                                              AuthenticationBloc>(context)),
+                                      BlocProvider.value(
+                                          value: _loginBloc)
+                                    ], child: LoginWithPasswordScreen(userRepository: UserRepository()))));
                       },
                       buttonPadding: 8.0,
                       children: <Widget>[

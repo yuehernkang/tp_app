@@ -22,35 +22,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   LoginState get initialState => LoginState.empty();
 
-  // @override
-  // Stream<Transition<LoginEvent, LoginState>> transformEvents(
-  //     Stream<LoginEvent> events, transitionFn) {
-  //   final nonDebounceStream = events.where((event) {
-  //     return (event is! EmailChanged && event is! PasswordChanged);
-  //   });
-  //   final debounceStream = events.where((event) {
-  //     return (event is EmailChanged || event is PasswordChanged);
-  //   }).debounceTime(Duration(milliseconds: 300));
-  //   return super.transformEvents(
-  //     nonDebounceStream.mergeWith([debounceStream]),
-  //     transitionFn,
-  //   );
-  // }
-  
-   @override
-  Stream<Transition<LoginEvent, LoginState>> transformEvents(
-      Stream<LoginEvent> events, transitionFn) {
-    final defferedEvents = events
-        .where((e) => e is EmailChanged || e is PasswordChanged)
-        .debounceTime(const Duration(milliseconds: 500))
-        .distinct()
-        .switchMap(transitionFn);
-    final forwardedEvents = events
-        .where((e) => e is! EmailChanged && e is! PasswordChanged)
-        .asyncExpand(transitionFn);
-    return forwardedEvents.mergeWith([defferedEvents]);
-  }
-
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event
