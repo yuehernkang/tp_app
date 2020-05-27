@@ -653,6 +653,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  platform_tab_bar_control:
+    dependency: "direct main"
+    description:
+      name: platform_tab_bar_control
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -777,6 +784,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  tabbar:
+    dependency: "direct main"
+    description:
+      name: tabbar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   term_glyph:
     dependency: transitive
     description:

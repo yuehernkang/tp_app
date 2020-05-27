@@ -56,6 +56,8 @@ dependencies:
   flutter_google_places: ^0.2.5
   wiredash: ^0.1.0
   google_map_polyutil: ^1.0.0
+  tabbar: ^0.0.3
+  platform_tab_bar_control: ^0.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

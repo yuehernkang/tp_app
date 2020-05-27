@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:tp_app/home_page/models/highlight_object.dart';
@@ -23,14 +24,25 @@ class HighlightsSlideshow extends StatelessWidget {
         pagination: new SwiperPagination(),
         itemBuilder: (BuildContext context, int index) {
           return new InkWell(
-            onTap: (){
-              launch(imageUrlList[index].targetUrl);
-            },
-            child: Image.network(
-              imageUrlList[index].highlightImageUrl,
-              fit: BoxFit.fill,
-            ),
-          );
+              onTap: () {
+                launch(imageUrlList[index].targetUrl);
+              },
+              // child: Image.network(
+              //   imageUrlList[index].highlightImageUrl,
+              //   fit: BoxFit.fill,
+              // ),
+              child: CachedNetworkImage(
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                imageUrl: imageUrlList[index].highlightImageUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ));
         },
       ),
     );
