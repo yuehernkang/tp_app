@@ -8,6 +8,7 @@ import 'package:tp_app/ui/login_page/widgets/login_button.dart';
 
 import 'bloc/login_event.dart';
 import 'bloc/login_state.dart';
+import 'constants.dart';
 
 class LoginWithPasswordScreen extends StatelessWidget {
   final UserRepository _userRepository;
@@ -23,10 +24,9 @@ class LoginWithPasswordScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Login Page')),
       body: Center(
-        child: BlocProvider<LoginBloc>(
-          create: (context) => LoginBloc(userRepository: _userRepository),
-          child: LoginWithPasswordForm(),
-        ),
+        child: BlocProvider.value(
+            value: BlocProvider.of<LoginBloc>(context),
+            child: LoginWithPasswordForm()),
       ),
     );
   }
@@ -109,37 +109,84 @@ class _LoginWithPasswordFormState extends State<LoginWithPasswordForm> {
             child: Form(
               child: ListView(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Image.asset('assets/tplogo.png', height: 200),
+                  Image.asset('assets/tplogo.png', height: 200),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Email',
+                        style: kLabelStyle,
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        decoration: kBoxDecorationStyle,
+                        height: 60.0,
+                        child: TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                          ),
+                          autovalidate: true,
+                          autocorrect: false,
+                          validator: (_) {
+                            return !state.isEmailValid ? 'Invalid Email' : null;
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(top: 14.0),
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Enter your Email',
+                            hintStyle: kHintTextStyle,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      labelText: 'Email',
-                      // errorText: "Invalid Email",
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isEmailValid ? 'Invalid Email' : null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.lock),
-                      labelText: 'Password',
-                      // errorText: "Invalid Password",
-                    ),
-                    obscureText: true,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isPasswordValid ? 'Invalid Password' : null;
-                    },
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Password',
+                        style: kLabelStyle,
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        decoration: kBoxDecorationStyle,
+                        height: 60.0,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                          ),
+                          autovalidate: true,
+                          autocorrect: false,
+                          validator: (_) {
+                            return !state.isPasswordValid
+                                ? 'Invalid Password'
+                                : null;
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(top: 14.0),
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Enter your Password',
+                            hintStyle: kHintTextStyle,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
