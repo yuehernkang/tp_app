@@ -38,10 +38,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: TpDrawer(context: context),
       ),
       appBar: CustomAppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[BodyContainer()],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[BodyContainer()],
+        ),
       ),
     );
 
@@ -91,16 +93,28 @@ class BodyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<HighlightObject> imageUrlList = List();
-    imageUrlList.add(
-        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/images/Carousel/TSA-ETSP.jpg",targetUrl: "https://www.tp.edu.sg/staticfiles/TP/files/centres/tsa/ETSP_for_4_Sectors_Brochure.pdf"));
-    imageUrlList.add(
-        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/Web/Carousel/kickstarter-thumbnail.jpg", targetUrl: "https://www.tp.edu.sg/staticfiles/Review/careerkickstarter/careerkickstarter.pdf"));
-    imageUrlList.add(
-        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/images/Carousel/freshmen-2020.jpg", targetUrl: "https://www.tp.edu.sg/admissions/freshmen"));
-    imageUrlList.add(
-        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/images/Banners/BYOD.jpg", targetUrl: "https://www.tp.edu.sg/byod"));
-    imageUrlList.add(
-        HighlightObject(highlightImageUrl: "https://www.tp.edu.sg/staticfiles/TP/Web/Carousel/tp30_carousel_banner.jpg", targetUrl: "https://www.tp.edu.sg/30"));
+    imageUrlList.add(HighlightObject(
+        highlightImageUrl:
+            "https://www.tp.edu.sg/staticfiles/TP/images/Carousel/TSA-ETSP.jpg",
+        targetUrl:
+            "https://www.tp.edu.sg/staticfiles/TP/files/centres/tsa/ETSP_for_4_Sectors_Brochure.pdf"));
+    imageUrlList.add(HighlightObject(
+        highlightImageUrl:
+            "https://www.tp.edu.sg/staticfiles/TP/Web/Carousel/kickstarter-thumbnail.jpg",
+        targetUrl:
+            "https://www.tp.edu.sg/staticfiles/Review/careerkickstarter/careerkickstarter.pdf"));
+    imageUrlList.add(HighlightObject(
+        highlightImageUrl:
+            "https://www.tp.edu.sg/staticfiles/TP/images/Carousel/freshmen-2020.jpg",
+        targetUrl: "https://www.tp.edu.sg/admissions/freshmen"));
+    imageUrlList.add(HighlightObject(
+        highlightImageUrl:
+            "https://www.tp.edu.sg/staticfiles/TP/images/Banners/BYOD.jpg",
+        targetUrl: "https://www.tp.edu.sg/byod"));
+    imageUrlList.add(HighlightObject(
+        highlightImageUrl:
+            "https://www.tp.edu.sg/staticfiles/TP/Web/Carousel/tp30_carousel_banner.jpg",
+        targetUrl: "https://www.tp.edu.sg/30"));
     return Column(
       children: <Widget>[
         TitleContainer(title: "Prospective Students"),
