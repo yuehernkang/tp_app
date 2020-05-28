@@ -58,6 +58,7 @@ dependencies:
   google_map_polyutil: ^1.0.0
   tabbar: ^0.0.3
   platform_tab_bar_control: ^0.0.4
+  firebase_crashlytics: ^0.1.3+3
 dev_dependencies:
   flutter_test:
     sdk: flutter

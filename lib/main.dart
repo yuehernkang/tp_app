@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tp_app/repository/firebase_messaging_bloc/bloc/firebase_messaging_bloc.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'bloc/bloc_delegate.dart';
 import 'repository/UserRepository.dart';
@@ -18,6 +19,10 @@ void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
   final UserRepository userRepository = UserRepository();
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  Crashlytics.instance.enableInDevMode = true;
+
+  // Pass all uncaught errors from the framework to Crashlytics.
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   runApp(
         MultiBlocProvider(
