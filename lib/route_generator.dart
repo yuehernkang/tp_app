@@ -7,7 +7,9 @@ import 'home_page/home_page.dart';
 import 'repository/authentication_bloc/authentication_bloc.dart';
 import 'ui/chat/chat_page.dart';
 import 'ui/full_time_courses/ft_courses_page.dart';
+import 'ui/full_time_courses/ft_courses_page_2.dart';
 import 'ui/login_page/login_with_password.dart';
+import 'ui/map_page/mapbox_page.dart';
 import 'ui/part_time_courses/pt_courses_page.dart';
 import 'ui/part_time_courses/pt_short_course/short_course_categories.dart';
 import 'ui/part_time_courses/pt_short_course/short_course_list.dart';
@@ -33,7 +35,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
                   value: this.authenticationBloc,
-                  child: FtCoursesPage(),
+                  child: FTCoursesPage2(),
                 ));
       case ScholarshipPage.routeName:
         return MaterialPageRoute(builder: (_) => ScholarshipPage());
@@ -53,7 +55,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => ShortCourseListPage(categoryName: args));
       case MapPage.routeName:
-        return MaterialPageRoute(builder: (_) => MapPage());
+        return MaterialPageRoute(builder: (_) => MapboxPage());
     }
   }
 
