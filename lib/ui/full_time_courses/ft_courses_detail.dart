@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expand_widget/expand_widget.dart';
@@ -6,6 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:md2_tab_indicator/md2_tab_indicator.dart';
+import 'package:platform_tab_bar_control/platform_tab_bar_control.dart';
+import 'package:tabbar/tabbar.dart';
 import 'package:tp_app/models/course.dart';
 
 import 'ft_courses_modules_page.dart';
@@ -20,8 +24,10 @@ class CoursesDetail extends StatefulWidget {
   _CoursesDetailState createState() => _CoursesDetailState();
 }
 
-class _CoursesDetailState extends State<CoursesDetail> {
+class _CoursesDetailState extends State<CoursesDetail>
+    with TickerProviderStateMixin {
   DocumentSnapshot snapshot;
+  TabController _tabController;
   Widget yearCard(String title, String details) {
     return Container(
       margin: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -49,6 +55,7 @@ class _CoursesDetailState extends State<CoursesDetail> {
   @override
   void initState() {
     super.initState();
+    _tabController = new TabController(length: 3, vsync: this);
   }
 
   @override
@@ -83,23 +90,28 @@ class _CoursesDetailState extends State<CoursesDetail> {
     yearList[2] = yearCard("Year 3", widget.snapshot.data['year3']);
     return CourseDetailBody(
       snapshot: widget.snapshot,
-      yearList: yearList
+      yearList: yearList,
+      tabController: _tabController,
     );
   }
 }
 
 class CourseDetailBody extends StatelessWidget {
-  const CourseDetailBody({
-    Key key,
-    @required this.snapshot,
-    @required this.yearList,
-  }) : super(key: key);
+  const CourseDetailBody(
+      {Key key,
+      @required this.snapshot,
+      @required this.yearList,
+      this.tabController})
+      : super(key: key);
 
   final DocumentSnapshot snapshot;
   final List<Widget> yearList;
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -112,20 +124,53 @@ class CourseDetailBody extends StatelessWidget {
             CourseHeroImageWidget(
               course: Course.fromSnapshot(snapshot),
             ),
-            CourseDetailWidget(
-                courseDetailText: snapshot.data['courseDetails']),
-            PlatformButton(
-              child: PlatformText("View Course Modules"),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FtCoursesModulePage(
-                              snapshot: snapshot,
-                            )));
-              },
-            ),
-            ThreeYearWidget(widgetList: yearList)
+            TabBar(
+                controller: this.tabController,
+                labelColor: Theme.of(context).accentColor,
+                indicator: MD2Indicator(
+                    indicatorHeight: 3,
+                    indicatorColor: Theme.of(context).accentColor,
+                    indicatorSize: MD2IndicatorSize.full),
+                unselectedLabelColor: Colors.black54,
+                tabs: <Widget>[
+                  Tab(
+                    text: "Introduction",
+                  ),
+                  Tab(
+                    text: "Course Structure",
+                  ),
+                  Tab(
+                    text: "Highlights",
+                  ),
+                ]),
+            Container(
+              height: screenHeight * 0.70,
+              margin: EdgeInsets.only(left: 16.0, right: 16.0),
+              child: TabBarView(
+                children: <Widget>[
+                  CourseDetailWidget(
+                    courseDetailText: snapshot.data['courseDetails'],
+                  ),
+                  Text("hello"),
+                  Text("hello"),
+                ],
+                controller: this.tabController,
+              ),
+            )
+            // CourseDetailWidget(
+            //     courseDetailText: snapshot.data['courseDetails']),
+            // PlatformButton(
+            //   child: PlatformText("View Course Modules"),
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => FtCoursesModulePage(
+            //                   snapshot: snapshot,
+            //                 )));
+            //   },
+            // ),
+            // ThreeYearWidget(widgetList: yearList)
           ],
         ),
       ),
@@ -157,32 +202,16 @@ class CourseDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              "Course Details",
-              style: TextStyle(fontSize: 24),
-            ),
-            ExpandText(
-              this.courseDetailText,
-              textAlign: TextAlign.justify,
-              maxLength: 5,
-            ),
-
-            // ReadMoreText(
-            //   widget.course.courseDetails,
-            //   trimLines: 3,
-            //   colorClickableText: Colors.pink,
-            //   trimMode: TrimMode.Line,
-            //   trimCollapsedText: '...Expand',
-            //   trimExpandedText: ' Collapse ',
-            //   style: TextStyle(fontSize: 16),
-            // )
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            "Course Details",
+            style: TextStyle(fontSize: 24),
+          ),
+          AutoSizeText(this.courseDetailText, minFontSize: 16)
+        ],
       ),
     );
   }

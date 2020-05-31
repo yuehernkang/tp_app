@@ -63,13 +63,16 @@ class ContentView extends StatefulWidget {
   _ContentViewState createState() => _ContentViewState();
 }
 
-class _ContentViewState extends State<ContentView> {
+class TabWidget extends StatelessWidget {
+  final String school;
+  const TabWidget({Key key, this.school}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    Widget tabWidget(String school) {
-      return Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
+    return Container(
+      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      width: MediaQuery.of(context).size.width,
+      child: SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(
@@ -79,9 +82,30 @@ class _ContentViewState extends State<ContentView> {
             )
           ],
         ),
-      );
-    }
+      ),
+    );
+  }
+}
 
+class _ContentViewState extends State<ContentView> {
+  Widget tabWidget(String school) {
+    return Container(
+      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: FTCourseList(
+              school: school,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final tabItems = [
       Tab(
         text: "Business",
@@ -101,11 +125,11 @@ class _ContentViewState extends State<ContentView> {
     ];
 
     final tabContent = [
-      tabWidget('bus'),
-      tabWidget('eng'),
-      tabWidget('des'),
-      tabWidget('asc'),
-      tabWidget('iit'),
+      TabWidget(school: 'bus'),
+      TabWidget(school: 'eng'),
+      TabWidget(school: 'des'),
+      TabWidget(school: 'asc'),
+      TabWidget(school: 'iit'),
     ];
     final SearchRepository searchRepository = SearchRepository();
     final FtCourseSearchBloc _ftCourseSearchBloc =
@@ -403,7 +427,7 @@ class FTCourseCard3 extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                height:128,
+                height: 128,
               ),
               Center(
                 child: AutoSizeText(
@@ -412,7 +436,9 @@ class FTCourseCard3 extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      fontSize: 27, fontWeight: FontWeight.w600, color:Theme.of(context).accentColor),
+                      fontSize: 27,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).accentColor),
                 ),
               ),
             ],
