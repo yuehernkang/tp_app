@@ -24,23 +24,21 @@ void main() {
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
-  runApp(
-        MultiBlocProvider(
-        providers: [
-          BlocProvider<FirebaseMessagingBloc>(create: (BuildContext context) {
-            return FirebaseMessagingBloc(firebaseMessaging: firebaseMessaging)
-              ..add(InitFirebaseNotifications());
-          }),
-          BlocProvider<AuthenticationBloc>(
-            create: (BuildContext context) {
-              return AuthenticationBloc(userRepository: userRepository)
-                ..add(AppStarted());
-            },
-          ),
-        ],
-        child: MyApp(),
-      )
-  );
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider<FirebaseMessagingBloc>(create: (BuildContext context) {
+        return FirebaseMessagingBloc(firebaseMessaging: firebaseMessaging)
+          ..add(InitFirebaseNotifications());
+      }),
+      BlocProvider<AuthenticationBloc>(
+        create: (BuildContext context) {
+          return AuthenticationBloc(userRepository: userRepository)
+            ..add(AppStarted());
+        },
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -72,5 +70,4 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
-
 }

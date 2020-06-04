@@ -1,18 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expand_widget/expand_widget.dart';
 import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
-import 'package:platform_tab_bar_control/platform_tab_bar_control.dart';
-import 'package:tabbar/tabbar.dart';
-import 'package:tp_app/models/course.dart';
 
-import 'ft_courses_modules_page.dart';
+import '../../models/course.dart';
 
 class CoursesDetail extends StatefulWidget {
   // final Course course;
