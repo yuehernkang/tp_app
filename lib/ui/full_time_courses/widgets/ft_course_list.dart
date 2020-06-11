@@ -43,6 +43,11 @@ class _FTCourseListState extends State<FTCourseList>
                   : "FROM NETWORK");
               return AnimationLimiter(
                 child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [Colors.red, Colors.white])),
                   child: ListView.builder(
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (BuildContext ctxt, int index) {

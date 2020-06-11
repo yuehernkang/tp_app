@@ -169,7 +169,7 @@ class FTCourseCard3 extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                height: 128,
+                height: 140,
               ),
               Center(
                 child: AutoSizeText(

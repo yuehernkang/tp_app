@@ -15,9 +15,11 @@ class FtCoursesPage extends StatelessWidget {
   PlatformTabController tabController;
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      body: ContentView(),
-    );
+    // return PlatformScaffold(
+    //   backgroundColor: Colors.red,
+    //   body: ContentView(),
+    // );
+    return ContentView();
   }
 }
 
@@ -25,24 +27,9 @@ class ContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget tabWidget(String school) {
-      return Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [Colors.red, Colors.white])),
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: FTCourseList(
-                school: school,
-              ),
-            )
-          ],
-        ),
-      );
+      return FTCourseList(
+            school: school,
+          );
     }
 
     final tabContent = [
@@ -79,16 +66,14 @@ class ContentView extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.label,
             labelColor: Theme.of(context).accentColor,
             unselectedLabelColor: Color(0xff5f6368),
-            
-            // indicator: MD2Indicator(
-            //     indicatorHeight: 3,
-            //     indicatorColor: Theme.of(context).accentColor,
-            //     indicatorSize: MD2IndicatorSize.full),
+            indicator: MD2Indicator(
+                indicatorHeight: 3,
+                indicatorColor: Theme.of(context).accentColor,
+                indicatorSize: MD2IndicatorSize.full),
             tabs: Constants.tabItems,
           ),
         ),
         body: TabBarView(
-
           children: tabContent,
         ),
       ),

@@ -77,7 +77,6 @@ class CourseNameWidget extends StatelessWidget {
       minFontSize: 56,
       maxFontSize: 80,
       style: TextStyle(
-        fontWeight: FontWeight.bold,
       ),
     ));
   }
