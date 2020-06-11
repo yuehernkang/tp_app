@@ -99,3 +99,5 @@ class LoginState {
     }''';
   }
 }
+
+class GoogleNotAvailable extends LoginState {}

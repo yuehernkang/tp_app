@@ -23,7 +23,7 @@ class ChatPage extends StatefulWidget {
   State createState() => new ChatPageState();
 }
 
-class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin{
+class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   ListModel<ChatMessage> _list;
 
@@ -100,6 +100,8 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin{
         ChatButton _chatButton = ChatButton.fromJson(f);
         print(f);
         buttons.add(RaisedButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0)),
           color: Theme.of(context).cardColor,
           child: Row(
             children: [
@@ -239,6 +241,5 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin{
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

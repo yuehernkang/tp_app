@@ -26,7 +26,6 @@ dependencies:
   flutter_platform_widgets: ^0.32.5
   cached_network_image: ^2.0.0
   flutter_blurhash: ^0.1.2
-  like_button: ^0.2.0
   flutter_cache_manager: ^1.1.3
   flutter_sticky_header: ^0.4.2
   firebase_analytics: ^5.0.11
@@ -56,6 +55,9 @@ dependencies:
   flutter_google_places: ^0.2.5
   wiredash: ^0.1.0
   google_map_polyutil: ^1.0.0
+  bubble: ^1.1.9+1
+  connectivity: ^0.4.8+6
+  flutter_zoom_drawer: ^1.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

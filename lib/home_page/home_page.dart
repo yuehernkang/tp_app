@@ -3,9 +3,8 @@ import 'package:dynamic_theme/theme_switcher_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:foldable_sidebar/foldable_sidebar.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tp_app/home_page/custom_drawer.dart';
 import 'package:tp_app/home_page/models/highlight_object.dart';
 import 'package:tp_app/ui/map_page/map_page.dart';
 
@@ -17,8 +16,17 @@ import '../ui/full_time_courses/ft_courses_page.dart';
 import '../ui/part_time_courses/pt_courses_page.dart';
 import '../ui/scholarships/scholarship_page.dart';
 import 'highlights_slideshow_widget.dart';
+import './menu_page.dart';
 
 class MyHomePage extends StatefulWidget {
+  static List<MenuItem> mainMenu = [
+    MenuItem("payment", Icons.payment, 0),
+    MenuItem("promos", Icons.card_giftcard, 1),
+    MenuItem("notifications", Icons.notifications, 2),
+    MenuItem("help", Icons.help, 3),
+    MenuItem("about_us", Icons.info_outline, 4),
+  ];
+
   static const String routeName = "/";
 
   @override
@@ -26,11 +34,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _updatePage(index) {
+    print("index");
+  }
+
   @override
   Widget build(BuildContext context) {
+    final _drawerController = ZoomDrawerController();
+    int _currentPage = 0;
     final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    // FSBStatus drawerStatus;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       drawer: BlocProvider.value(
@@ -46,45 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-
-    // return SafeArea(
-    //   child: Scaffold(
-    //     body: (FoldableSidebarBuilder(
-    //       drawerBackgroundColor: Colors.redAccent,
-    //       // drawer: BlocProvider.value(
-    //       //   value: authenticationBloc,
-    //       //   child: TpDrawer(context: context),
-    //       // ),
-    //       status: drawerStatus,
-
-    //       drawer: CustomDrawer(
-    //         closeDrawer: () {
-    //           setState(() {
-    //             drawerStatus = FSBStatus.FSB_CLOSE;
-    //           });
-    //         },
-    //       ),
-    //       screenContents: Column(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         crossAxisAlignment: CrossAxisAlignment.center,
-    //         children: <Widget>[BodyContainer()],
-    //       ),
-    //     )),
-    //     floatingActionButton: FloatingActionButton(
-    //         backgroundColor: Colors.deepOrange,
-    //         child: Icon(
-    //           Icons.menu,
-    //           color: Colors.white,
-    //         ),
-    //         onPressed: () {
-    //           setState(() {
-    //             drawerStatus = drawerStatus == FSBStatus.FSB_OPEN
-    //                 ? FSBStatus.FSB_CLOSE
-    //                 : FSBStatus.FSB_OPEN;
-    //           });
-    //         }),
-    //   ),
-    // );
   }
 }
 
@@ -117,13 +90,27 @@ class BodyContainer extends StatelessWidget {
         targetUrl: "https://www.tp.edu.sg/30"));
     return Column(
       children: <Widget>[
-        TitleContainer(title: "Prospective Students"),
-        RowOneIconContainer(),
-        RowTwoIconContainer(),
-        RowThreeIconContainer(),
-        RowFourIconContainer(),
-        TitleContainer(title: "Latest Highlights"),
-        HighlightsSlideshow(imageUrlList: imageUrlList),
+        Card(
+          // elevation: 12.0,
+          child: Column(
+            children: <Widget>[
+              TitleContainer(title: "Latest Highlights"),
+              HighlightsSlideshow(imageUrlList: imageUrlList),
+            ],
+          ),
+        ),
+        Card(
+          // elevation: 12.0,
+          child: Column(
+            children: <Widget>[
+              TitleContainer(title: "Prospective Students"),
+              RowOneIconContainer(),
+              RowTwoIconContainer(),
+              RowThreeIconContainer(),
+              RowFourIconContainer(),
+            ],
+          ),
+        ),
       ],
     );
   }

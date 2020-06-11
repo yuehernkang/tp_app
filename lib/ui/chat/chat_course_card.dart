@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:like_button/like_button.dart';
 
 class ChatCourseCard extends StatelessWidget {
   final String courseName, imageUrl;
@@ -56,16 +55,6 @@ class ChatCourseCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    LikeButton(
-                      likeBuilder: (bool isLiked) {
-                        return Icon(
-                          Icons.favorite,
-                          color: isLiked
-                              ? Colors.red
-                              : Theme.of(context).buttonColor,
-                        );
-                      },
-                    )
                   ])
             ],
           )),
