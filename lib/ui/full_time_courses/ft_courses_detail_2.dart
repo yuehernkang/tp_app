@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,73 @@ class _CoursesDetailState extends State<CoursesDetail2> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: PlatformScaffold(
-            body: SingleChildScrollView(
-                child: CourseDetailBody(snapshot: widget.snapshot))));
+      child: PlatformScaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 200.0,
+                floating: false,
+                pinned: false,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  // title: Text("Hello"),
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Hero(
+                        tag: widget.snapshot['courseCode'],
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {},
+                            child: CachedNetworkImage(
+                              imageUrl: widget.snapshot['imageUrl'],
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment(0.0, 0.5),
+                            end: Alignment(0.0, 0.0),
+                            colors: <Color>[
+                              Color(0x60000000),
+                              Color(0x00000000),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 144,
+                          ),
+                          Center(
+                            child: AutoSizeText(
+                              widget.snapshot['courseName'] ?? 'Course Name',
+                              maxLines: 1,
+                              stepGranularity: 1,
+                              minFontSize: 24,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 48),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: SingleChildScrollView(
+              child: CourseDetailBody(snapshot: widget.snapshot)),
+        ),
+      ),
+    );
   }
 }
 
@@ -48,9 +113,9 @@ class CourseDetailBody extends StatelessWidget {
               colors: [Colors.white, Colors.yellow])),
       child: Column(
         children: <Widget>[
-          CourseNameWidget(
-            courseName: snapshot["courseName"],
-          ),
+          // CourseNameWidget(
+          //   courseName: snapshot["courseName"],
+          // ),
           CourseDetailWidget(
             courseDetailText: snapshot["courseDetails"],
           ),
@@ -76,8 +141,7 @@ class CourseNameWidget extends StatelessWidget {
       courseName ?? 'Course Name',
       minFontSize: 56,
       maxFontSize: 80,
-      style: TextStyle(
-      ),
+      style: TextStyle(),
     ));
   }
 }

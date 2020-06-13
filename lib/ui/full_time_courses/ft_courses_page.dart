@@ -15,10 +15,6 @@ class FtCoursesPage extends StatelessWidget {
   PlatformTabController tabController;
   @override
   Widget build(BuildContext context) {
-    // return PlatformScaffold(
-    //   backgroundColor: Colors.red,
-    //   body: ContentView(),
-    // );
     return ContentView();
   }
 }
@@ -80,3 +76,5 @@ class ContentView extends StatelessWidget {
     );
   }
 }
+
+

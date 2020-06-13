@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:tp_app/ui/map_page/map_page.dart';
 
 import 'home_page/home_page.dart';
@@ -36,7 +37,7 @@ class AppRouter {
                   child: FtCoursesPage(),
                 ));
       case ScholarshipPage.routeName:
-        return MaterialPageRoute(builder: (_) => ScholarshipPage());
+        return platformPageRoute(builder: (_) => ScholarshipPage());
       case PtCoursesPage.routeName:
         return MaterialPageRoute(builder: (_) => PtCoursesPage());
       case ChatPage.routeName:
@@ -54,6 +55,7 @@ class AppRouter {
             builder: (_) => ShortCourseListPage(categoryName: args));
       case MapPage.routeName:
         return MaterialPageRoute(builder: (_) => MapPage());
+        
     }
   }
 

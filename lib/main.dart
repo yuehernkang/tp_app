@@ -68,6 +68,10 @@ class _MyAppState extends State<MyApp> {
           theme: theme,
           navigatorObservers: <NavigatorObserver>[MyApp.observer],
           onGenerateRoute: _router.generateRoute,
+          onUnknownRoute: (RouteSettings setting) {
+            String unknownRoute = setting.name;
+            // return new MaterialPageRoute(builder: (context) => NotFoundPage());
+          },
         );
       },
     );

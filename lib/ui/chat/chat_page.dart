@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:font_awesome_flutter/fa_icon.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tp_app/home_page/home_page.dart';
 import 'package:tp_app/ui/chat/bloc/chatbot_bloc.dart';
 import 'package:tp_app/ui/chat/empty.dart';
 import 'package:tp_app/ui/chat/repository/DialogFlowRepository.dart';
@@ -37,20 +41,41 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     warmUpFunction();
-    _chatbotBloc.add(SendMessage("hello"));
-
-    _list = ListModel<ChatMessage>(
-      listKey: _listKey,
-      initialItems: <ChatMessage>[
-        ChatMessage(
-          text: "hello",
-        )
-      ],
-    );
   }
 
-  void warmUpFunction() {
-    http.get('https://us-central1-tp-app-aff2e.cloudfunctions.net/api/test');
+  void warmUpFunction() async {
+    bool result = await DataConnectionChecker().hasConnection;
+    if (result == true) {
+      await http
+          .get('https://us-central1-tp-app-aff2e.cloudfunctions.net/api/test');
+      _chatbotBloc.add(SendMessage("hello"));
+      _list = ListModel<ChatMessage>(
+        listKey: _listKey,
+        initialItems: <ChatMessage>[
+          ChatMessage(
+            text: "hello",
+          )
+        ],
+      );
+    } else {
+      showPlatformDialog(
+        context: context,
+        builder: (_) => PlatformAlertDialog(
+          title: Text('No Internet Connection'),
+          content: Text('Internet connection is required for chatbot'),
+          actions: <Widget>[
+            PlatformDialogAction(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+
+              },
+            ),
+          ],
+        ),
+      );
+      print(DataConnectionChecker().lastTryResults);
+    }
   }
 
   void _handleSubmit(String text) {
@@ -58,9 +83,6 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
     ChatMessage chatMessage = new ChatMessage(text: text, user: false);
     setState(() {
       _list.insert(0, chatMessage);
-      // _dialogFlowRepository
-      //     .dialogFlowChat(text)
-      //     .then((value) => receivedMessage(value));
     });
   }
 

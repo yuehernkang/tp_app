@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 
 import 'package:bloc/bloc.dart';
 import 'package:connectivity/connectivity.dart';
@@ -21,5 +22,7 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
     }
   }
 
-  Stream<ConnectivityState> _mapInitConnectivityToState() async* {}
+  Stream<ConnectivityState> _mapInitConnectivityToState() async* {
+    developer.log('wtf', name: 'connectivityBloc');
+  }
 }

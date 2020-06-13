@@ -27,9 +27,14 @@ class ChatbotBloc extends Bloc<ChatbotEvent, ChatbotState> {
   Stream<ChatbotState> _mapSendMessage(String message) async* {
     yield ChatbotSendMessage(message);
     List receivedMessage;
-    await this.dialogFlowRepository.dialogFlowChat(message).then((value) {
+    
+    try{
+      await this.dialogFlowRepository.dialogFlowChat(message).then((value) {
       receivedMessage = value;
     });
+    }catch(_){
+      print("hello");
+    }
     yield ChatbotMessageReceived(receivedMessage);
   }
 }

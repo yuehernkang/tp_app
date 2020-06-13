@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:tp_app/ui/login_page/login_page_2.dart';
 import 'package:tp_app/ui/settings/settings.dart';
 
 import '../../repository/authentication_bloc/authentication_bloc.dart';
@@ -62,7 +63,7 @@ class TpDrawer extends StatelessWidget {
                                 // builder: (context) => LoginWithPassword(authenticationBloc: this.widget.authenticationBloc))
                                 builder: (context) => BlocProvider.value(
                                       value: _authenticationBloc,
-                                      child: LoginOptionsPage(),
+                                      child: LoginPage2(),
                                     )));
                       },
                     )

@@ -176,6 +176,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.1"
+  data_connection_checker:
+    dependency: "direct main"
+    description:
+      name: data_connection_checker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.4"
   debounce_throttle:
     dependency: "direct main"
     description:
@@ -429,13 +436,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  foldable_sidebar:
-    dependency: "direct main"
-    description:
-      name: foldable_sidebar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -604,6 +604,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
+  parallax_image:
+    dependency: "direct main"
+    description:
+      name: parallax_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+1"
   path:
     dependency: transitive
     description:
@@ -784,6 +791,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  sup:
+    dependency: "direct main"
+    description:
+      name: sup
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   synchronized:
     dependency: transitive
     description:

@@ -47,7 +47,6 @@ dependencies:
   url_launcher: ^5.4.7
   flutter_spinkit: ^4.1.2+1
   auto_size_text: ^2.1.0
-  foldable_sidebar: ^1.0.0
   verify: ^1.1.1
   google_maps_flutter: ^0.5.28+1
   location: ^3.0.2
@@ -58,6 +57,9 @@ dependencies:
   bubble: ^1.1.9+1
   connectivity: ^0.4.8+6
   flutter_zoom_drawer: ^1.0.3
+  parallax_image: ^0.3.1+1
+  sup: ^1.0.1
+  data_connection_checker: ^0.3.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

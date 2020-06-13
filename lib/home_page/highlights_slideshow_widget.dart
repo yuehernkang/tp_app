@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:tp_app/home_page/models/highlight_object.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,7 +31,7 @@ class HighlightsSlideshow extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: imageUrlList[index].highlightImageUrl,
               fit: BoxFit.fill,
-              placeholder: (context, url) => new CircularProgressIndicator(),
+              placeholder: (context, url) {return Center(child: PlatformCircularProgressIndicator());},
               errorWidget: (context, url, error) => new Icon(Icons.error),
             ),
           );

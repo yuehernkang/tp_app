@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:sup/quick_sup.dart';
 import 'package:tp_app/models/course.dart';
 import 'package:tp_app/ui/widgets/loading_widget.dart';
 
@@ -28,7 +29,6 @@ class _FTCourseListState extends State<FTCourseList>
             .orderBy('courseName')
             .getDocuments(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
             return LoadingWidget();
           }
@@ -38,16 +38,23 @@ class _FTCourseListState extends State<FTCourseList>
             case ConnectionState.waiting:
               return LoadingWidget();
             default:
-              print(snapshot.data.metadata.isFromCache
-                  ? "NOT FROM NETWORK"
-                  : "FROM NETWORK");
+              if (snapshot.hasError)
+                return new QuickSup.error(
+                  title: 'Nope',
+                  subtitle: 'That didn\'t work, son.',
+                  onRetry: () {},
+                );
+              else
+                print(snapshot.data.metadata.isFromCache
+                    ? "NOT FROM NETWORK"
+                    : "FROM NETWORK");
               return AnimationLimiter(
                 child: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          begin: Alignment.topRight,
+                          begin: Alignment.topCenter,
                           end: Alignment.bottomLeft,
-                          colors: [Colors.red, Colors.white])),
+                          colors: [Colors.white, Colors.red])),
                   child: ListView.builder(
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (BuildContext ctxt, int index) {
