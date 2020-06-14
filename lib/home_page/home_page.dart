@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:dynamic_theme/theme_switcher_widgets.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tp_app/home_page/models/highlight_object.dart';
-import 'package:tp_app/ui/map_page/map_page.dart';
+import 'package:tp_app/ui/map_page/mapbox_page.dart';
 
 import '../repository/authentication_bloc/authentication_bloc.dart';
 import '../ui/app_bar/custom_app_bar.dart';
@@ -125,7 +127,7 @@ class TitleContainer extends StatelessWidget {
     return Center(
       child: Text(
         this.title,
-        style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+        style: GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -284,7 +286,7 @@ class IconWithSubtitle extends StatelessWidget {
               break;
             case "Map":
               {
-                Navigator.pushNamed(context, MapPage.routeName);
+                Navigator.pushNamed(context, MapboxPage.routeName);
               }
           }
         },
@@ -292,9 +294,10 @@ class IconWithSubtitle extends StatelessWidget {
           children: <Widget>[
             this.icon,
             Center(
-              child: Text(
+              child: AutoSizeText(
                 this.subtitle,
-                style: TextStyle(fontSize: 20.0),
+                maxLines: 1,
+                style: GoogleFonts.lato(fontSize: 20),
               ),
             )
           ],

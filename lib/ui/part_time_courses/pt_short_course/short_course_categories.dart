@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -62,7 +63,7 @@ class ShortCourseCategoryPage extends StatelessWidget {
       body: GridView.builder(
           itemCount: categoryList.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, childAspectRatio: 1),
+              crossAxisCount: 2, childAspectRatio: 1.5),
           itemBuilder: (BuildContext ctxt, int index) {
             return AnimationConfiguration.staggeredList(
                 duration: const Duration(milliseconds: 375),
@@ -95,28 +96,71 @@ class PtShortCourseItem extends StatelessWidget {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         color: Theme.of(context).accentColor,
         child: Stack(
-          children: <Widget>[
-            CachedNetworkImage(
-              imageUrl: item.imageUrl,
-              fit: BoxFit.fill,
+          fit: StackFit.expand,
+          children: [
+            Hero(
+              tag: item.displayText,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {},
+                  child: CachedNetworkImage(
+                    imageUrl: item.imageUrl,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.0, 0.5),
+                  end: Alignment(0.0, 0.0),
+                  colors: <Color>[
+                    Color(0x60000000),
+                    Color(0x00000000),
+                  ],
+                ),
+              ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  color: Colors.black.withOpacity(0.5),
-                  child: ListTile(
-                    title: Text(
-                      item.displayText,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                SizedBox(height: 72),
+                AutoSizeText(
+                  item.displayText ?? 'Course Name',
+                  maxLines: 2,
+                  minFontSize: 16,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 )
               ],
             ),
           ],
         ),
+        // child: Stack(
+        //   children: <Widget>[
+        //     CachedNetworkImage(
+        //       imageUrl: item.imageUrl,
+        //       fit: BoxFit.fill,
+        //     ),
+        //     Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: <Widget>[
+        //         Container(
+        //           color: Colors.black.withOpacity(0.5),
+        //           child: ListTile(
+        //             title: Text(
+        //               item.displayText,
+        //               style: TextStyle(
+        //                   color: Colors.white, fontWeight: FontWeight.bold),
+        //             ),
+        //           ),
+        //         )
+        //       ],
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

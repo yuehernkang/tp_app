@@ -25,8 +25,8 @@ class FtCourseSearchBloc
     if (event.query != "") {
       yield FtCourseSearchState.loading();
       try {
-        List<Course> courses = await searchRepository.queryAgolia(event.query);
-        yield FtCourseSearchState.success(courses);
+        // List<Course> courses = await searchRepository.queryAgolia(event.query);
+        // yield FtCourseSearchState.success(courses);
       } catch (_) {
         yield FtCourseSearchState.error();
       }

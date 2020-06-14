@@ -15,7 +15,7 @@ import 'ui/part_time_courses/pt_short_course/short_course_list.dart';
 import 'ui/part_time_courses/pt_skillsfuture/pt_skillsfuture_page.dart';
 import 'ui/scholarships/scholarship_page.dart';
 import 'ui/settings/settings.dart';
-
+import 'ui/map_page/mapbox_page.dart';
 class AppRouter {
   final BuildContext context;
   final AuthenticationBloc authenticationBloc;
@@ -55,7 +55,8 @@ class AppRouter {
             builder: (_) => ShortCourseListPage(categoryName: args));
       case MapPage.routeName:
         return MaterialPageRoute(builder: (_) => MapPage());
-        
+      case MapboxPage.routeName:
+        return MaterialPageRoute(builder: (_) => MapboxPage());
     }
   }
 

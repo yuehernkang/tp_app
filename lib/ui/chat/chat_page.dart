@@ -46,7 +46,7 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
   void warmUpFunction() async {
     bool result = await DataConnectionChecker().hasConnection;
     if (result == true) {
-      await http
+      http
           .get('https://us-central1-tp-app-aff2e.cloudfunctions.net/api/test');
       _chatbotBloc.add(SendMessage("hello"));
       _list = ListModel<ChatMessage>(

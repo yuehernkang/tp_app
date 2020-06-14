@@ -38,7 +38,7 @@ dependencies:
   expand_widget: ^0.2.0+2
   md2_tab_indicator: ^1.0.2
   firebase_messaging: ^6.0.15
-  algolia: ^0.1.7
+  # algolia: ^0.1.7
   debounce_throttle: ^1.1.0
   flushbar: ^1.10.2
   animations: ^1.0.0+5
@@ -60,6 +60,12 @@ dependencies:
   parallax_image: ^0.3.1+1
   sup: ^1.0.1
   data_connection_checker: ^0.3.4
+  flutter_map: ^0.9.0
+  mapbox_gl: ^0.7.0
+  latlong: ^0.6.1
+  rxdart: ^0.24.1
+  page_view_indicator: ^2.0.4
+  scrollable_positioned_list: ^0.1.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parallax_image/parallax_image.dart';
 import 'package:tp_app/models/course.dart';
 
@@ -177,8 +178,7 @@ class FTCourseCard3 extends StatelessWidget {
                   stepGranularity: 1,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontFamily: 'Helvetica',
+                  style: GoogleFonts.lato(
                       fontSize: 27,
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).accentColor),

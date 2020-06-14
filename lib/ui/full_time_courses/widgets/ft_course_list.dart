@@ -18,6 +18,39 @@ class FTCourseList extends StatefulWidget {
 
 class _FTCourseListState extends State<FTCourseList>
     with AutomaticKeepAliveClientMixin {
+  Color backgroundColor;
+  @override
+  void initState() {
+    switch (widget.school) {
+      case "bus":
+        {
+          backgroundColor = Colors.yellow;
+        }
+        break;
+      case "eng":
+        {
+          backgroundColor = Colors.purple;
+        }
+        break;
+      case "des":
+        {
+          backgroundColor = Colors.blue;
+        }
+        break;
+      case "asc":
+        {
+          backgroundColor = Colors.green;
+        }
+        break;
+      case "iit":
+        {
+          backgroundColor = Colors.blue;
+        }
+        break;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -54,7 +87,7 @@ class _FTCourseListState extends State<FTCourseList>
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomLeft,
-                          colors: [Colors.white, Colors.red])),
+                          colors: [Colors.white, backgroundColor])),
                   child: ListView.builder(
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (BuildContext ctxt, int index) {

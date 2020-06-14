@@ -30,7 +30,7 @@ class _CoursesDetailState extends State<CoursesDetail2> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                expandedHeight: 200.0,
+                expandedHeight: 160.0,
                 floating: false,
                 pinned: false,
                 flexibleSpace: FlexibleSpaceBar(
@@ -66,9 +66,7 @@ class _CoursesDetailState extends State<CoursesDetail2> {
                       ),
                       Column(
                         children: <Widget>[
-                          SizedBox(
-                            height: 144,
-                          ),
+                          SizedBox(height: 104),
                           Center(
                             child: AutoSizeText(
                               widget.snapshot['courseName'] ?? 'Course Name',
@@ -111,22 +109,20 @@ class CourseDetailBody extends StatelessWidget {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [Colors.white, Colors.yellow])),
-      child: Column(
-        children: <Widget>[
-          // CourseNameWidget(
-          //   courseName: snapshot["courseName"],
-          // ),
-          CourseDetailWidget(
-            courseDetailText: snapshot["courseDetails"],
-          ),
-          CourseDetailWidget(
-            courseDetailText: snapshot["courseDetails"],
-          ),
-          CourseDetailWidget(
-            courseDetailText: snapshot["courseDetails"],
-          ),
-        ],
-      ),
+      child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            CourseDetailWidget(
+              courseDetailText: snapshot["courseDetails"],
+            ),
+            CourseDetailWidget(
+              courseDetailText: snapshot["courseDetails"],
+            ),
+            CourseDetailWidget(
+              courseDetailText: snapshot["courseDetails"],
+            ),
+          ],
+        ),
     );
   }
 }
@@ -139,9 +135,8 @@ class CourseNameWidget extends StatelessWidget {
     return Container(
         child: AutoSizeText(
       courseName ?? 'Course Name',
-      minFontSize: 56,
+      minFontSize: 36,
       maxFontSize: 80,
-      style: TextStyle(),
     ));
   }
 }
