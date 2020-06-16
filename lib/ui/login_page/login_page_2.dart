@@ -93,6 +93,7 @@ class LoginPage2 extends StatelessWidget {
           ios: (_) => CupertinoNavigationBarData(
             title: Text("Temasek Polytechnic Admissions"),
 
+
           ),
         ),
         // appBar: AppBar(
