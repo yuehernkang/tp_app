@@ -5,6 +5,9 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:google_map_polyutil/google_map_polyutil.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+import 'custom_scroll_view.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
@@ -42,6 +45,7 @@ class _MapPageState extends State<MapPage> {
   PolylinePoints polylinePoints;
   LocationData currentLocation;
   LocationData destinationLocation;
+  String _mapStyle;
 
   //1.341251, 103.934042
   //1.349025, 103.927803
@@ -52,29 +56,33 @@ class _MapPageState extends State<MapPage> {
     super.dispose();
   }
 
-  Future<void> checkPermissions(){
-    location.hasPermission().then((value){
-      if(value == PermissionStatus.denied){
+  Future<void> checkPermissions() {
+    location.hasPermission().then((value) {
+      if (value == PermissionStatus.denied) {
         print("permission denied");
         location.requestPermission();
       }
     });
   }
 
-
   Future<bool> checkIfInTP(LatLng currentLocation) async {
     return await GoogleMapPolyUtil.containsLocation(
-        polygon: polygonLatlngs, point:currentLocation);
+        polygon: polygonLatlngs, point: currentLocation);
   }
 
   @override
   void initState() {
     super.initState();
+    rootBundle.loadString('assets/map_style.txt').then((string) {
+      _mapStyle = string;
+    });
+
     location = new Location();
     polylinePoints = PolylinePoints();
     checkPermissions();
     location.onLocationChanged.listen((LocationData cLoc) {
-      checkIfInTP(LatLng(cLoc.latitude, cLoc.longitude)).then((value) => print(value));
+      checkIfInTP(LatLng(cLoc.latitude, cLoc.longitude))
+          .then((value) => print(value));
     });
   }
 
@@ -121,20 +129,41 @@ class _MapPageState extends State<MapPage> {
       icon: myIcon,
     ));
 
-    return new Scaffold(
-      body: GoogleMap(
-        compassEnabled: true,
-        buildingsEnabled: true,
-        myLocationEnabled: true,
-        indoorViewEnabled: true,
-        mapType: MapType.normal,
-        initialCameraPosition: MapPage._kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-        markers: _markers,
-        polylines: {},
-        polygons: _polygons,
+    return SafeArea(
+      child: new Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Scaffold(
+              body: GoogleMap(
+                compassEnabled: true,
+                buildingsEnabled: true,
+                myLocationEnabled: true,
+                indoorViewEnabled: true,
+                mapType: MapType.normal,
+                initialCameraPosition: MapPage._kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                  controller.setMapStyle(_mapStyle);
+                },
+                markers: _markers,
+                polylines: {},
+                polygons: _polygons,
+              ),
+            ),
+            DraggableScrollableSheet(
+              initialChildSize: 0.30,
+              minChildSize: 0.15,
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                return SafeArea(
+                  child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: CustomScrollViewContent()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

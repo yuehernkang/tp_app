@@ -2,11 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:tp_app/ui/map_page/flutter_map_page.dart';
 import 'package:tp_app/ui/map_page/map_page.dart';
+import 'package:tp_app/ui/part_time_courses/pt_short_course/short_course_details.dart';
 
 import 'home_page/home_page.dart';
 import 'repository/authentication_bloc/authentication_bloc.dart';
 import 'ui/chat/chat_page.dart';
+import 'ui/full_time_courses/ft_courses_page_2.dart';
+
 import 'ui/full_time_courses/ft_courses_page.dart';
 import 'ui/login_page/login_with_password.dart';
 import 'ui/part_time_courses/pt_courses_page.dart';
@@ -16,6 +20,7 @@ import 'ui/part_time_courses/pt_skillsfuture/pt_skillsfuture_page.dart';
 import 'ui/scholarships/scholarship_page.dart';
 import 'ui/settings/settings.dart';
 import 'ui/map_page/mapbox_page.dart';
+
 class AppRouter {
   final BuildContext context;
   final AuthenticationBloc authenticationBloc;
@@ -31,13 +36,15 @@ class AppRouter {
                   child: MyHomePage(),
                 ));
       case FtCoursesPage.routeName:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider.value(
-                  value: this.authenticationBloc,
-                  child: FtCoursesPage(),
-                ));
+        // return MaterialPageRoute(
+        //     builder: (_) => BlocProvider.value(
+        //           value: this.authenticationBloc,
+        //           child: FtCoursesPage(),
+        //         ));
+        return MaterialPageRoute(builder: (_) => FtCoursesPage());
+
       case ScholarshipPage.routeName:
-        return platformPageRoute(builder: (_) => ScholarshipPage());
+        return MaterialPageRoute(builder: (_) => ScholarshipPage());
       case PtCoursesPage.routeName:
         return MaterialPageRoute(builder: (_) => PtCoursesPage());
       case ChatPage.routeName:
@@ -57,6 +64,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => MapPage());
       case MapboxPage.routeName:
         return MaterialPageRoute(builder: (_) => MapboxPage());
+      case FlutterMapPage.routeName:
+        return MaterialPageRoute(builder: (_) => FlutterMapPage());
+      case ShortCourseDetail.routeName:
+        return MaterialPageRoute(builder: (_) => ShortCourseDetail());
     }
   }
 

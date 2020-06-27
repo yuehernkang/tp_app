@@ -5,12 +5,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './constants.dart';
 
 import 'bloc/bloc_delegate.dart';
 import 'repository/UserRepository.dart';
 import 'repository/authentication_bloc/authentication_bloc.dart';
-import 'repository/connectivity_bloc/connectivity_bloc.dart';
 import 'repository/firebase_messaging_bloc/firebase_messaging_bloc.dart';
 import 'route_generator.dart';
 import 'ui/theme/theme.dart';
@@ -31,11 +29,6 @@ void main() {
         create: (BuildContext context) {
           return AuthenticationBloc(userRepository: userRepository)
             ..add(AppStarted());
-        },
-      ),
-      BlocProvider<ConnectivityBloc>(
-        create: (BuildContext context) {
-          return ConnectivityBloc()..add(InitConnectivity());
         },
       ),
     ],

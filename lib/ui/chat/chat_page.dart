@@ -74,7 +74,6 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
           ],
         ),
       );
-      print(DataConnectionChecker().lastTryResults);
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_app/ui/part_time_courses/pt_short_course/short_course_details.dart';
 import 'package:tp_app/ui/widgets/loading_widget.dart';
 
 class ShortCourseListPage extends StatelessWidget {
@@ -36,10 +37,19 @@ class ShortCourseList extends StatelessWidget {
           default:
             return new ListView(
               children:
-                  snapshot.data.documents.map((DocumentSnapshot document) {
-                return new ListTile(
-                  title: new Text(document['course_name']),
-                  subtitle: new Text(document['category_name']),
+                  snapshot.data.documents.map((DocumentSnapshot snapshot) {
+                return Card(
+                  child: new ListTile(
+                      title: new Text(snapshot['course_name']),
+                      subtitle: new Text(snapshot['category_name']),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ShortCourseDetail(
+                                      snapshot: snapshot,
+                                    )));
+                      }),
                 );
               }).toList(),
             );

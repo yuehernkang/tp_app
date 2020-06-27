@@ -4,7 +4,7 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:md2_tab_indicator/md2_tab_indicator.dart';
+import 'package:tp_app/utils/custom_tab_indicator.dart';
 import '../../constants.dart' as Constants;
 
 class LoginPage2 extends StatelessWidget {
@@ -21,6 +21,7 @@ class LoginPage2 extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: OutlineButton(
+              focusColor: Colors.red,
               highlightedBorderColor: Colors.red,
               borderSide: BorderSide(color: Colors.black),
               padding: EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
@@ -31,7 +32,8 @@ class LoginPage2 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Icon(FontAwesomeIcons.envelope),
-                  Text("Continue with email", style: GoogleFonts.lato(fontSize: 16))
+                  Text("Continue with email",
+                      style: GoogleFonts.lato(fontSize: 16))
                 ],
               ),
             ),
@@ -39,6 +41,7 @@ class LoginPage2 extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: OutlineButton(
+              focusColor: Colors.blue,
               borderSide: BorderSide(color: Colors.black),
               padding: EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
               shape: new RoundedRectangleBorder(
@@ -83,17 +86,14 @@ class LoginPage2 extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.label,
               labelColor: Theme.of(context).accentColor,
               unselectedLabelColor: Color(0xff5f6368),
-              indicator: MD2Indicator(
+              indicator: CustomTabIndicator(
                   indicatorHeight: 3,
-                  indicatorColor: Theme.of(context).accentColor,
-                  indicatorSize: MD2IndicatorSize.full),
+                  indicatorColor: Theme.of(context).accentColor,),
               tabs: Constants.tabItems2,
             ),
           ),
           ios: (_) => CupertinoNavigationBarData(
             title: Text("Temasek Polytechnic Admissions"),
-
-
           ),
         ),
         // appBar: AppBar(
@@ -114,11 +114,13 @@ class LoginPage2 extends StatelessWidget {
         //     tabs: Constants.tabItems2,
         //   ),
         // ),
+        // body: TabBarView(
+        //   children: tabContent,
+        // ),
         body: TabBarView(
           children: tabContent,
         ),
       ),
     );
-    ;
   }
 }

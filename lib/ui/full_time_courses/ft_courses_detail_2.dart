@@ -85,8 +85,7 @@ class _CoursesDetailState extends State<CoursesDetail2> {
               ),
             ];
           },
-          body: SingleChildScrollView(
-              child: CourseDetailBody(snapshot: widget.snapshot)),
+          body: Container(child: CourseDetailBody(snapshot: widget.snapshot)),
         ),
       ),
     );
@@ -110,19 +109,19 @@ class CourseDetailBody extends StatelessWidget {
               end: Alignment.bottomLeft,
               colors: [Colors.white, Colors.yellow])),
       child: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            CourseDetailWidget(
-              courseDetailText: snapshot["courseDetails"],
-            ),
-            CourseDetailWidget(
-              courseDetailText: snapshot["courseDetails"],
-            ),
-            CourseDetailWidget(
-              courseDetailText: snapshot["courseDetails"],
-            ),
-          ],
-        ),
+        shrinkWrap: true,
+        children: <Widget>[
+          CourseDetailWidget(
+            courseDetailText: snapshot["courseDetails"],
+          ),
+          CourseDetailWidget(
+            courseDetailText: snapshot["courseDetails"],
+          ),
+          CourseDetailWidget(
+            courseDetailText: snapshot["courseDetails"],
+          ),
+        ],
+      ),
     );
   }
 }

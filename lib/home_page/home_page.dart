@@ -8,6 +8,8 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tp_app/home_page/models/highlight_object.dart';
+import 'package:tp_app/ui/map_page/flutter_map_page.dart';
+import 'package:tp_app/ui/map_page/map_page.dart';
 import 'package:tp_app/ui/map_page/mapbox_page.dart';
 
 import '../repository/authentication_bloc/authentication_bloc.dart';
@@ -142,12 +144,21 @@ class RowOneIconContainer extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.school, size: 50.0),
-              subtitle: "Full-Time Courses"),
+            icon: FaIcon(
+              FontAwesomeIcons.school,
+              size: 50.0,
+              color: Colors.red,
+            ),
+            subtitle: "Full-Time Courses",
+          ),
         ),
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.graduationCap, size: 50.0),
+              icon: FaIcon(
+                FontAwesomeIcons.graduationCap,
+                size: 50.0,
+                color: Colors.yellowAccent,
+              ),
               subtitle: "Scholarships"),
         ),
         // Container(
@@ -169,12 +180,20 @@ class RowTwoIconContainer extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.briefcase, size: 50.0),
+              icon: FaIcon(
+                FontAwesomeIcons.briefcase,
+                size: 50.0,
+                color: Colors.blue,
+              ),
               subtitle: "Part-Time Courses"),
         ),
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.comments, size: 50.0),
+              icon: FaIcon(
+                FontAwesomeIcons.comments,
+                size: 50.0,
+                color: Colors.orange,
+              ),
               subtitle: "Chat"),
         ),
         // Container(
@@ -218,7 +237,13 @@ class RowFourIconContainer extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: IconWithSubtitle(
-              icon: FaIcon(FontAwesomeIcons.map, size: 50.0), subtitle: "Map"),
+            icon: FaIcon(
+              FontAwesomeIcons.map,
+              size: 50.0,
+              color: Colors.blue,
+            ),
+            subtitle: "Map",
+          ),
         ),
         Expanded(
           child: IconWithSubtitle(

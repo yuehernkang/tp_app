@@ -12,8 +12,7 @@ final List<Tab> tabItems2 = [
   ),
 ];
 
-const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
-
+//FtCoursesPage
 final List<Tab> tabItems = [
   Tab(
     text: "Business",
@@ -30,4 +29,20 @@ final List<Tab> tabItems = [
   Tab(
     text: "IT",
   )
+];
+
+//ShortCourseDetails
+final List<Tab> tabItems3 = [
+  Tab(
+    text: "Overview",
+  ),
+  Tab(
+    text: "Course Outline",
+  ),
+  Tab(
+    text: "Trainer's Profile",
+  ),
+  Tab(
+    text: "Enquires & Application",
+  ),
 ];
