@@ -117,23 +117,40 @@ class PtShortCourseItem extends StatelessWidget {
                   begin: Alignment(0.0, 0.5),
                   end: Alignment(0.0, 0.0),
                   colors: <Color>[
-                    Color(0x60000000),
+                    Colors.black54
+,
                     Color(0x00000000),
                   ],
                 ),
               ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: 72),
-                AutoSizeText(
-                  item.displayText ?? 'Course Name',
-                  maxLines: 2,
-                  minFontSize: 16,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          item.displayText,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                        ),
+                      ),
+                    )
+                  ],
                 )
+                // AutoSizeText(
+                //   item.displayText ?? 'Course Name',
+                //   maxLines: 2,
+                //   minFontSize: 16,
+                //   style: TextStyle(
+                //       color: Colors.white, fontWeight: FontWeight.bold),
+                // )
               ],
             ),
           ],

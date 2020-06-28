@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 /// Content of the DraggableBottomSheet's child SingleChildScrollView
 class CustomScrollViewContent extends StatelessWidget {
@@ -6,7 +8,9 @@ class CustomScrollViewContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 12.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(0), topRight: Radius.circular(0))),
       margin: const EdgeInsets.all(0),
       child: Container(
         decoration: BoxDecoration(
@@ -23,10 +27,10 @@ class CustomInnerContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(height: 12),
-        CustomDraggingHandle(),
-        SizedBox(height: 16),
-        CustomExploreTemasekPolytechnic(),
+        // SizedBox(height: 12),
+        // CustomDraggingHandle(),
+        // SizedBox(height: 16),
+        // CustomExploreTemasekPolytechnic(),
         SizedBox(height: 16),
         CustomHorizontallyScrollingRestaurants(),
         SizedBox(height: 24),
@@ -58,13 +62,17 @@ class CustomDraggingHandle extends StatelessWidget {
 }
 
 class CustomExploreTemasekPolytechnic extends StatelessWidget {
+  final AsyncSnapshot snapshot;
+
+  const CustomExploreTemasekPolytechnic({Key key, this.snapshot})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text("Explore Temasek Polytechnic",
-            style: TextStyle(fontSize: 22, color: Colors.black45)),
+            style: TextStyle(fontSize: 22, color: Colors.black)),
         SizedBox(width: 8),
         Container(
           height: 24,
@@ -85,18 +93,42 @@ class CustomHorizontallyScrollingRestaurants extends StatelessWidget {
       padding: const EdgeInsets.only(left: 16),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CustomRestaurantCategory(),
-            SizedBox(width: 12),
-            CustomRestaurantCategory(),
-            SizedBox(width: 12),
-            CustomRestaurantCategory(),
-            SizedBox(width: 12),
-            CustomRestaurantCategory(),
-            SizedBox(width: 12),
-          ],
+        child: Container(
+          height: 96,
+          width: MediaQuery.of(context).size.width,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              Shimmer.fromColors(
+                baseColor: Colors.grey[500],
+                highlightColor: Colors.grey[300],
+                enabled: true,
+                child: CustomRestaurantCategory(),
+              ),
+              SizedBox(width: 12),
+              Shimmer.fromColors(
+                baseColor: Colors.grey[500],
+                highlightColor: Colors.grey[100],
+                enabled: true,
+                child: CustomRestaurantCategory(),
+              ),
+              SizedBox(width: 12),
+              Shimmer.fromColors(
+                baseColor: Colors.grey[500],
+                highlightColor: Colors.grey[100],
+                enabled: true,
+                child: CustomRestaurantCategory(),
+              ),
+              SizedBox(width: 12),
+              Shimmer.fromColors(
+                baseColor: Colors.grey[500],
+                highlightColor: Colors.grey[100],
+                enabled: true,
+                child: CustomRestaurantCategory(),
+              ),
+              SizedBox(width: 12),
+            ],
+          ),
         ),
       ),
     );
@@ -132,10 +164,30 @@ class CustomFeaturedItemsGrid extends StatelessWidget {
         crossAxisSpacing: 12,
         shrinkWrap: true,
         children: <Widget>[
-          CustomFeaturedItem(),
-          CustomFeaturedItem(),
-          CustomFeaturedItem(),
-          CustomFeaturedItem(),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[500],
+            highlightColor: Colors.grey[300],
+            enabled: true,
+            child: CustomRestaurantCategory(),
+          ),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[500],
+            highlightColor: Colors.grey[300],
+            enabled: true,
+            child: CustomRestaurantCategory(),
+          ),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[500],
+            highlightColor: Colors.grey[300],
+            enabled: true,
+            child: CustomRestaurantCategory(),
+          ),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[500],
+            highlightColor: Colors.grey[300],
+            enabled: true,
+            child: CustomRestaurantCategory(),
+          ),
         ],
       ),
     );
