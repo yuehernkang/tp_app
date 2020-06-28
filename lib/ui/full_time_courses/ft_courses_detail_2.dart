@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:timeline_list/timeline.dart';
+import 'package:timeline_list/timeline_model.dart';
 
 class CoursesDetail2 extends StatefulWidget {
   final DocumentSnapshot snapshot;
@@ -85,7 +87,7 @@ class _CoursesDetailState extends State<CoursesDetail2> {
               ),
             ];
           },
-          body: Container(child: CourseDetailBody(snapshot: widget.snapshot)),
+          body: CourseDetailBody(snapshot: widget.snapshot),
         ),
       ),
     );
@@ -114,8 +116,9 @@ class CourseDetailBody extends StatelessWidget {
           CourseDetailWidget(
             courseDetailText: snapshot["courseDetails"],
           ),
-          CourseDetailWidget(
-            courseDetailText: snapshot["courseDetails"],
+          Container(
+            height: 200,
+            child: TimelineWidget(),
           ),
           CourseDetailWidget(
             courseDetailText: snapshot["courseDetails"],
@@ -123,6 +126,24 @@ class CourseDetailBody extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class TimelineWidget extends StatelessWidget {
+  List<TimelineModel> items = [
+    TimelineModel(Placeholder(),
+        position: TimelineItemPosition.random,
+        iconBackground: Colors.redAccent,
+        icon: Icon(Icons.blur_circular)),
+    TimelineModel(Placeholder(),
+        position: TimelineItemPosition.random,
+        iconBackground: Colors.redAccent,
+        icon: Icon(Icons.blur_circular)),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Timeline(children: items, position: TimelinePosition.Center);
   }
 }
 
