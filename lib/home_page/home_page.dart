@@ -311,7 +311,7 @@ class IconWithSubtitle extends StatelessWidget {
               break;
             case "Map":
               {
-                Navigator.pushNamed(context, MapboxPage.routeName);
+                Navigator.pushNamed(context, FlutterMapPage.routeName);
               }
           }
         },
